@@ -77,3 +77,12 @@ class GitHub(object):
         x=self.fetcher("http://github.com/api/v1/xml/%s" % username).read()
         doc=xml.dom.minidom.parseString(x)
         return User(doc)
+
+if __name__ == '__main__':
+    import sys
+    u = GitHub().user(sys.argv[1])
+    print "User:  %s (%s)" % (u.login, u.name)
+    for repo in [u.repos[k] for k in sorted(u.repos.keys())]:
+        print "- %s" % repo.name
+        print "  %s" % repo.url
+        print "  %s" % "git://github.com/%s/%s.git" % (u.login, repo.name)

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user>
+  <name>Dustin Sallings</name>
+  <repositories type="array">
+    <repository>
+      <name>java-memcached-client</name>
+      <url>http://github.com/dustin/java-memcached-client</url>
+      <description>A simple, asynchronous, single-threaded memcached client written in java.</description>
+      <homepage>http://code.google.com/p/spymemcached/</homepage>
+    </repository>
+    <repository>
+      <name>buildwatch</name>
+      <url>http://github.com/dustin/buildwatch</url>
+      <description>A buildbot GUI for OS X</description>
+      <homepage>http://code.google.com/p/buildwatch/</homepage>
+    </repository>
+    <repository>
+      <name>ruby-freebase</name>
+      <url>http://github.com/dustin/ruby-freebase</url>
+      <description>A ruby client for freebase</description>
+      <homepage></homepage>
+    </repository>
+    <repository>
+      <name>photo</name>
+      <url>http://github.com/dustin/photo</url>
+      <description>My photo album project.</description>
+      <homepage>http://bleu.west.spy.net/photo/</homepage>
+    </repository>
+    <repository>
+      <name>gitnub</name>
+      <url>http://github.com/dustin/gitnub</url>
+      <description>A Gitk-like application written in RubyCocoa that looks like it belongs on a Mac.  See the wiki for downloads and screenshots.</description>
+      <homepage>http://alternateidea.com</homepage>
+    </repository>
+    <repository>
+      <name>cache_fu</name>
+      <url>http://github.com/dustin/cache_fu</url>
+      <description>Everyone's favorite memcached plugin for ActiveRecord.</description>
+      <homepage>http://errtheblog.com</homepage>
+    </repository>
+    <repository>
+      <name>money</name>
+      <url>http://github.com/dustin/money</url>
+      <description>My money tracking app.  There are many like it, but this one is mine.</description>
+      <homepage></homepage>
+    </repository>
+    <repository>
+      <name>grit</name>
+      <url>http://github.com/dustin/grit</url>
+      <description>Grit is a Ruby library for extracting information from a git repository in an object oriented manner.</description>
+      <homepage>http://grit.rubyforge.org/</homepage>
+    </repository>
+    <repository>
+      <name>logmerge</name>
+      <url>http://github.com/dustin/logmerge</url>
+      <description>Combines several compressed web logfiles (including S3) into a single common log file very quickly.</description>
+      <homepage></homepage>
+    </repository>
+    <repository>
+      <name>environ</name>
+      <url>http://github.com/dustin/environ</url>
+      <description>My environmental monitoring stuff for the house.</description>
+      <homepage></homepage>
+    </repository>
+    <repository>
+      <name>ibutton</name>
+      <url>http://github.com/dustin/ibutton</url>
+      <description>My 1wire protocol stack and related tools</description>
+      <homepage>http://bleu.west.spy.net/~dustin/projects/ibutton/</homepage>
+    </repository>
+    <repository>
+      <name>app-hider</name>
+      <url>http://github.com/dustin/app-hider</url>
+      <description>OS X app that helps you focus by hiding applications you aren't paying attention to.</description>
+      <homepage>http://bleu.west.spy.net/~dustin/projects/AppHider/</homepage>
+    </repository>
+    <repository>
+      <name>py-backpack</name>
+      <url>http://github.com/dustin/py-backpack</url>
+      <description>Python interface to backpack.</description>
+      <homepage>http://bleu.west.spy.net/~dustin/projects/backpack/</homepage>
+    </repository>
+    <repository>
+      <name>photosync</name>
+      <url>http://github.com/dustin/photosync</url>
+      <description>An OS X application to build a standalone web site as an export from my photo album.</description>
+      <homepage>http://bleu.west.spy.net/~dustin/projects/photosync/</homepage>
+    </repository>
+    <repository>
+      <name>java-digg</name>
+      <url>http://github.com/dustin/java-digg</url>
+      <description>My digg interface for java.</description>
+      <homepage>http://bleu.west.spy.net/~dustin/projects/digg/</homepage>
+    </repository>
+    <repository>
+      <name>diggwatch</name>
+      <url>http://github.com/dustin/diggwatch</url>
+      <description>My diggwatch site.</description>
+      <homepage>http://bleu.west.spy.net/diggwatch/</homepage>
+    </repository>
+    <repository>
+      <name>spyjar</name>
+      <url>http://github.com/dustin/spyjar</url>
+      <description>My generally useful java library I take wherever I go.</description>
+      <homepage>http://bleu.west.spy.net/~dustin/projects/spyjar/</homepage>
+    </repository>
+    <repository>
+      <name>photoupload</name>
+      <url>http://github.com/dustin/photoupload</url>
+      <description>A Mac OS X photo uploader program for my photo album.</description>
+      <homepage>http://bleu.west.spy.net/~dustin/projects/photoupload/</homepage>
+    </repository>
+    <repository>
+      <name>github-twitter</name>
+      <url>http://github.com/dustin/github-twitter</url>
+      <description>Sinatra app that pushes your Github Commit info to twitter</description>
+      <homepage>http://groups.google.com/group/github-twitter/</homepage>
+    </repository>
+  </repositories>
+  <login>dustin</login>
+  <email>dustin@spy.net</email>
+  <location>Santa Clara, CA</location>
+</user>

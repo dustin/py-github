@@ -126,9 +126,21 @@ class GitHub(object):
 
 if __name__ == '__main__':
     import sys
-    u = GitHub().user(sys.argv[1])
-    print "User:  %s (%s)" % (u.login, u.name)
-    for repo in [u.repos[k] for k in sorted(u.repos.keys())]:
-        print "- %s" % repo.name
-        print "  %s" % repo.url
-        print "  %s" % "git://github.com/%s/%s.git" % (u.login, repo.name)
+    gh=GitHub()
+    if len(sys.argv) == 2:
+        u = gh.user(sys.argv[1])
+        print "User:  %s (%s)" % (u.login, u.name)
+        for repo in [u.repos[k] for k in sorted(u.repos.keys())]:
+            print "- %s" % repo.name
+            print "  %s" % repo.url
+            print "  %s" % "git://github.com/%s/%s.git" % (u.login, repo.name)
+    elif len(sys.argv) == 4:
+        for commit in gh.commits(*sys.argv[1:]):
+            print "%s %s - %s" % (commit.id[0:7],
+                commit.author.email, commit.message)
+    else:
+        print "Usages:"
+        print " %s user" % sys.argv[0]
+        print "    -- show info about a given user"
+        print " %s user repo branch" % sys.argv[0]
+        print "    -- show recent commits on a specific branch"

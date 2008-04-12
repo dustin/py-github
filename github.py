@@ -83,8 +83,7 @@ class Commit(object):
         while ch:
             if ch.nodeType != xml.dom.Node.TEXT_NODE:
                 if ch.localName == 'parents':
-                    self.parents = [str(s.firstChild.data)
-                        for s in ch.getElementsByTagName('id')]
+                    self.parents = self.__parseSimpleList(ch, 'id')
                 elif ch.localName == 'author':
                     self.author = Person(ch)
                 elif ch.localName == 'committer':
@@ -96,6 +95,9 @@ class Commit(object):
                 else:
                     self.__dict__[ch.localName] = ch.firstChild.data
             ch=ch.nextSibling
+
+    def __parseSimpleList(self, el, name):
+        return [str(s.firstChild.data) for s in el.getElementsByTagName(name)]
 
     def __parseDate(self, el):
         dateStr=el.firstChild.data

@@ -50,21 +50,60 @@ class Repository(object):
     def __repr__(self):
         return "<<Repository %s>>" % self.name
 
-class User(object):
-    """A github user."""
+class Person(object):
+    """A person."""
 
-    def __init__(self, doc):
-        ch=doc.firstChild.firstChild
+    def __init__(self, el):
+        ch=el.firstChild
         while ch:
             if ch.nodeType != xml.dom.Node.TEXT_NODE:
                 if ch.localName != 'repositories':
                     self.__dict__[ch.localName] = ch.firstChild.data
             ch=ch.nextSibling
-        repos=[Repository(el) for el in doc.getElementsByTagName('repository')]
+        repos=[Repository(el) for el in el.getElementsByTagName('repository')]
         self.repos=dict([(r.name, r) for r in repos])
 
     def __repr__(self):
+        return "<<Person %s <%s>>>" % (self.name, self.email)
+
+class User(Person):
+    """A github user."""
+
+    def __init__(self, doc):
+        Person.__init__(self, doc.firstChild)
+
+    def __repr__(self):
         return "<<User %s with %d repos>>" % (self.login, len(self.repos))
+
+class Commit(object):
+    """A single commit."""
+
+    def __init__(self, el):
+        ch=el.firstChild
+        while ch:
+            if ch.nodeType != xml.dom.Node.TEXT_NODE:
+                if ch.localName == 'parents':
+                    self.parents = [str(s.firstChild.data)
+                        for s in ch.getElementsByTagName('id')]
+                elif ch.localName == 'author':
+                    self.author = Person(ch)
+                elif ch.localName == 'committer':
+                    self.committer = Person(ch)
+                elif ch.localName == 'committed-date':
+                    self.committedDate = self.__parseDate(ch)
+                elif ch.localName == 'authored-date':
+                    self.authoredDate = self.__parseDate(ch)
+                else:
+                    self.__dict__[ch.localName] = ch.firstChild.data
+            ch=ch.nextSibling
+
+    def __parseDate(self, el):
+        dateStr=el.firstChild.data
+        # XXX:  Parse here.
+        return dateStr
+
+    def __repr__(self):
+        return "<<Commit %s>>" % self.id
 
 class GitHub(object):
     """Interface to github."""
@@ -77,6 +116,13 @@ class GitHub(object):
         x=self.fetcher("http://github.com/api/v1/xml/%s" % username).read()
         doc=xml.dom.minidom.parseString(x)
         return User(doc)
+
+    def commits(self, username, repo, branch):
+        """Get the recent commits for the given repo."""
+        x=self.fetcher("http://github.com/api/v1/xml/%s/%s/commits/%s"
+            % (username, repo, branch)).read()
+        doc=xml.dom.minidom.parseString(x)
+        return [Commit(el) for el in doc.getElementsByTagName('commit')]
 
 if __name__ == '__main__':
     import sys

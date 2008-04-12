@@ -96,6 +96,28 @@ class GitHubTest(unittest.TestCase):
         self.assertTrue('Repository' in c.modified[0].diff)
         self.assertTrue('GitHubTest' in c.modified[1].diff)
 
+    def testCommitWithMerge(self):
+        c= self.__loadCommit('commit-merge.xml')
+        self.assertEquals('c80c0d9557bc88ec236e7de9854f738c1d6c03b9', c.id)
+        self.assertEquals('27d3edfc5f719e1f59871b420a5a4af6616ddca0', c.tree)
+        self.assertEquals('2008-03-12T00:05:00-07:00', c.committedDate)
+        self.assertEquals('2008-03-12T00:05:00-07:00', c.authoredDate)
+        self.assertEquals("Merge branch 'torelease'", c.message)
+        self.assertEquals(['c47c0aaa9579fd27d185366ac189cacaa0d9f066',
+            '40133467bedae260f9322325ee93ca27fd4fac6c'], c.parents)
+        self.assertEquals('http://github.com/dustin/py-github/commit/%s' % c.id,
+            c.url)
+        self.assertEquals('dustin@spy.net', c.author.email)
+        self.assertEquals('dustin@spy.net', c.committer.email)
+        self.assertEquals('Dustin Sallings', c.author.name)
+        self.assertEquals('Dustin Sallings', c.committer.name)
+        self.assertEquals(0, len(c.removed))
+        self.assertEquals(0, len(c.added))
+        self.assertEquals(['data/commits.xml'], c.added)
+        self.assertEquals(['ApplicationDelegate.m',
+            'English.lproj/MainMenu.xib', 'Info.plist', 'buildwatch.xml'],
+            [m.filename for m in c.modified])
+
 if __name__ == '__main__':
     unittest.main()
     # gh=github.GitHub(hack)

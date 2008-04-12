@@ -25,6 +25,12 @@ class GitHubTest(unittest.TestCase):
             'http://github.com/api/v1/xml/caged/gitnub/commits/master',
             'data/commits.xml').commits('caged', 'gitnub', 'master')
 
+    def __loadCommit(self, which):
+        id='00000010000101'
+        return self.__gh(
+            'http://github.com/api/v1/xml/dustin/py-github/commit/%s' % id,
+            'data/' + which).commit('dustin', 'py-github', id)
+
     def testUserBase(self):
         """Test the base properties of the user object."""
         u=self.__loadUser()
@@ -65,6 +71,30 @@ class GitHubTest(unittest.TestCase):
         self.assertEquals('Dustin Sallings', c.committer.name)
         self.assertEquals('dustin@spy.net', c.author.email)
         self.assertEquals('dustin@spy.net', c.committer.email)
+
+    def testCommitWithAdd(self):
+        c= self.__loadCommit('commit-with-add.xml')
+        self.assertEquals('33464f2c56ed5fd64319d8dcc52fdfdb5db9d8ae', c.id)
+        self.assertEquals('b73e9af69c043f68b19aa000980e56377fddb600', c.tree)
+        self.assertEquals('2008-04-11T21:43:32-07:00', c.committedDate)
+        self.assertEquals('2008-04-11T21:43:32-07:00', c.authoredDate)
+        self.assertEquals('Added support for listing recent commits.',
+            c.message)
+        self.assertEquals(['f54d6071a0dafadd3ce50dd0b01b3ca3b69818c7'],
+            c.parents)
+        self.assertEquals('http://github.com/dustin/py-github/commit/%s' % c.id,
+            c.url)
+        self.assertEquals('dustin@spy.net', c.author.email)
+        self.assertEquals('dustin@spy.net', c.committer.email)
+        self.assertEquals('Dustin Sallings', c.author.name)
+        self.assertEquals('Dustin Sallings', c.committer.name)
+        self.assertEquals(0, len(c.removed))
+        self.assertEquals(['data/commits.xml'], c.added)
+        self.assertEquals(['github.py', 'githubtest.py'],
+            [m.filename for m in c.modified])
+
+        self.assertTrue('Repository' in c.modified[0].diff)
+        self.assertTrue('GitHubTest' in c.modified[1].diff)
 
 if __name__ == '__main__':
     unittest.main()

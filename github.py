@@ -75,11 +75,24 @@ class User(Person):
     def __repr__(self):
         return "<<User %s with %d repos>>" % (self.login, len(self.repos))
 
+class FileModification(object):
+    """Object representing a specific file modification."""
+
+    def __init__(self, el):
+        self.diff = el.getElementsByTagName('diff')[0].firstChild.data
+        self.filename = el.getElementsByTagName('filename')[0].firstChild.data
+
+    def __repr__(self):
+        return "<<FileModification: %s>>" % self.filename
+
 class Commit(object):
     """A single commit."""
 
     def __init__(self, el):
         ch=el.firstChild
+        self.removed=[]
+        self.added=[]
+        self.modified=[]
         while ch:
             if ch.nodeType != xml.dom.Node.TEXT_NODE:
                 if ch.localName == 'parents':
@@ -92,6 +105,13 @@ class Commit(object):
                     self.committedDate = self.__parseDate(ch)
                 elif ch.localName == 'authored-date':
                     self.authoredDate = self.__parseDate(ch)
+                elif ch.localName == 'added':
+                    self.added = self.__parseSimpleList(ch, 'filename')
+                elif ch.localName == 'removed':
+                    self.removed = self.__parseSimpleList(ch, 'removed')
+                elif ch.localName == 'modified':
+                    self.modified = [FileModification(el)
+                        for el in ch.getElementsByTagName('modified')]
                 else:
                     self.__dict__[ch.localName] = ch.firstChild.data
             ch=ch.nextSibling
@@ -125,6 +145,13 @@ class GitHub(object):
             % (username, repo, branch)).read()
         doc=xml.dom.minidom.parseString(x)
         return [Commit(el) for el in doc.getElementsByTagName('commit')]
+
+    def commit(self, username, repo, commit):
+        """Get a specific commit from the given repo."""
+        x=self.fetcher("http://github.com/api/v1/xml/%s/%s/commit/%s"
+            % (username, repo, commit)).read()
+        doc=xml.dom.minidom.parseString(x)
+        return Commit(doc.getElementsByTagName('commit')[0])
 
 if __name__ == '__main__':
     import sys

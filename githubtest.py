@@ -105,15 +105,14 @@ class GitHubTest(unittest.TestCase):
         self.assertEquals("Merge branch 'torelease'", c.message)
         self.assertEquals(['c47c0aaa9579fd27d185366ac189cacaa0d9f066',
             '40133467bedae260f9322325ee93ca27fd4fac6c'], c.parents)
-        self.assertEquals('http://github.com/dustin/py-github/commit/%s' % c.id,
-            c.url)
+        self.assertEquals('http://github.com/dustin/buildwatch/commit/%s'
+            % c.id, c.url)
         self.assertEquals('dustin@spy.net', c.author.email)
         self.assertEquals('dustin@spy.net', c.committer.email)
         self.assertEquals('Dustin Sallings', c.author.name)
         self.assertEquals('Dustin Sallings', c.committer.name)
         self.assertEquals(0, len(c.removed))
         self.assertEquals(0, len(c.added))
-        self.assertEquals(['data/commits.xml'], c.added)
         self.assertEquals(['ApplicationDelegate.m',
             'English.lproj/MainMenu.xib', 'Info.plist', 'buildwatch.xml'],
             [m.filename for m in c.modified])

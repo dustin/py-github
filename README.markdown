@@ -1,7 +1,12 @@
 # What's on Github?
 
-This is the beginning of a tool I'm writing so I can figure out and keep track
-of what I've got at github (and hopefully other places as well).
+This is a library that implements
+[github's API](http://github.com/guides/the-github-api) in python.
+
+Part of the reason I wrote this was to have a simple way to keep local clones
+of my projects.  Included is githubsync.py which does that for any given user
+(within the limitations of the github API, which currently limits you to public
+projects).
 
 ## Example
 

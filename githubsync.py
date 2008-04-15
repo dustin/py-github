@@ -15,7 +15,7 @@ def sync(path, user, repo):
     p=os.path.join(path, repo.name) + ".git"
     print "Syncing %s -> %s" % (repo, p)
     if os.path.exists(p):
-        subprocess.call(['git', '--git-dir=' + p, 'fetch'])
+        subprocess.call(['git', '--git-dir=' + p, 'fetch', '-f'])
     else:
         url = "git://github.com/%s/%s" % (user.login, repo.name)
         subprocess.call(['git', 'clone', '--bare', url, p])

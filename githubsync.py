@@ -14,13 +14,12 @@ import github
 def sync(path, user, repo):
     p=os.path.join(path, repo.name) + ".git"
     print "Syncing %s -> %s" % (repo, p)
-    if os.path.exists(p):
-        subprocess.call(['git', '--git-dir=' + p, 'fetch', '-f'])
-    else:
+    if not os.path.exists(p):
         url = "git://github.com/%s/%s" % (user.login, repo.name)
         subprocess.call(['git', 'clone', '--bare', url, p])
         subprocess.call(['git', '--git-dir=' + p, 'remote', 'add', 'origin',
             url])
+    subprocess.call(['git', '--git-dir=' + p, 'fetch', '-f'])
 
 def usage():
     sys.stderr.write("Usage:  %s username destination_url\n" % sys.argv[0])

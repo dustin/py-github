@@ -11,15 +11,17 @@ import subprocess
 
 import github
 
-def sync(path, user, repo):
-    p=os.path.join(path, repo.name) + ".git"
-    print "Syncing %s -> %s" % (repo, p)
+def sync(path, url, repo_name):
+    p=os.path.join(path, repo_name) + ".git"
+    print "Syncing %s -> %s" % (repo_name, p)
     if not os.path.exists(p):
-        url = "git://github.com/%s/%s" % (user.login, repo.name)
         subprocess.call(['git', 'clone', '--bare', url, p])
         subprocess.call(['git', '--git-dir=' + p, 'remote', 'add', '--mirror',
             'origin', url])
     subprocess.call(['git', '--git-dir=' + p, 'fetch', '-f'])
+
+def sync_user_repo(path, user, repo):
+    sync(path, "git://github.com/%s/%s" % (user.login, repo.name), repo.name)
 
 def usage():
     sys.stderr.write("Usage:  %s username destination_url\n" % sys.argv[0])
@@ -37,4 +39,4 @@ if __name__ == '__main__':
     u = gh.user(user)
 
     for repo in u.repos.values():
-        sync(path, u, repo)
+        sync_user_repo(path, u, repo)

@@ -11,13 +11,26 @@ import subprocess
 
 import github
 
+def check_for_old_format(path, url):
+    p=subprocess.Popen(['git', '--git-dir=' + path, 'config',
+        'remote.origin.fetch'], stdout=subprocess.PIPE)
+    stdout, stderr=p.communicate()
+    if stdout.strip() != '+refs/*:refs/*':
+        print "Not properly configured for mirroring, repairing."
+        subprocess.call(['git', '--git-dir=' + path, 'remote', 'rm', 'origin'])
+        add_mirror(path, url)
+
+def add_mirror(path, url):
+    subprocess.call(['git', '--git-dir=' + path, 'remote', 'add', '--mirror',
+            'origin', url])
+
 def sync(path, url, repo_name):
     p=os.path.join(path, repo_name) + ".git"
     print "Syncing %s -> %s" % (repo_name, p)
     if not os.path.exists(p):
         subprocess.call(['git', 'clone', '--bare', url, p])
-        subprocess.call(['git', '--git-dir=' + p, 'remote', 'add', '--mirror',
-            'origin', url])
+        add_mirror(p, url)
+    check_for_old_format(p, url)
     subprocess.call(['git', '--git-dir=' + p, 'fetch', '-f'])
 
 def sync_user_repo(path, user, repo):

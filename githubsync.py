@@ -35,6 +35,13 @@ if __name__ == '__main__':
         usage()
         exit(1)
 
+    privfile = os.path.join(os.getenv("HOME"), ".github-private")
+    if os.path.exists(privfile):
+        f=open(privfile)
+        for line in f:
+            name, url = line.strip().split("\t")
+            sync(path, url, name)
+
     gh=github.GitHub()
     u = gh.user(user)
 

@@ -39,7 +39,15 @@ def sync_user_repo(path, user, repo):
 def usage():
     sys.stderr.write("Usage:  %s username destination_url\n" % sys.argv[0])
     sys.stderr.write(
-        "  Ensures you've got the latest stuff for the given user.\n")
+        """Ensures you've got the latest stuff for the given user.
+
+Also, if the file $HOME/.github-private exists, it will be read for
+additional projects.
+
+Each line must be a simple project name (e.g. py-github), a tab character,
+and a git URL.
+"""
+        )
 
 if __name__ == '__main__':
     try:

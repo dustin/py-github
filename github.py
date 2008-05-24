@@ -168,10 +168,10 @@ class GitHub(object):
         doc=xml.dom.minidom.parseString(x)
         return User(doc)
 
-    def search(self, keywords):
+    def search(self, search_string):
         """Search for repositories."""
         x=self.fetcher("http://github.com/api/v1/xml/search/%s"
-            % keywords.replace(' ', '+')).read()
+            % search_string.replace(' ', '+')).read()
         doc=xml.dom.minidom.parseString(x)
         return SearchResults(doc)
 

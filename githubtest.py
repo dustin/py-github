@@ -104,6 +104,7 @@ class GitHubTest(unittest.TestCase):
         self.assertEquals('<<SearchResults with 30 repos>>', `res`)
 
     def testCommitsBase(self):
+        """Basic test of a commit"""
         commits=self.__loadCommits()
         self.assertEquals(30, len(commits))
         c=commits[0]
@@ -122,6 +123,7 @@ class GitHubTest(unittest.TestCase):
         self.assertEquals('dustin@spy.net', c.committer.email)
 
     def testCommitWithAdd(self):
+        """Testing a commit with some adds."""
         c= self.__loadCommit('commit-with-add.xml')
         self.assertEquals('33464f2c56ed5fd64319d8dcc52fdfdb5db9d8ae', c.id)
         self.assertEquals('b73e9af69c043f68b19aa000980e56377fddb600', c.tree)
@@ -146,6 +148,7 @@ class GitHubTest(unittest.TestCase):
         self.assertTrue('GitHubTest' in c.modified[1].diff)
 
     def testCommitWithMerge(self):
+        """Testing a commit with a merge."""
         c= self.__loadCommit('commit-merge.xml')
         self.assertEquals('c80c0d9557bc88ec236e7de9854f738c1d6c03b9', c.id)
         self.assertEquals('27d3edfc5f719e1f59871b420a5a4af6616ddca0', c.tree)

@@ -20,6 +20,10 @@ class GitHubTest(unittest.TestCase):
         return self.__gh('http://github.com/api/v1/xml/dustin',
             'data/user.xml').user('dustin')
 
+    def __loadSearch(self):
+        return self.__gh('http://github.com/api/v1/xml/search/merb+stuff',
+            'data/search.xml').search('merb stuff')
+
     def __loadCommits(self):
         return self.__gh(
             'http://github.com/api/v1/xml/caged/gitnub/commits/master',
@@ -63,6 +67,41 @@ class GitHubTest(unittest.TestCase):
         """Test the forks element in the user response."""
         u=self.__loadUser()
         self.assertEquals(3, u.repos['java-memcached-client'].forks)
+
+    def testSearchLen(self):
+        """Test search results len"""
+        res=self.__loadSearch()
+        self.assertEquals(30, len(res))
+
+    def testSearchSplicing(self):
+        """Test search results splicing operator"""
+        res=self.__loadSearch()
+        self.assertEquals(3, len(res[:3]))
+        self.assertEquals(3, len(res[3:6]))
+
+        self.assertEquals('merb-installer', res[-2:][0].name)
+
+    def testSearchIteration(self):
+        """Test search results iteration"""
+        res=self.__loadSearch()
+        c=0
+        for r in res:
+            c += 1
+            self.assertTrue(isinstance(r.forks, int))
+        self.assertEquals(30, c)
+
+    def testSearchGetItem(self):
+        """Test search results get item"""
+        res=self.__loadSearch()
+
+        self.assertEquals('merb-simple-model', res[1].name)
+        self.assertEquals('merb_active_admin', res[-3].name)
+
+    def testSearchRepr(self):
+        """Test search results repr"""
+        res=self.__loadSearch()
+
+        self.assertEquals('<<SearchResults with 30 repos>>', `res`)
 
     def testCommitsBase(self):
         commits=self.__loadCommits()

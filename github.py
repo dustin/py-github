@@ -72,6 +72,29 @@ class Person(object):
     def __repr__(self):
         return "<<Person %s <%s>>>" % (self.name, self.email)
 
+class SearchResults(object):
+    """Search results."""
+
+    def __init__(self, el):
+        ch=el.firstChild
+        self.repos=[Repository(el)
+            for el in el.getElementsByTagName('repository')]
+
+    def __iter__(self):
+        return iter(self.repos)
+
+    def __getitem__(self, which):
+        return self.repos[which]
+
+    def __getslice__(self, i, j):
+        return self.repos[i:j]
+
+    def __len__(self):
+        return len(self.repos)
+
+    def __repr__(self):
+        return "<<SearchResults with %d repos>>" % len(self.repos)
+
 class User(Person):
     """A github user."""
 
@@ -144,6 +167,13 @@ class GitHub(object):
         x=self.fetcher("http://github.com/api/v1/xml/%s" % username).read()
         doc=xml.dom.minidom.parseString(x)
         return User(doc)
+
+    def search(self, keywords):
+        """Search for repositories."""
+        x=self.fetcher("http://github.com/api/v1/xml/search/%s"
+            % keywords.replace(' ', '+')).read()
+        doc=xml.dom.minidom.parseString(x)
+        return SearchResults(doc)
 
     def commits(self, username, repo, branch):
         """Get the recent commits for the given repo."""

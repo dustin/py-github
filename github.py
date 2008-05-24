@@ -175,7 +175,7 @@ class GitHub(object):
         doc=xml.dom.minidom.parseString(x)
         return SearchResults(doc)
 
-    def commits(self, username, repo, branch):
+    def commits(self, username, repo, branch='master'):
         """Get the recent commits for the given repo."""
         x=self.fetcher("http://github.com/api/v1/xml/%s/%s/commits/%s"
             % (username, repo, branch)).read()

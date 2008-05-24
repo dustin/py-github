@@ -104,7 +104,7 @@ class GitHubTest(unittest.TestCase):
         self.assertEquals('<<SearchResults with 30 repos>>', `res`)
 
     def testCommitsBase(self):
-        """Basic test of a commit"""
+        """Test getting commits."""
         commits=self.__loadCommits()
         self.assertEquals(30, len(commits))
         c=commits[0]

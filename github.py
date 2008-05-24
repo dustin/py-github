@@ -2,6 +2,15 @@
 """
 Interface to github's API.
 
+Basic usage:
+
+g = GitHub()
+
+for r in g.search('memcache'):
+    print r.name
+
+See the GitHub docs or README.markdown for more usage.
+
 Copyright (c) 2007  Dustin Sallings <dustin@spy.net>
 """
 

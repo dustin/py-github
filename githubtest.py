@@ -38,12 +38,12 @@ class GitHubTest(unittest.TestCase):
         self.assertEquals("dustin", u.login)
         self.assertEquals("dustin@spy.net", u.email)
         self.assertEquals("Santa Clara, CA", u.location)
-        self.assertEquals("<<User dustin with 19 repos>>", repr(u))
+        self.assertEquals("<<User dustin with 34 repos>>", repr(u))
 
     def testUserRepos(self):
         """Test the repositories within the user object."""
         u=self.__loadUser()
-        self.assertEquals(19, len(u.repos))
+        self.assertEquals(34, len(u.repos))
         self.assertEquals('buildwatch', u.repos['buildwatch'].name)
         self.assertEquals('http://github.com/dustin/buildwatch',
             u.repos['buildwatch'].url)
@@ -53,6 +53,16 @@ class GitHubTest(unittest.TestCase):
             u.repos['buildwatch'].homepage)
         self.assertEquals("<<Repository buildwatch>>",
             repr(u.repos['buildwatch']))
+
+    def testUserWatchers(self):
+        """Test the watchers element in the user response."""
+        u=self.__loadUser()
+        self.assertEquals(10, u.repos['java-memcached-client'].watchers)
+
+    def testUserForks(self):
+        """Test the forks element in the user response."""
+        u=self.__loadUser()
+        self.assertEquals(3, u.repos['java-memcached-client'].forks)
 
     def testCommitsBase(self):
         commits=self.__loadCommits()

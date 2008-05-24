@@ -44,7 +44,13 @@ class Repository(object):
         ch=el.firstChild
         while ch:
             if ch.nodeType != xml.dom.Node.TEXT_NODE and ch.firstChild:
-                self.__dict__[ch.localName] = ch.firstChild.data
+                type = 'string'
+                if ch.attributes.has_key('type'):
+                    type = ch.attributes['type'].value
+                if type == 'integer':
+                    self.__dict__[ch.localName] = int(ch.firstChild.data)
+                else:
+                    self.__dict__[ch.localName] = ch.firstChild.data
             ch=ch.nextSibling
 
     def __repr__(self):

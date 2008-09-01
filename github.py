@@ -1,20 +1,6 @@
 #!/usr/bin/env python
-"""
-Interface to github's API.
-
-Basic usage:
-
-g = GitHub()
-
-for r in g.search('memcache'):
-    print r.name
-
-See the GitHub docs or README.markdown for more usage.
-
-Copyright (c) 2007  Dustin Sallings <dustin@spy.net>
-"""
-
-# Copyright (c) 2005  Dustin Sallings <dustin@spy.net>
+#
+# Copyright (c) 2005-2008  Dustin Sallings <dustin@spy.net>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +21,20 @@ Copyright (c) 2007  Dustin Sallings <dustin@spy.net>
 # SOFTWARE.
 #
 # <http://www.opensource.org/licenses/mit-license.php>
+"""
+Interface to github's API.
+
+Basic usage:
+
+g = GitHub()
+
+for r in g.search('memcache'):
+    print r.name
+
+See the GitHub docs or README.markdown for more usage.
+
+Copyright (c) 2007  Dustin Sallings <dustin@spy.net>
+"""
 
 # GAE friendly URL detection (theoretically)
 try:

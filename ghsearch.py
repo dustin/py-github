@@ -4,10 +4,12 @@ import sys
 
 import github
 
+
 def usage():
     """display the usage and exit"""
     print "Usage:  %s keyword [keyword...]" % (sys.argv[0])
     sys.exit(1)
+
 
 if __name__ == '__main__':
     g = github.GitHub()

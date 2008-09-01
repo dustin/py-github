@@ -15,17 +15,17 @@ Copyright (c) 2007  Dustin Sallings <dustin@spy.net>
 """
 
 # Copyright (c) 2005  Dustin Sallings <dustin@spy.net>
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,22 +39,23 @@ Copyright (c) 2007  Dustin Sallings <dustin@spy.net>
 # GAE friendly URL detection (theoretically)
 try:
     import urllib2
-    default_fetcher=urllib2.urlopen
+    default_fetcher = urllib2.urlopen
 except LoadError:
     pass
 
 import xml
 import xml.dom.minidom
 
+
 class Repository(object):
     """A github repository."""
 
     def __init__(self, el):
-        ch=el.firstChild
+        ch = el.firstChild
         while ch:
             if ch.nodeType != xml.dom.Node.TEXT_NODE and ch.firstChild:
                 type = 'string'
-                if ch.attributes.has_key('type'):
+                if 'type' in ch.attributes.keys():
                     type = ch.attributes['type'].value
                 if type == 'integer':
                     self.__dict__[ch.localName] = int(ch.firstChild.data)
@@ -65,28 +66,30 @@ class Repository(object):
     def __repr__(self):
         return "<<Repository %s>>" % self.name
 
+
 class Person(object):
     """A person."""
 
     def __init__(self, el):
-        ch=el.firstChild
+        ch = el.firstChild
         while ch:
             if ch.nodeType != xml.dom.Node.TEXT_NODE:
                 if ch.localName != 'repositories':
                     self.__dict__[ch.localName] = ch.firstChild.data
-            ch=ch.nextSibling
-        repos=[Repository(el) for el in el.getElementsByTagName('repository')]
-        self.repos=dict([(r.name, r) for r in repos])
+            ch = ch.nextSibling
+        rps = [Repository(el) for el in el.getElementsByTagName('repository')]
+        self.repos = dict([(r.name, r) for r in rps])
 
     def __repr__(self):
         return "<<Person %s <%s>>>" % (self.name, self.email)
+
 
 class SearchResults(object):
     """Search results."""
 
     def __init__(self, el):
-        ch=el.firstChild
-        self.repos=[Repository(el)
+        ch = el.firstChild
+        self.repos = [Repository(el)
             for el in el.getElementsByTagName('repository')]
 
     def __iter__(self):
@@ -104,6 +107,7 @@ class SearchResults(object):
     def __repr__(self):
         return "<<SearchResults with %d repos>>" % len(self.repos)
 
+
 class User(Person):
     """A github user."""
 
@@ -112,6 +116,7 @@ class User(Person):
 
     def __repr__(self):
         return "<<User %s with %d repos>>" % (self.login, len(self.repos))
+
 
 class FileModification(object):
     """Object representing a specific file modification."""
@@ -123,14 +128,15 @@ class FileModification(object):
     def __repr__(self):
         return "<<FileModification: %s>>" % self.filename
 
+
 class Commit(object):
     """A single commit."""
 
     def __init__(self, el):
-        ch=el.firstChild
-        self.removed=[]
-        self.added=[]
-        self.modified=[]
+        ch = el.firstChild
+        self.removed = []
+        self.added = []
+        self.modified = []
         while ch:
             if ch.nodeType != xml.dom.Node.TEXT_NODE:
                 if ch.localName == 'parents':
@@ -165,42 +171,43 @@ class Commit(object):
     def __repr__(self):
         return "<<Commit %s>>" % self.id
 
+
 class GitHub(object):
     """Interface to github."""
 
     def __init__(self, fetcher=default_fetcher):
-        self.fetcher=fetcher
+        self.fetcher = fetcher
 
     def user(self, username):
         """Get the info for a user."""
-        x=self.fetcher("http://github.com/api/v1/xml/%s" % username).read()
-        doc=xml.dom.minidom.parseString(x)
+        x = self.fetcher("http://github.com/api/v1/xml/%s" % username).read()
+        doc = xml.dom.minidom.parseString(x)
         return User(doc)
 
     def search(self, search_string):
         """Search for repositories."""
-        x=self.fetcher("http://github.com/api/v1/xml/search/%s"
+        x = self.fetcher("http://github.com/api/v1/xml/search/%s"
             % search_string.replace(' ', '+')).read()
-        doc=xml.dom.minidom.parseString(x)
+        doc = xml.dom.minidom.parseString(x)
         return SearchResults(doc)
 
     def commits(self, username, repo, branch='master'):
         """Get the recent commits for the given repo."""
-        x=self.fetcher("http://github.com/api/v1/xml/%s/%s/commits/%s"
+        x = self.fetcher("http://github.com/api/v1/xml/%s/%s/commits/%s"
             % (username, repo, branch)).read()
-        doc=xml.dom.minidom.parseString(x)
+        doc = xml.dom.minidom.parseString(x)
         return [Commit(el) for el in doc.getElementsByTagName('commit')]
 
     def commit(self, username, repo, commit):
         """Get a specific commit from the given repo."""
-        x=self.fetcher("http://github.com/api/v1/xml/%s/%s/commit/%s"
+        x = self.fetcher("http://github.com/api/v1/xml/%s/%s/commit/%s"
             % (username, repo, commit)).read()
-        doc=xml.dom.minidom.parseString(x)
+        doc = xml.dom.minidom.parseString(x)
         return Commit(doc.getElementsByTagName('commit')[0])
 
 if __name__ == '__main__':
     import sys
-    gh=GitHub()
+    gh = GitHub()
     if len(sys.argv) == 2:
         u = gh.user(sys.argv[1])
         print "User:  %s (%s)" % (u.login, u.name)

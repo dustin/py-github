@@ -8,9 +8,11 @@ import unittest
 
 import github
 
+
 class GitHubTest(unittest.TestCase):
 
     def __gh(self, expUrl, filename):
+
         def opener(url):
             self.assertEquals(expUrl, url)
             return open(filename)
@@ -30,14 +32,14 @@ class GitHubTest(unittest.TestCase):
             'data/commits.xml').commits('caged', 'gitnub', 'master')
 
     def __loadCommit(self, which):
-        id='00000010000101'
+        id = '00000010000101'
         return self.__gh(
             'http://github.com/api/v1/xml/dustin/py-github/commit/%s' % id,
             'data/' + which).commit('dustin', 'py-github', id)
 
     def testUserBase(self):
         """Test the base properties of the user object."""
-        u=self.__loadUser()
+        u = self.__loadUser()
         self.assertEquals("Dustin Sallings", u.name)
         self.assertEquals("dustin", u.login)
         self.assertEquals("dustin@spy.net", u.email)
@@ -46,7 +48,7 @@ class GitHubTest(unittest.TestCase):
 
     def testUserRepos(self):
         """Test the repositories within the user object."""
-        u=self.__loadUser()
+        u = self.__loadUser()
         self.assertEquals(34, len(u.repos))
         self.assertEquals('buildwatch', u.repos['buildwatch'].name)
         self.assertEquals('http://github.com/dustin/buildwatch',
@@ -60,22 +62,22 @@ class GitHubTest(unittest.TestCase):
 
     def testUserWatchers(self):
         """Test the watchers element in the user response."""
-        u=self.__loadUser()
+        u = self.__loadUser()
         self.assertEquals(10, u.repos['java-memcached-client'].watchers)
 
     def testUserForks(self):
         """Test the forks element in the user response."""
-        u=self.__loadUser()
+        u = self.__loadUser()
         self.assertEquals(3, u.repos['java-memcached-client'].forks)
 
     def testSearchLen(self):
         """Test search results len"""
-        res=self.__loadSearch()
+        res = self.__loadSearch()
         self.assertEquals(30, len(res))
 
     def testSearchSplicing(self):
         """Test search results splicing operator"""
-        res=self.__loadSearch()
+        res = self.__loadSearch()
         self.assertEquals(3, len(res[:3]))
         self.assertEquals(3, len(res[3:6]))
 
@@ -83,8 +85,8 @@ class GitHubTest(unittest.TestCase):
 
     def testSearchIteration(self):
         """Test search results iteration"""
-        res=self.__loadSearch()
-        c=0
+        res = self.__loadSearch()
+        c = 0
         for r in res:
             c += 1
             self.assertTrue(isinstance(r.forks, int))
@@ -92,22 +94,22 @@ class GitHubTest(unittest.TestCase):
 
     def testSearchGetItem(self):
         """Test search results get item"""
-        res=self.__loadSearch()
+        res = self.__loadSearch()
 
         self.assertEquals('merb-simple-model', res[1].name)
         self.assertEquals('merb_active_admin', res[-3].name)
 
     def testSearchRepr(self):
         """Test search results repr"""
-        res=self.__loadSearch()
+        res = self.__loadSearch()
 
         self.assertEquals('<<SearchResults with 30 repos>>', `res`)
 
     def testCommitsBase(self):
         """Test getting commits."""
-        commits=self.__loadCommits()
+        commits = self.__loadCommits()
         self.assertEquals(30, len(commits))
-        c=commits[0]
+        c = commits[0]
         self.assertEquals('da603ec86b62418e2ad433bb848ae6073cef7137', c.id)
         self.assertEquals("Consider .xib files binary.", c.message)
         self.assertEquals(
@@ -124,7 +126,7 @@ class GitHubTest(unittest.TestCase):
 
     def testCommitWithAdd(self):
         """Testing a commit with some adds."""
-        c= self.__loadCommit('commit-with-add.xml')
+        c = self.__loadCommit('commit-with-add.xml')
         self.assertEquals('33464f2c56ed5fd64319d8dcc52fdfdb5db9d8ae', c.id)
         self.assertEquals('b73e9af69c043f68b19aa000980e56377fddb600', c.tree)
         self.assertEquals('2008-04-11T21:43:32-07:00', c.committedDate)
@@ -133,8 +135,8 @@ class GitHubTest(unittest.TestCase):
             c.message)
         self.assertEquals(['f54d6071a0dafadd3ce50dd0b01b3ca3b69818c7'],
             c.parents)
-        self.assertEquals('http://github.com/dustin/py-github/commit/%s' % c.id,
-            c.url)
+        self.assertEquals('http://github.com/dustin/py-github/commit/%s' % (
+            c.id), c.url)
         self.assertEquals('dustin@spy.net', c.author.email)
         self.assertEquals('dustin@spy.net', c.committer.email)
         self.assertEquals('Dustin Sallings', c.author.name)
@@ -149,7 +151,7 @@ class GitHubTest(unittest.TestCase):
 
     def testCommitWithMerge(self):
         """Testing a commit with a merge."""
-        c= self.__loadCommit('commit-merge.xml')
+        c = self.__loadCommit('commit-merge.xml')
         self.assertEquals('c80c0d9557bc88ec236e7de9854f738c1d6c03b9', c.id)
         self.assertEquals('27d3edfc5f719e1f59871b420a5a4af6616ddca0', c.tree)
         self.assertEquals('2008-03-12T00:05:00-07:00', c.committedDate)
@@ -168,6 +170,7 @@ class GitHubTest(unittest.TestCase):
         self.assertEquals(['ApplicationDelegate.m',
             'English.lproj/MainMenu.xib', 'Info.plist', 'buildwatch.xml'],
             [m.filename for m in c.modified])
+
 
 if __name__ == '__main__':
     unittest.main()

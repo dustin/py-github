@@ -52,6 +52,15 @@ _types = {
     'float': lambda x: float(x.firstChild.data)
 }
 
+def _parse(el):
+    """Generic response parser."""
+
+    type = 'string'
+    if 'type' in el.attributes.keys():
+        type = el.attributes['type'].value
+
+    return _types[type](el)
+
 class BaseResponse(object):
     """Base class for XML Response Handling."""
 
@@ -59,10 +68,7 @@ class BaseResponse(object):
         ch = el.firstChild
         while ch:
             if ch.nodeType != xml.dom.Node.TEXT_NODE and ch.firstChild:
-                type = 'string'
-                if 'type' in ch.attributes.keys():
-                    type = ch.attributes['type'].value
-                self.__dict__[ch.localName] = _types[type](ch)
+                self.__dict__[ch.localName] = _parse(ch)
             ch=ch.nextSibling
 
     def __repr__(self):

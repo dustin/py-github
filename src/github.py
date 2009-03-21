@@ -101,6 +101,7 @@ class GitHub(object):
     def __init__(self, fetcher=default_fetcher):
         self.fetcher = fetcher
 
+    @property
     def users(self):
         """Get access to the user API."""
         return UserEndpoint(self.fetcher)

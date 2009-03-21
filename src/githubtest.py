@@ -41,7 +41,7 @@ class GitHubTest(unittest.TestCase):
 
     def __loadUserSearch(self):
         return self.__gh('http://github.com/api/v2/xml/user/search/dustin',
-            'data/user.search.xml').users().search('dustin')
+            'data/user.search.xml').users.search('dustin')
 
     def testUserSearch(self):
         """Test the base properties of the user object."""

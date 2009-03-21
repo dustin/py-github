@@ -46,7 +46,11 @@ except LoadError:
 import xml
 import xml.dom.minidom
 
-_types = []
+_types = {
+    'string': lambda x: x.firstChild.data,
+    'integer': lambda x: int(x.firstChild.data),
+    'float': lambda x: float(x.firstChild.data)
+}
 
 class BaseResponse(object):
     """Base class for XML Response Handling."""
@@ -58,15 +62,7 @@ class BaseResponse(object):
                 type = 'string'
                 if 'type' in ch.attributes.keys():
                     type = ch.attributes['type'].value
-                if type == 'integer':
-                    self.__dict__[ch.localName] = int(ch.firstChild.data)
-                elif type == 'string':
-                    self.__dict__[ch.localName] = ch.firstChild.data
-                elif type == 'float':
-                    self.__dict__[ch.localName] = float(ch.firstChild.data)
-                else:
-                    import sys
-                    sys.stderr.write("***Unhandled type: %s\n" % type)
+                self.__dict__[ch.localName] = _types[type](ch)
             ch=ch.nextSibling
 
     def __repr__(self):
@@ -75,8 +71,15 @@ class BaseResponse(object):
 class User(BaseResponse):
     """A github user."""
 
+    parses = 'user'
+
     def __repr__(self):
         return "<<User %s>>" % self.name
+
+# Load the known types.
+for __t in (t for t in globals().values() if isinstance(type, type(t))):
+    if hasattr(__t, 'parses'):
+        _types[__t.parses] = __t
 
 class BaseEndpoint(object):
 

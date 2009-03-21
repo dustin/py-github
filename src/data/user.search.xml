@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users type="array">
+  <user>
+    <score type="float">12.231684</score>
+    <name>dustin</name>
+    <actions type="integer">35</actions>
+    <language>Ruby</language>
+    <followers type="integer">78</followers>
+    <username>dustin</username>
+    <type>user</type>
+    <fullname>Dustin Sallings</fullname>
+    <repos type="integer">77</repos>
+    <id>user-1779</id>
+    <pushed>2009-03-19T09:15:24.663Z</pushed>
+    <created>2008-02-29T17:59:09Z</created>
+    <location>Santa Clara, CA</location>
+    <email>dustin@spy.net</email>
+  </user>
+  <user>
+    <score type="float">1.870283</score>
+    <name>djmitche</name>
+    <actions type="integer">790</actions>
+    <language>C</language>
+    <followers type="integer">4</followers>
+    <username>djmitche</username>
+    <type>user</type>
+    <fullname>Dustin J. Mitchell</fullname>
+    <repos type="integer">3</repos>
+    <id>user-28673</id>
+    <pushed>2009-02-24T23:15:22.119Z</pushed>
+    <created>2008-10-12T23:41:38Z</created>
+    <location>Annapolis, MD</location>
+    <email>dustin@zmanda.com</email>
+  </user>
+  <user>
+    <score type="float">2.2760367</score>
+    <name>dwhittle</name>
+    <actions type="integer">3708</actions>
+    <language>PHP</language>
+    <followers type="integer">4</followers>
+    <username>dwhittle</username>
+    <type>user</type>
+    <fullname>Dustin Whittle</fullname>
+    <repos type="integer">2</repos>
+    <id>user-12161</id>
+    <pushed>2009-03-15T23:15:16.238Z</pushed>
+    <created>2008-06-01T04:36:45Z</created>
+    <location>San Francisco, California, USA</location>
+    <email>dustin.whittle@gmail.com</email>
+  </user>
+  <user>
+    <score type="float">3.4932976</score>
+    <name>mephux</name>
+    <actions type="integer">35</actions>
+    <language>Ruby</language>
+    <followers type="integer">2</followers>
+    <username>mephux</username>
+    <type>user</type>
+    <fullname>Dustin</fullname>
+    <repos type="integer">1</repos>
+    <id>user-22273</id>
+    <pushed>2009-03-20T12:15:22.4Z</pushed>
+    <created>2008-08-27T23:35:06Z</created>
+    <location>Kansas</location>
+    <email>dustin.webber@gmail.com</email>
+  </user>
+  <user>
+    <score type="float">2.2760367</score>
+    <name>griptech</name>
+    <actions type="integer">991</actions>
+    <language/>
+    <followers type="integer">1</followers>
+    <username>griptech</username>
+    <type>user</type>
+    <fullname>Dustin Leggans</fullname>
+    <repos type="integer">0</repos>
+    <id>user-8413</id>
+    <pushed>2009-03-08T10:15:24.947Z</pushed>
+    <created>2008-04-24T21:33:27Z</created>
+    <location>Columbus, OH</location>
+    <email>dll@griptechnology.com</email>
+  </user>
+  <user>
+    <score type="float">2.2760367</score>
+    <name>dcdustin</name>
+    <actions type="integer">1</actions>
+    <language>JavaScript</language>
+    <followers type="integer">0</followers>
+    <username>dcdustin</username>
+    <type>user</type>
+    <fullname>Dustin Hansen</fullname>
+    <repos type="integer">2</repos>
+    <id>user-49771</id>
+    <pushed>2009-01-31T01:05:29.731Z</pushed>
+    <created>2009-01-27T21:52:14Z</created>
+    <location>Idaho, USA</location>
+    <email>dustin.email@gmail.com</email>
+  </user>
+  <user>
+    <score type="float">3.4932976</score>
+    <name>mierau</name>
+    <actions type="integer">1</actions>
+    <language/>
+    <followers type="integer">0</followers>
+    <username>mierau</username>
+    <type>user</type>
+    <fullname>Dustin</fullname>
+    <repos type="integer">0</repos>
+    <id>user-55453</id>
+    <pushed>2009-02-20T21:15:45.303Z</pushed>
+    <created>2009-02-18T04:00:10Z</created>
+    <location/>
+    <email>dustin@path.io</email>
+  </user>
+  <user>
+    <score type="float">2.2760367</score>
+    <name>fadeddata</name>
+    <actions type="integer">3</actions>
+    <language>JavaScript</language>
+    <followers type="integer">0</followers>
+    <username>fadeddata</username>
+    <type>user</type>
+    <fullname>Dustin Withers</fullname>
+    <repos type="integer">1</repos>
+    <id>user-25651</id>
+    <pushed>2009-02-21T05:15:31.499Z</pushed>
+    <created>2008-09-21T22:33:00Z</created>
+    <location>Nashville, TN</location>
+    <email>colorful.bottle@gmail.com</email>
+  </user>
+  <user>
+    <score type="float">12.231684</score>
+    <name>dustins</name>
+    <actions type="integer">1354</actions>
+    <language/>
+    <followers type="integer">0</followers>
+    <username>dustins</username>
+    <type>user</type>
+    <fullname>Dustin Sweigart</fullname>
+    <repos type="integer">1</repos>
+    <id>user-14645</id>
+    <pushed>2009-02-21T18:15:24.347Z</pushed>
+    <created>2008-06-23T02:15:13Z</created>
+    <location/>
+    <email>ast3r3x@gmail.com</email>
+  </user>
+  <user>
+    <score type="float">2.2760367</score>
+    <name>dustinlucien</name>
+    <actions type="integer">1</actions>
+    <language/>
+    <followers type="integer">0</followers>
+    <username>dustinlucien</username>
+    <type>user</type>
+    <fullname>Dustin Lucien</fullname>
+    <repos type="integer">0</repos>
+    <id>user-48741</id>
+    <pushed>2009-02-23T10:15:22.788Z</pushed>
+    <created>2009-01-23T12:53:02Z</created>
+    <location>brooklyn, ny</location>
+    <email>dustin.lucien@gmail.com</email>
+  </user>
+  <user>
+    <score type="float">2.2760367</score>
+    <name>mannkind</name>
+    <actions type="integer">172</actions>
+    <language>JavaScript</language>
+    <followers type="integer">0</followers>
+    <username>mannkind</username>
+    <type>user</type>
+    <fullname>Dustin Brewer</fullname>
+    <repos type="integer">3</repos>
+    <id>user-41883</id>
+    <pushed>2009-03-01T20:15:15.996Z</pushed>
+    <created>2008-12-21T02:56:18Z</created>
+    <location>Washington</location>
+    <email>mannkind@gmail.com</email>
+  </user>
+  <user>
+    <score type="float">2.2760367</score>
+    <name>dbarker</name>
+    <actions type="integer">13</actions>
+    <language>Ruby</language>
+    <followers type="integer">0</followers>
+    <username>dbarker</username>
+    <type>user</type>
+    <fullname>Dustin Barker</fullname>
+    <repos type="integer">1</repos>
+    <id>user-32656</id>
+    <pushed>2009-03-06T04:15:24.301Z</pushed>
+    <created>2008-11-04T18:54:59Z</created>
+    <location>Brooklyn, NY</location>
+    <email>dustin.barker@gmail.com</email>
+  </user>
+</users>

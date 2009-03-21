@@ -39,160 +39,27 @@ class GitHubTest(unittest.TestCase):
             return open(filename)
         return github.GitHub(opener)
 
-    def __loadUser(self):
-        return self.__gh('http://github.com/api/v1/xml/dustin',
-            'data/user.xml').user('dustin')
+    def __loadUserSearch(self):
+        return self.__gh('http://github.com/api/v2/xml/user/search/dustin',
+            'data/user.search.xml').users().search('dustin')
 
-    def __loadSearch(self):
-        return self.__gh('http://github.com/api/v1/xml/search/merb+stuff',
-            'data/search.xml').search('merb stuff')
-
-    def __loadCommits(self):
-        return self.__gh(
-            'http://github.com/api/v1/xml/caged/gitnub/commits/master',
-            'data/commits.xml').commits('caged', 'gitnub', 'master')
-
-    def __loadCommit(self, which):
-        id = '00000010000101'
-        return self.__gh(
-            'http://github.com/api/v1/xml/dustin/py-github/commit/%s' % id,
-            'data/' + which).commit('dustin', 'py-github', id)
-
-    def testUserBase(self):
+    def testUserSearch(self):
         """Test the base properties of the user object."""
-        u = self.__loadUser()
-        self.assertEquals("Dustin Sallings", u.name)
-        self.assertEquals("dustin", u.login)
+        u = self.__loadUserSearch()[0]
+        self.assertEquals("Dustin Sallings", u.fullname)
+        self.assertEquals("dustin", u.name)
         self.assertEquals("dustin@spy.net", u.email)
         self.assertEquals("Santa Clara, CA", u.location)
-        self.assertEquals("<<User dustin with 34 repos>>", repr(u))
-
-    def testUserRepos(self):
-        """Test the repositories within the user object."""
-        u = self.__loadUser()
-        self.assertEquals(34, len(u.repos))
-        self.assertEquals('buildwatch', u.repos['buildwatch'].name)
-        self.assertEquals('http://github.com/dustin/buildwatch',
-            u.repos['buildwatch'].url)
-        self.assertEquals('A buildbot GUI for OS X',
-            u.repos['buildwatch'].description)
-        self.assertEquals('http://code.google.com/p/buildwatch/',
-            u.repos['buildwatch'].homepage)
-        self.assertEquals("<<Repository buildwatch>>",
-            repr(u.repos['buildwatch']))
-
-    def testUserWatchers(self):
-        """Test the watchers element in the user response."""
-        u = self.__loadUser()
-        self.assertEquals(10, u.repos['java-memcached-client'].watchers)
-
-    def testUserForks(self):
-        """Test the forks element in the user response."""
-        u = self.__loadUser()
-        self.assertEquals(3, u.repos['java-memcached-client'].forks)
-
-    def testSearchLen(self):
-        """Test search results len"""
-        res = self.__loadSearch()
-        self.assertEquals(30, len(res))
-
-    def testSearchSplicing(self):
-        """Test search results splicing operator"""
-        res = self.__loadSearch()
-        self.assertEquals(3, len(res[:3]))
-        self.assertEquals(3, len(res[3:6]))
-
-        self.assertEquals('merb-installer', res[-2:][0].name)
-
-    def testSearchIteration(self):
-        """Test search results iteration"""
-        res = self.__loadSearch()
-        c = 0
-        for r in res:
-            c += 1
-            self.assertTrue(isinstance(r.forks, int))
-        self.assertEquals(30, c)
-
-    def testSearchGetItem(self):
-        """Test search results get item"""
-        res = self.__loadSearch()
-
-        self.assertEquals('merb-simple-model', res[1].name)
-        self.assertEquals('merb_active_admin', res[-3].name)
-
-    def testSearchRepr(self):
-        """Test search results repr"""
-        res = self.__loadSearch()
-
-        self.assertEquals('<<SearchResults with 30 repos>>', `res`)
-
-    def testCommitsBase(self):
-        """Test getting commits."""
-        commits = self.__loadCommits()
-        self.assertEquals(30, len(commits))
-        c = commits[0]
-        self.assertEquals('da603ec86b62418e2ad433bb848ae6073cef7137', c.id)
-        self.assertEquals("Consider .xib files binary.", c.message)
-        self.assertEquals(
-            "http://github.com/dustin/buildwatch/commit/%s" % c.id, c.url)
-        self.assertEquals("2008-03-12T15:44:56-07:00", c.committedDate)
-        self.assertEquals("2008-03-12T15:44:56-07:00", c.authoredDate)
-        self.assertEquals("3c40e4178cedbc98214eb9a2b987b2d26a60d09c", c.tree)
-        self.assertEquals(['c80c0d9557bc88ec236e7de9854f738c1d6c03b9'],
-            c.parents)
-        self.assertEquals('Dustin Sallings', c.author.name)
-        self.assertEquals('Dustin Sallings', c.committer.name)
-        self.assertEquals('dustin@spy.net', c.author.email)
-        self.assertEquals('dustin@spy.net', c.committer.email)
-
-    def testCommitWithAdd(self):
-        """Testing a commit with some adds."""
-        c = self.__loadCommit('commit-with-add.xml')
-        self.assertEquals('33464f2c56ed5fd64319d8dcc52fdfdb5db9d8ae', c.id)
-        self.assertEquals('b73e9af69c043f68b19aa000980e56377fddb600', c.tree)
-        self.assertEquals('2008-04-11T21:43:32-07:00', c.committedDate)
-        self.assertEquals('2008-04-11T21:43:32-07:00', c.authoredDate)
-        self.assertEquals('Added support for listing recent commits.',
-            c.message)
-        self.assertEquals(['f54d6071a0dafadd3ce50dd0b01b3ca3b69818c7'],
-            c.parents)
-        self.assertEquals('http://github.com/dustin/py-github/commit/%s' % (
-            c.id), c.url)
-        self.assertEquals('dustin@spy.net', c.author.email)
-        self.assertEquals('dustin@spy.net', c.committer.email)
-        self.assertEquals('Dustin Sallings', c.author.name)
-        self.assertEquals('Dustin Sallings', c.committer.name)
-        self.assertEquals(0, len(c.removed))
-        self.assertEquals(['data/commits.xml'], c.added)
-        self.assertEquals(['github.py', 'githubtest.py'],
-            [m.filename for m in c.modified])
-
-        self.assertTrue('Repository' in c.modified[0].diff)
-        self.assertTrue('GitHubTest' in c.modified[1].diff)
-
-    def testCommitWithMerge(self):
-        """Testing a commit with a merge."""
-        c = self.__loadCommit('commit-merge.xml')
-        self.assertEquals('c80c0d9557bc88ec236e7de9854f738c1d6c03b9', c.id)
-        self.assertEquals('27d3edfc5f719e1f59871b420a5a4af6616ddca0', c.tree)
-        self.assertEquals('2008-03-12T00:05:00-07:00', c.committedDate)
-        self.assertEquals('2008-03-12T00:05:00-07:00', c.authoredDate)
-        self.assertEquals("Merge branch 'torelease'", c.message)
-        self.assertEquals(['c47c0aaa9579fd27d185366ac189cacaa0d9f066',
-            '40133467bedae260f9322325ee93ca27fd4fac6c'], c.parents)
-        self.assertEquals('http://github.com/dustin/buildwatch/commit/%s'
-            % c.id, c.url)
-        self.assertEquals('dustin@spy.net', c.author.email)
-        self.assertEquals('dustin@spy.net', c.committer.email)
-        self.assertEquals('Dustin Sallings', c.author.name)
-        self.assertEquals('Dustin Sallings', c.committer.name)
-        self.assertEquals(0, len(c.removed))
-        self.assertEquals(0, len(c.added))
-        self.assertEquals(['ApplicationDelegate.m',
-            'English.lproj/MainMenu.xib', 'Info.plist', 'buildwatch.xml'],
-            [m.filename for m in c.modified])
-
+        self.assertEquals("Ruby", u.language)
+        self.assertEquals(35, u.actions)
+        self.assertEquals(77, u.repos)
+        self.assertEquals(78, u.followers)
+        self.assertEquals('user-1779', u.id)
+        self.assertAlmostEquals(12.231684, u.score)
+        self.assertEquals('user', u.type)
+        self.assertEquals('2008-02-29T17:59:09Z', u.created)
+        self.assertEquals('2009-03-19T09:15:24.663Z', u.pushed)
+        self.assertEquals("<<User dustin>>", repr(u))
 
 if __name__ == '__main__':
     unittest.main()
-    # gh=github.GitHub(hack)

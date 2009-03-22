@@ -29,7 +29,6 @@ import unittest
 
 import github
 
-
 class GitHubTest(unittest.TestCase):
 
     def __gh(self, expUrl, filename):

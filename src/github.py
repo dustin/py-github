@@ -56,10 +56,32 @@ def _parse(el):
     """Generic response parser."""
 
     type = 'string'
-    if 'type' in el.attributes.keys():
+    if el.attributes and 'type' in el.attributes.keys():
         type = el.attributes['type'].value
+    elif len(el.childNodes) > 1:
+        # This is a container, find the child type
+        type = None
+        ch = el.firstChild
+        while ch and not type:
+            if ch.localName == 'type':
+                type = ch.firstChild.data
+            ch = ch.nextSibling
+
+    if not type:
+        raise Exception("Can't parse %s" % el.toxml())
 
     return _types[type](el)
+
+def _parseArray(el):
+    rv = []
+    ch = el.firstChild
+    while ch:
+        if ch.nodeType != xml.dom.Node.TEXT_NODE and ch.firstChild:
+            rv.append(_parse(ch))
+        ch=ch.nextSibling
+    return rv
+
+_types['array'] = _parseArray
 
 class BaseResponse(object):
     """Base class for XML Response Handling."""
@@ -101,8 +123,7 @@ class UserEndpoint(BaseEndpoint):
     def search(self, query):
         print "Searching for", query
         doc = self._fetch('user/search/' + query)
-        users = doc.getElementsByTagName('user')
-        return [User(u) for u in users]
+        return _parse(doc.documentElement)
 
 class GitHub(object):
     """Interface to github."""

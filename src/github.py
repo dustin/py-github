@@ -105,9 +105,8 @@ class User(BaseResponse):
         return "<<User %s>>" % self.name
 
 # Load the known types.
-for __t in (t for t in globals().values() if isinstance(type, type(t))):
-    if hasattr(__t, 'parses'):
-        _types[__t.parses] = __t
+for __t in (t for t in globals().values() if hasattr(t, 'parses')):
+    _types[__t.parses] = __t
 
 class BaseEndpoint(object):
 

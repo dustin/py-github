@@ -72,6 +72,14 @@ def _parse(el):
 
     return _types[type](el)
 
+def parses(t):
+    """Parser for a specific type in the github response."""
+    def f(orig):
+        orig.parses = t
+        return orig
+    return f
+
+@parses('array')
 def _parseArray(el):
     rv = []
     ch = el.firstChild
@@ -80,8 +88,6 @@ def _parseArray(el):
             rv.append(_parse(ch))
         ch=ch.nextSibling
     return rv
-
-_types['array'] = _parseArray
 
 class BaseResponse(object):
     """Base class for XML Response Handling."""

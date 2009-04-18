@@ -85,6 +85,24 @@ def parses(t):
         return orig
     return f
 
+def with_temporary_mappings(m):
+    """Allow temporary localized altering of type mappings."""
+    def f(orig):
+        def every(self, *args):
+            global _types
+            o = _types.copy()
+            for k,v in m.items():
+                if v:
+                    _types[k] = v
+                else:
+                    del _types[k]
+            try:
+                return orig(self, *args)
+            finally:
+                _types = o
+        return every
+    return f
+
 @parses('array')
 def _parseArray(el):
     rv = []
@@ -251,28 +269,18 @@ class CommitEndpoint(BaseEndpoint):
 
 class IssuesEndpoint(BaseEndpoint):
 
+    @with_temporary_mappings({'user': None})
     def list(self, user, repo, state='open'):
         """Get the list of issues for the given repo in the given state."""
-        # This has a user field that looks a lot like the user type, but isn't.
-        olduser = _types['user']
-        del _types['user']
-        try:
-            return self._parsed('/'.join(['issues', 'list', user, repo, state]))
-        finally:
-            _types['user'] = olduser
+        return self._parsed('/'.join(['issues', 'list', user, repo, state]))
 
 class ObjectsEndpoint(BaseEndpoint):
 
+    @with_temporary_mappings({'tree': Tree, 'type': lambda x: x.firstChild.data})
     def tree(self, user, repo, t):
         """Get the given tree from the given repo."""
-        _types['tree'] = Tree
-        _types['type'] = lambda x: x.firstChild.data
-        try:
-            tl = self._parsed('/'.join(['tree', 'show', user, repo, t]))
-            return dict([(t.name, t) for t in tl])
-        finally:
-            del _types['tree']
-            del _types['type']
+        tl = self._parsed('/'.join(['tree', 'show', user, repo, t]))
+        return dict([(t.name, t) for t in tl])
 
 class GitHub(object):
     """Interface to github."""

@@ -25,6 +25,7 @@
 Defines and runs unittests.
 """
 
+import hashlib
 import unittest
 
 import github
@@ -286,6 +287,15 @@ class ObjectTest(BaseCase):
         self.assertEquals('text/plain', blob.mime_type)
         self.assertEquals(1842, len(blob.data))
         self.assertEquals(1641, blob.data.index('Production/Stable'))
+
+    def testRawBlob(self):
+        """Test raw blob fetching."""
+        h = '6e290379ec58fa00ac9d1c2a78f0819a21397445'
+        blob = self._gh('http://github.com/api/v2/xml/blob/show/dustin/py-github/' + h,
+                        'data/setup.py').objects.raw_blob('dustin', 'py-github', h)
+        self.assertEquals('e2dc8aea9ae8961f4f5923f9febfdd0a',
+                          hashlib.md5(blob).hexdigest())
+
 
 if __name__ == '__main__':
     unittest.main()

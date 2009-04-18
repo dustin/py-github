@@ -215,8 +215,8 @@ class BaseEndpoint(object):
         self.token = token
         self.fetcher = fetcher
 
-    def _fetch(self, path):
-        p = "http://github.com/api/v2/xml/" + path
+    def _raw_fetch(self, path):
+        p = 'http://github.com/api/v2/xml/' + path
         args = ''
         if self.user and self.token:
             params = '&'.join(['login=' + urllib.quote(self.user),
@@ -225,7 +225,10 @@ class BaseEndpoint(object):
                 p += params
             else:
                 p += '?' + params
-        return xml.dom.minidom.parseString(self.fetcher(p).read())
+        return self.fetcher(p).read()
+
+    def _fetch(self, path):
+        return xml.dom.minidom.parseString(self._raw_fetch(path))
 
     def _parsed(self, path):
         doc = self._fetch(path)
@@ -292,6 +295,11 @@ class ObjectsEndpoint(BaseEndpoint):
     @with_temporary_mappings({'blob': Blob})
     def blob(self, user, repo, t, fn):
         return self._parsed('/'.join(['blob', 'show', user, repo, t, fn]))
+
+    def raw_blob(self, user, repo, sha):
+        """Get a raw blob from a repo."""
+        path = 'blob/show/%s/%s/%s' % (user, repo, sha)
+        return self._raw_fetch(path)
 
 class GitHub(object):
     """Interface to github."""

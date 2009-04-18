@@ -141,6 +141,7 @@ class RepoTest(BaseCase):
             'data/repos.xml').repos.forUser('verbal')
 
     def testUserRepoList(self):
+        """Get a list of repos for a user."""
         rs = self.__loadUserRepos()
         self.assertEquals(10, len(rs))
         r = rs[0]

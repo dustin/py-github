@@ -156,22 +156,23 @@ class BaseEndpoint(object):
                 p += '?' + params
         return xml.dom.minidom.parseString(self.fetcher(p).read())
 
+    def _parsed(self, path):
+        doc = self._fetch(path)
+        return _parse(doc.documentElement)
+
 class UserEndpoint(BaseEndpoint):
 
     def search(self, query):
-        doc = self._fetch('user/search/' + query)
-        return _parse(doc.documentElement)
+        return self._parsed('user/search/' + query)
 
     def show(self, username):
-        doc = self._fetch('user/show/' + username)
-        return _parse(doc.documentElement)
+        return self._parsed('user/show/' + username)
 
 class RepositoryEndpoint(BaseEndpoint):
 
     def forUser(self, username):
         """Get the repositories for the given user."""
-        doc = self._fetch('repos/show/' + username)
-        return _parse(doc.documentElement)
+        return self._parsed('repos/show/' + username)
 
 class GitHub(object):
     """Interface to github."""

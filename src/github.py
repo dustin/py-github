@@ -51,7 +51,8 @@ _types = {
     'string': lambda x: x.firstChild.data,
     'integer': lambda x: int(x.firstChild.data),
     'float': lambda x: float(x.firstChild.data),
-    'datetime': lambda x: x.firstChild.data
+    'datetime': lambda x: x.firstChild.data,
+    'boolean': lambda x: x.firstChild.data == 'true'
 }
 
 def _parse(el):
@@ -124,6 +125,14 @@ class Plan(BaseResponse):
     def __repr__(self):
         return "<<Plan %s>>" % self.name
 
+class Repository(BaseResponse):
+    """A repository."""
+
+    parses = 'repository'
+
+    def __repr__(self):
+        return "<<Repository %s/%s>>" % (self.owner, self.name)
+
 # Load the known types.
 for __t in (t for t in globals().values() if hasattr(t, 'parses')):
     _types[__t.parses] = __t
@@ -157,6 +166,13 @@ class UserEndpoint(BaseEndpoint):
         doc = self._fetch('user/show/' + username)
         return _parse(doc.documentElement)
 
+class RepositoryEndpoint(BaseEndpoint):
+
+    def forUser(self, username):
+        """Get the repositories for the given user."""
+        doc = self._fetch('repos/show/' + username)
+        return _parse(doc.documentElement)
+
 class GitHub(object):
     """Interface to github."""
 
@@ -169,4 +185,9 @@ class GitHub(object):
     def users(self):
         """Get access to the user API."""
         return UserEndpoint(self.user, self.token, self.fetcher)
+
+    @property
+    def repos(self):
+        """Get access to the user API."""
+        return RepositoryEndpoint(self.user, self.token, self.fetcher)
 

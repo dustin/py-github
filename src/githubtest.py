@@ -29,34 +29,36 @@ import unittest
 
 import github
 
-class GitHubTest(unittest.TestCase):
+class BaseCase(unittest.TestCase):
 
-    def __gh(self, expUrl, filename):
+    def _gh(self, expUrl, filename):
 
         def opener(url):
             self.assertEquals(expUrl, url)
             return open(filename)
         return github.GitHub(fetcher=opener)
 
-    def __agh(self, expUrl, u, t, filename):
+    def _agh(self, expUrl, u, t, filename):
 
         def opener(url):
             self.assertEquals(expUrl, url + '?login=' + u + '&token=' + t)
             return open(filename)
         return github.GitHub(fetcher=opener)
 
+class UserTest(BaseCase):
+
     def __loadUserSearch(self):
-        return self.__gh('http://github.com/api/v2/xml/user/search/dustin',
+        return self._gh('http://github.com/api/v2/xml/user/search/dustin',
             'data/user.search.xml').users.search('dustin')
 
     def __loadUser(self, which, u=None, p=None):
         if u:
-            return self.__agh('http://github.com/api/v2/xml/user/show/dustin'
+            return self._agh('http://github.com/api/v2/xml/user/show/dustin'
                               + '?login=' + u + '&token=' + p,
                               u, p, 'data/' + which).users.show('dustin')
 
         else:
-            return self.__gh('http://github.com/api/v2/xml/user/show/dustin',
+            return self._gh('http://github.com/api/v2/xml/user/show/dustin',
                              'data/' + which).users.show('dustin')
 
     def testUserSearch(self):
@@ -120,6 +122,29 @@ class GitHubTest(unittest.TestCase):
         self.assertEquals(4, u.owned_private_repo_count)
         self.assertEquals(5, u.total_private_repo_count)
         self.assertEquals(0, u.private_gist_count)
+
+class RepoTest(BaseCase):
+
+    def __loadUserRepos(self):
+        return self._gh('http://github.com/api/v2/xml/repos/show/verbal',
+            'data/repos.xml').repos.forUser('verbal')
+
+    def testUserRepoList(self):
+        rs = self.__loadUserRepos()
+        self.assertEquals(10, len(rs))
+        r = rs[0]
+        self.assertEquals('A beanstalk client for the twisted network framework.',
+                          r.description)
+        self.assertEquals(2, r.watchers)
+        self.assertEquals(0, r.forks)
+        self.assertEquals('beanstalk-client-twisted', r.name)
+        self.assertEquals(False, r.private)
+        self.assertEquals('http://github.com/verbal/beanstalk-client-twisted',
+                          r.url)
+        self.assertEquals(True, r.fork)
+        self.assertEquals('verbal', r.owner)
+        # XXX:  Can't parse empty elements.  :(
+        # self.assertEquals('', r.homepage)
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repositories type="array">
+  <repository>
+    <description>A beanstalk client for the twisted network framework.</description>
+    <watchers type="integer">2</watchers>
+    <forks type="integer">0</forks>
+    <name>beanstalk-client-twisted</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/verbal/beanstalk-client-twisted</url>
+    <fork type="boolean">true</fork>
+    <owner>verbal</owner>
+    <homepage></homepage>
+  </repository>
+  <repository>
+    <description>apparently this exists already. its called webhooks</description>
+    <watchers type="integer">1</watchers>
+    <forks type="integer">0</forks>
+    <name>hollaback</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/verbal/hollaback</url>
+    <fork type="boolean">false</fork>
+    <owner>verbal</owner>
+    <homepage>http://webhooks.pbwiki.com/</homepage>
+  </repository>
+  <repository>
+    <description>collection of simple twitter bots</description>
+    <watchers type="integer">1</watchers>
+    <forks type="integer">0</forks>
+    <name>twitter_bots</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/verbal/twitter_bots</url>
+    <fork type="boolean">true</fork>
+    <owner>verbal</owner>
+    <homepage>http://github.com/cjmartin/twitter_bots/</homepage>
+  </repository>
+  <repository>
+    <description>OS X app that helps you focus by hiding applications you aren't paying attention to.</description>
+    <watchers type="integer">2</watchers>
+    <forks type="integer">0</forks>
+    <name>app-hider</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/verbal/app-hider</url>
+    <fork type="boolean">true</fork>
+    <owner>verbal</owner>
+    <homepage>http://bleu.west.spy.net/~dustin/projects/AppHider/</homepage>
+  </repository>
+  <repository>
+    <description>my github page</description>
+    <watchers type="integer">1</watchers>
+    <forks type="integer">0</forks>
+    <name>verbal.github.com</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/verbal/verbal.github.com</url>
+    <fork type="boolean">false</fork>
+    <owner>verbal</owner>
+    <homepage>http://verbal.github.com</homepage>
+  </repository>
+  <repository>
+    <description>A beanstalk client for OCaml.</description>
+    <watchers type="integer">1</watchers>
+    <forks type="integer">0</forks>
+    <name>beanstalk-client-ocaml</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/verbal/beanstalk-client-ocaml</url>
+    <fork type="boolean">true</fork>
+    <owner>verbal</owner>
+    <homepage></homepage>
+  </repository>
+  <repository>
+    <description>A twitter &lt;-&gt; XMPP gateway with search and track and other good stuff.</description>
+    <watchers type="integer">2</watchers>
+    <forks type="integer">0</forks>
+    <name>twitterspy</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/verbal/twitterspy</url>
+    <fork type="boolean">true</fork>
+    <owner>verbal</owner>
+    <homepage>http://dustin.github.com/whatsup/</homepage>
+  </repository>
+  <repository>
+    <description>A twisted interface to longurl.org to provide asynchronous short URL expansion to twisted apps.</description>
+    <watchers type="integer">2</watchers>
+    <forks type="integer">0</forks>
+    <name>twisted-longurl</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/verbal/twisted-longurl</url>
+    <fork type="boolean">true</fork>
+    <owner>verbal</owner>
+    <homepage></homepage>
+  </repository>
+  <repository>
+    <description>A twisted client for twitter-like APIs.</description>
+    <watchers type="integer">2</watchers>
+    <forks type="integer">0</forks>
+    <name>twitty-twister</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/verbal/twitty-twister</url>
+    <fork type="boolean">true</fork>
+    <owner>verbal</owner>
+    <homepage></homepage>
+  </repository>
+  <repository>
+    <description>A git mirror of Ralph Meijer's wokkel.</description>
+    <watchers type="integer">2</watchers>
+    <forks type="integer">0</forks>
+    <name>wokkel</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/verbal/wokkel</url>
+    <fork type="boolean">true</fork>
+    <owner>verbal</owner>
+    <homepage>http://wokkel.ik.nu/</homepage>
+  </repository>
+</repositories>

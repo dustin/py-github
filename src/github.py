@@ -228,6 +228,10 @@ class RepositoryEndpoint(BaseEndpoint):
                 rv[c.localName] = str(c.firstChild.data)
         return rv
 
+    def search(self, term):
+        """Search for repositories."""
+        return self._parsed('repos/search/' + urllib.quote_plus(term))
+
 class CommitEndpoint(BaseEndpoint):
 
     def forBranch(self, user, repo, branch='master'):

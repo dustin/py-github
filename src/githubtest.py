@@ -158,6 +158,31 @@ class RepoTest(BaseCase):
         # XXX:  Can't parse empty elements.  :(
         # self.assertEquals('', r.homepage)
 
+    def testRepoSearch(self):
+        """Test searching a repository."""
+        rl = self._gh('http://github.com/api/v2/xml/repos/search/ruby+testing',
+                      'data/repos.search.xml').repos.search('ruby testing')
+        self.assertEquals(12, len(rl))
+
+        r = rl[0]
+        self.assertEquals('synthesis', r.name)
+        self.assertAlmostEquals(0.3234576, r.score, 4)
+        self.assertEquals(4656, r.actions)
+        self.assertEquals(2048, r.size)
+        self.assertEquals('Ruby', r.language)
+        self.assertEquals(26, r.followers)
+        self.assertEquals('gmalamid', r.username)
+        self.assertEquals('repo', r.type)
+        self.assertEquals('repo-3555', r.id)
+        self.assertEquals(1, r.forks)
+        self.assertFalse(r.fork)
+        self.assertEquals('Ruby test code analysis tool employing a '
+                          '"Synthesized Testing" strategy, aimed to reduce '
+                          'the volume of slower, coupled, complex wired tests.',
+                          r.description)
+        self.assertEquals('2009-01-08T13:45:06Z', r.pushed)
+        self.assertEquals('2008-03-11T23:38:04Z', r.created)
+
     def testBranchList(self):
         """Test branch listing for a repo."""
         bl = self._gh('http://github.com/api/v2/xml/repos/show/schacon/ruby-git/branches',

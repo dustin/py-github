@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues type="array">
+  <issue>
+    <user>schacon</user>
+    <updated-at type="datetime">2009-04-17T16:19:02-07:00</updated-at>
+    <body>something</body>
+    <title>new</title>
+    <number type="integer">2</number>
+    <votes type="integer">0</votes>
+    <position type="float">1.0</position>
+    <created-at type="datetime">2009-04-17T16:18:50-07:00</created-at>
+    <state>open</state>
+  </issue>
+</issues>

@@ -209,5 +209,25 @@ class CommitTest(BaseCase):
         self.assertEquals('Tom Preston-Werner', c.committer.name)
         self.assertEquals('tom@mojombo.com', c.committer.email)
 
+class IssueTest(BaseCase):
+
+    def testListIssues(self):
+        """Test listing issues."""
+        il = self._gh('http://github.com/api/v2/xml/issues/list/schacon/simplegit/open',
+                      'data/issues.list.xml').issues.list('schacon', 'simplegit')
+        self.assertEquals(1, len(il))
+        i = il[0]
+
+        self.assertEquals('schacon', i.user)
+        self.assertEquals('2009-04-17T16:19:02-07:00', i.updated_at)
+        self.assertEquals('something', i.body)
+        self.assertEquals('new', i.title)
+        self.assertEquals(2, i.number)
+        self.assertEquals(0, i.votes)
+        self.assertEquals(1.0, i.position)
+        self.assertEquals('2009-04-17T16:18:50-07:00', i.created_at)
+        self.assertEquals('open', i.state)
+
+
 if __name__ == '__main__':
     unittest.main()

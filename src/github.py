@@ -164,6 +164,14 @@ class Committer(User):
 
     parses = 'committer'
 
+class Issue(BaseResponse):
+    """An issue within the issue tracker."""
+
+    parses = 'issue'
+
+    def __repr__(self):
+        return "<<Issue #%d>>" % self.number
+
 # Load the known types.
 for __t in (t for t in globals().values() if hasattr(t, 'parses')):
     _types[__t.parses] = __t
@@ -230,6 +238,18 @@ class CommitEndpoint(BaseEndpoint):
         """Get the commits for the given file within the given branch."""
         return self._parsed('/'.join(['commits', 'list', user, repo, branch, path]))
 
+class IssuesEndpoint(BaseEndpoint):
+
+    def list(self, user, repo, state='open'):
+        """Get the list of issues for the given repo in the given state."""
+        # This has a user field that looks a lot like the user type, but isn't.
+        olduser = _types['user']
+        del _types['user']
+        try:
+            return self._parsed('/'.join(['issues', 'list', user, repo, state]))
+        finally:
+            _types['user'] = olduser
+
 class GitHub(object):
     """Interface to github."""
 
@@ -251,3 +271,7 @@ class GitHub(object):
     @property
     def commits(self):
         return CommitEndpoint(self.user, self.token, self.fetcher)
+
+    @property
+    def issues(self):
+        return IssuesEndpoint(self.user, self.token, self.fetcher)

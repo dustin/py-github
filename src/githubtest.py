@@ -36,7 +36,7 @@ class GitHubTest(unittest.TestCase):
         def opener(url):
             self.assertEquals(expUrl, url)
             return open(filename)
-        return github.GitHub(opener)
+        return github.GitHub(fetcher=opener)
 
     def __loadUserSearch(self):
         return self.__gh('http://github.com/api/v2/xml/user/search/dustin',

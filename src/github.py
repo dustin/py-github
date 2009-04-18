@@ -49,7 +49,8 @@ import xml.dom.minidom
 _types = {
     'string': lambda x: x.firstChild.data,
     'integer': lambda x: int(x.firstChild.data),
-    'float': lambda x: float(x.firstChild.data)
+    'float': lambda x: float(x.firstChild.data),
+    'datetime': lambda x: x.firstChild.data
 }
 
 def _parse(el):

@@ -204,6 +204,13 @@ class Blob(BaseResponse):
     def __repr__(self):
         return "<<Blob: %s>>" % self.name
 
+class Modification(BaseResponse):
+    """A modification object."""
+
+    # Parsing is scoped to usage
+    def __repr__(self):
+        return "<<Modification of %s>>" % self.filename
+
 # Load the known types.
 for __t in (t for t in globals().values() if hasattr(t, 'parses')):
     _types[__t.parses] = __t
@@ -276,6 +283,19 @@ class CommitEndpoint(BaseEndpoint):
     def forFile(self, user, repo, path, branch='master'):
         """Get the commits for the given file within the given branch."""
         return self._parsed('/'.join(['commits', 'list', user, repo, branch, path]))
+
+    @with_temporary_mappings({'removed': _parseArray,
+                              'added': _parseArray,
+                              'modified': Modification,
+                              'diff': lambda x: x.firstChild.data,
+                              'filename': lambda x: x.firstChild.data})
+    def show(self, user, repo, sha):
+        """Get an individual commit."""
+        c = self._parsed('/'.join(['commits', 'show', user, repo, sha]))
+        # Some fixup due to weird XML structure
+        c.removed = [i[0] for i in c.removed]
+        c.added = [i[0] for i in c.added]
+        return c
 
 class IssuesEndpoint(BaseEndpoint):
 

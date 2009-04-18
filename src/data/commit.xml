@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commit>
+  <removed type="array">
+    <removed>
+      <filename>internal_tests.c</filename>
+    </removed>
+  </removed>
+  <added type="array">
+    <added>
+      <filename>cache.c</filename>
+    </added>
+    <added>
+      <filename>cache.h</filename>
+    </added>
+    <added>
+      <filename>testapp.c</filename>
+    </added>
+  </added>
+  <message>Create a generic cache for objects of same size
+
+The suffix pool could be thread-local and use the generic cache</message>
+  <modified type="array">
+    <modified>
+      <diff>@@ -33,5 +33,5 @@ memcached-*.tar.gz
+ doc/protocol-binary-range.txt
+ doc/protocol-binary.txt
+ /sizes
+-/internal_tests
+ /version.m4
++/testapp</diff>
+      <filename>.gitignore</filename>
+    </modified>
+    <modified>
+      <diff>@@ -1,9 +1,11 @@
+ bin_PROGRAMS = memcached
+ pkginclude_HEADERS = protocol_binary.h
+-noinst_PROGRAMS = memcached-debug sizes internal_tests
++noinst_PROGRAMS = memcached-debug sizes testapp
+ 
+ BUILT_SOURCES=
+ 
++testapp_SOURCES = testapp.c util.c util.h
++
+ memcached_SOURCES = memcached.c memcached.h \
+                     hash.c hash.h \
+                     slabs.c slabs.h \
+@@ -12,7 +14,12 @@ memcached_SOURCES = memcached.c memcached.h \
+                     thread.c daemon.c \
+                     stats.c stats.h \
+                     util.c util.h \
+-                    trace.h
++                    trace.h cache.h
++
++if BUILD_CACHE
++memcached_SOURCES += cache.c
++testapp_SOURCES += cache.c
++endif
+ 
+ if BUILD_SOLARIS_PRIVS
+ memcached_SOURCES += solaris_priv.c
+@@ -28,8 +35,6 @@ memcached_DEPENDENCIES =
+ memcached_debug_DEPENDENCIES = 
+ CLEANFILES=
+ 
+-internal_tests_SOURCES = internal_tests.c util.c
+-
+ if BUILD_DTRACE
+ BUILT_SOURCES += memcached_dtrace.h
+ CLEANFILES += memcached_dtrace.h
+@@ -62,9 +67,9 @@ EXTRA_DIST = doc scripts TODO t memcached.spec memcached_dtrace.d version.m4
+ 
+ MOSTLYCLEANFILES = *.gcov *.gcno *.gcda *.tcov
+ 
+-test:	memcached-debug internal_tests sizes
++test:	memcached-debug sizes testapp
+ 	$(srcdir)/sizes
+-	$(srcdir)/internal_tests
++	$(srcdir)/testapp
+ 	prove $(srcdir)/t
+ 	@if test `basename $(PROFILER)` = "gcov"; then \
+ 	  for file in memcached_debug-*.gc??; do \</diff>
+      <filename>Makefile.am</filename>
+    </modified>
+    <modified>
+      <diff>@@ -230,7 +230,6 @@ dnl ----------------------------------------------------------------------------
+ AC_SEARCH_LIBS(socket, socket)
+ AC_SEARCH_LIBS(gethostbyname, nsl)
+ AC_SEARCH_LIBS(umem_cache_create, umem)
+-
+ AC_HEADER_STDBOOL
+ AC_C_CONST
+ 
+@@ -336,6 +335,14 @@ AC_CHECK_FUNCS(setppriv, [
+ 
+ AM_CONDITIONAL([BUILD_SOLARIS_PRIVS],[test "$build_solaris_privs" = "yes"])
+ 
++AC_CHECK_HEADER(umem.h, [
++   AC_DEFINE([HAVE_UMEM_H], 1,
++         [Define this if you have umem.h])
++   build_cache=no
++], [build_cache=yes])
++
++AM_CONDITIONAL([BUILD_CACHE], [test "x$build_cache" = "xyes"])
++
+ AC_ARG_ENABLE(docs,
+   [AS_HELP_STRING([--disable-docs],[Disable documentation generation])])
+ </diff>
+      <filename>configure.ac</filename>
+    </modified>
+    <modified>
+      <diff>@@ -451,9 +451,7 @@ static void conn_cleanup(conn *c) {
+ 
+     if (c-&gt;suffixleft != 0) {
+         for (; c-&gt;suffixleft &gt; 0; c-&gt;suffixleft--, c-&gt;suffixcurr++) {
+-            if(suffix_add_to_freelist(*(c-&gt;suffixcurr))) {
+-                free(*(c-&gt;suffixcurr));
+-            }
++            cache_free(c-&gt;thread-&gt;suffix_cache, *(c-&gt;suffixcurr));
+         }
+     }
+ 
+@@ -613,72 +611,6 @@ static void conn_set_state(conn *c, enum conn_states state) {
+ }
+ 
+ /*
+- * Free list management for suffix buffers.
+- */
+-
+-static char **freesuffix;
+-static int freesuffixtotal;
+-static int freesuffixcurr;
+-/* Lock for alternative item suffix freelist */
+-static pthread_mutex_t suffix_lock = PTHREAD_MUTEX_INITIALIZER;
+-
+-static void suffix_init(void) {
+-    freesuffixtotal = 500;
+-    freesuffixcurr  = 0;
+-
+-    freesuffix = calloc(freesuffixtotal, sizeof(char *));
+-    if (freesuffix == NULL) {
+-        fprintf(stderr, "Failed to allocate suffix pool\n");
+-    }
+-    return;
+-}
+-
+-/*
+- * Returns a suffix buffer from the freelist, if any.
+- */
+-char *suffix_from_freelist() {
+-    char *s;
+-
+-    pthread_mutex_lock(&amp;suffix_lock);
+-    if (freesuffixcurr &gt; 0) {
+-        s = freesuffix[--freesuffixcurr];
+-    } else {
+-        /* If malloc fails, let the logic fall through without spamming
+-         * STDERR on the server. */
+-        s = malloc( SUFFIX_SIZE );
+-    }
+-    pthread_mutex_unlock(&amp;suffix_lock);
+-
+-    return s;
+-}
+-
+-/*
+- * Adds a connection to the freelist. 0 = success. Should call this using
+- * suffix_add_to_freelist() for thread safety.
+- */
+-bool suffix_add_to_freelist(char *s) {
+-    bool ret = true;
+-
+-    pthread_mutex_lock(&amp;suffix_lock);
+-    if (freesuffixcurr &lt; freesuffixtotal) {
+-        freesuffix[freesuffixcurr++] = s;
+-        ret = false;
+-    } else {
+-        /* try to enlarge free connections array */
+-        char **new_freesuffix = realloc(freesuffix,
+-            sizeof(char *) * freesuffixtotal * 2);
+-        if (new_freesuffix) {
+-            freesuffixtotal *= 2;
+-            freesuffix = new_freesuffix;
+-            freesuffix[freesuffixcurr++] = s;
+-            ret = false;
+-        }
+-    }
+-    pthread_mutex_unlock(&amp;suffix_lock);
+-    return ret;
+-}
+-
+-/*
+  * Ensures that there is room for another struct iovec in a connection's
+  * iov list.
+  *
+@@ -2354,7 +2286,7 @@ static inline void process_get_command(conn *c, token_t *tokens, size_t ntokens,
+                     }
+                   }
+ 
+-                  suffix = suffix_from_freelist();
++                  suffix = cache_alloc(c-&gt;thread-&gt;suffix_cache);
+                   if (suffix == NULL) {
+                     pthread_mutex_lock(&amp;c-&gt;thread-&gt;stats.mutex);
+                     c-&gt;thread-&gt;stats.get_cmds   += stats_get_cmds;
+@@ -3386,10 +3318,7 @@ static void drive_machine(conn *c) {
+                     }
+                     while (c-&gt;suffixleft &gt; 0) {
+                         char *suffix = *(c-&gt;suffixcurr);
+-                        if(suffix_add_to_freelist(suffix)) {
+-                            /* Failed to add to freelist, don't leak */
+-                            free(suffix);
+-                        }
++                        cache_free(c-&gt;thread-&gt;suffix_cache, suffix);
+                         c-&gt;suffixcurr++;
+                         c-&gt;suffixleft--;
+                     }
+@@ -4200,8 +4129,6 @@ int main (int argc, char **argv) {
+     stats_init();
+     assoc_init();
+     conn_init();
+-    /* Hacky suffix buffers. */
+-    suffix_init();
+     slabs_init(settings.maxbytes, settings.factor, preallocate);
+ 
+     /*</diff>
+      <filename>memcached.c</filename>
+    </modified>
+    <modified>
+      <diff>@@ -15,6 +15,7 @@
+ #include &lt;pthread.h&gt;
+ 
+ #include "protocol_binary.h"
++#include "cache.h"
+ 
+ /* Maximum length of a key. */
+ #define KEY_MAX_LENGTH 250
+@@ -263,6 +264,7 @@ typedef struct {
+     int notify_send_fd;         /* sending end of notify pipe */
+     struct thread_stats stats;  /* Stats generated by this thread */
+     struct conn_queue *new_conn_queue; /* queue of new connections to handle */
++    cache_t *suffix_cache;      /* suffix cache */
+ } LIBEVENT_THREAD;
+ 
+ typedef struct conn conn;
+@@ -392,8 +394,6 @@ char *add_delta(conn *c, item *item, const int incr, const int64_t delta,
+ void accept_new_conns(const bool do_accept);
+ conn *conn_from_freelist(void);
+ bool  conn_add_to_freelist(conn *c);
+-char *suffix_from_freelist(void);
+-bool  suffix_add_to_freelist(char *s);
+ int   is_listen_thread(void);
+ item *item_alloc(char *key, size_t nkey, int flags, rel_time_t exptime, int nbytes);
+ char *item_cachedump(const unsigned int slabs_clsid, const unsigned int limit, unsigned int *bytes);</diff>
+      <filename>memcached.h</filename>
+    </modified>
+    <modified>
+      <diff>@@ -217,6 +217,13 @@ static void setup_thread(LIBEVENT_THREAD *me) {
+         perror("Failed to initialize mutex");
+         exit(EXIT_FAILURE);
+     }
++
++    me-&gt;suffix_cache = cache_create("suffix", SUFFIX_SIZE, sizeof(char*),
++                                    NULL, NULL);
++    if (me-&gt;suffix_cache == NULL) {
++        fprintf(stderr, "Failed to create suffix cache\n");
++        exit(EXIT_FAILURE);
++    }
+ }
+ 
+ </diff>
+      <filename>thread.c</filename>
+    </modified>
+  </modified>
+  <parents type="array">
+    <parent>
+      <id>ee0c3d5ae74d0862b4d9990e2ad13bc79f8c34df</id>
+    </parent>
+  </parents>
+  <url>http://github.com/dustin/memcached/commit/4c86fa592fcc7cb685c6e9d8b6aebe8dcbac6b3e</url>
+  <author>
+    <name>Trond Norbye</name>
+    <email>Trond.Norbye@sun.com</email>
+  </author>
+  <id>4c86fa592fcc7cb685c6e9d8b6aebe8dcbac6b3e</id>
+  <committed-date>2009-04-17T16:15:52-07:00</committed-date>
+  <authored-date>2009-03-27T10:30:16-07:00</authored-date>
+  <tree>94b644163f6381a9930e2d7c583fae023895b903</tree>
+  <committer>
+    <name>Dustin Sallings</name>
+    <email>dustin@spy.net</email>
+  </committer>
+</commit>

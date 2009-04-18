@@ -235,6 +235,33 @@ class CommitTest(BaseCase):
         self.assertEquals('Tom Preston-Werner', c.committer.name)
         self.assertEquals('tom@mojombo.com', c.committer.email)
 
+    def testIndividualCommit(self):
+        """Grab a single commit."""
+        h = '4c86fa592fcc7cb685c6e9d8b6aebe8dcbac6b3e'
+        c = self._gh('http://github.com/api/v2/xml/commits/show/dustin/memcached/' + h,
+                     'data/commit.xml').commits.show('dustin', 'memcached', h)
+        self.assertEquals(['internal_tests.c'], c.removed)
+        self.assertEquals(set(['cache.c', 'cache.h', 'testapp.c']), set(c.added))
+        self.assertEquals('Create a generic cache for objects of same size\n\n'
+                          'The suffix pool could be thread-local and use the generic cache',
+                          c.message)
+
+        self.assertEquals(6, len(c.modified))
+        self.assertEquals('.gitignore', c.modified[0].filename)
+        self.assertEquals(140, len(c.modified[0].diff))
+
+        self.assertEquals(['ee0c3d5ae74d0862b4d9990e2ad13bc79f8c34df'],
+                          [p.id for p in c.parents])
+        self.assertEquals('http://github.com/dustin/memcached/commit/' + h, c.url)
+        self.assertEquals('Trond Norbye', c.author.name)
+        self.assertEquals('Trond.Norbye@sun.com', c.author.email)
+        self.assertEquals(h, c.id)
+        self.assertEquals('2009-04-17T16:15:52-07:00', c.committed_date)
+        self.assertEquals('2009-03-27T10:30:16-07:00', c.authored_date)
+        self.assertEquals('94b644163f6381a9930e2d7c583fae023895b903', c.tree)
+        self.assertEquals('Dustin Sallings', c.committer.name)
+        self.assertEquals('dustin@spy.net', c.committer.email)
+
 class IssueTest(BaseCase):
 
     def testListIssues(self):

@@ -59,6 +59,8 @@ def _parse(el):
     type = 'string'
     if el.attributes and 'type' in el.attributes.keys():
         type = el.attributes['type'].value
+    elif el.localName in _types:
+        type = el.localName
     elif len(el.childNodes) > 1:
         # This is a container, find the child type
         type = None
@@ -69,7 +71,8 @@ def _parse(el):
             ch = ch.nextSibling
 
     if not type:
-        raise Exception("Can't parse %s" % el.toxml())
+        raise Exception("Can't parse %s, known: %s"
+                        % (el.toxml(), repr(_types.keys())))
 
     return _types[type](el)
 

@@ -38,13 +38,26 @@ class GitHubTest(unittest.TestCase):
             return open(filename)
         return github.GitHub(fetcher=opener)
 
+    def __agh(self, expUrl, u, t, filename):
+
+        def opener(url):
+            self.assertEquals(expUrl, url + '?login=' + u + '&token=' + t)
+            return open(filename)
+        return github.GitHub(fetcher=opener)
+
     def __loadUserSearch(self):
         return self.__gh('http://github.com/api/v2/xml/user/search/dustin',
             'data/user.search.xml').users.search('dustin')
 
-    def __loadUser(self, which):
-        return self.__gh('http://github.com/api/v2/xml/user/show/dustin',
-            'data/' + which).users.show('dustin')
+    def __loadUser(self, which, u=None, p=None):
+        if u:
+            return self.__agh('http://github.com/api/v2/xml/user/show/dustin'
+                              + '?login=' + u + '&token=' + p,
+                              u, p, 'data/' + which).users.show('dustin')
+
+        else:
+            return self.__gh('http://github.com/api/v2/xml/user/show/dustin',
+                             'data/' + which).users.show('dustin')
 
     def testUserSearch(self):
         """Test the base properties of the user object."""
@@ -79,6 +92,34 @@ class GitHubTest(unittest.TestCase):
         self.assertEquals('Santa Clara, CA', u.location)
         self.assertEquals('dustin@spy.net', u.email)
         self.assertEquals('2008-02-29T09:59:09-08:00', u.created_at)
+
+    def testUserPrivate(self):
+        """Test the user show API with extra info from auth."""
+        u = self.__loadUser('user.private.xml', 'dustin', 'blahblah')
+        self.assertEquals("Dustin Sallings", u.name)
+        # self.assertEquals(None, u.company)
+        self.assertEquals(10, u.following_count)
+        self.assertEquals(21, u.public_gist_count)
+        self.assertEquals(81, u.public_repo_count)
+        self.assertEquals('http://bleu.west.spy.net/~dustin/', u.blog)
+        self.assertEquals(1779, u.id)
+        self.assertEquals(82, u.followers_count)
+        self.assertEquals('dustin', u.login)
+        self.assertEquals('Santa Clara, CA', u.location)
+        self.assertEquals('dustin@spy.net', u.email)
+        self.assertEquals('2008-02-29T09:59:09-08:00', u.created_at)
+
+        # Begin private data
+
+        self.assertEquals("micro", u.plan.name)
+        self.assertEquals(1, u.plan.collaborators)
+        self.assertEquals(614400, u.plan.space)
+        self.assertEquals(5, u.plan.private_repos)
+        self.assertEquals(155191, u.disk_usage)
+        self.assertEquals(6, u.collaborators)
+        self.assertEquals(4, u.owned_private_repo_count)
+        self.assertEquals(5, u.total_private_repo_count)
+        self.assertEquals(0, u.private_gist_count)
 
 if __name__ == '__main__':
     unittest.main()

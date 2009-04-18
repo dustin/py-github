@@ -116,6 +116,14 @@ class User(BaseResponse):
     def __repr__(self):
         return "<<User %s>>" % self.name
 
+class Plan(BaseResponse):
+    """A github plan."""
+
+    parses = 'plan'
+
+    def __repr__(self):
+        return "<<Plan %s>>" % self.name
+
 # Load the known types.
 for __t in (t for t in globals().values() if hasattr(t, 'parses')):
     _types[__t.parses] = __t

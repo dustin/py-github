@@ -141,6 +141,29 @@ class PublicKey(BaseResponse):
     def __repr__(self):
         return "<<Public key %s>>" % self.title
 
+class Commit(BaseResponse):
+    """A commit."""
+
+    parses = 'commit'
+
+    def __repr__(self):
+        return "<<Commit: %s>>" % self.id
+
+class Parent(Commit):
+    """A commit parent."""
+
+    parses = 'parent'
+
+class Author(User):
+    """A commit author."""
+
+    parses = 'author'
+
+class Committer(User):
+    """A commit committer."""
+
+    parses = 'committer'
+
 # Load the known types.
 for __t in (t for t in globals().values() if hasattr(t, 'parses')):
     _types[__t.parses] = __t
@@ -188,6 +211,12 @@ class RepositoryEndpoint(BaseEndpoint):
         """Get the repositories for the given user."""
         return self._parsed('repos/show/' + username)
 
+class CommitEndpoint(BaseEndpoint):
+
+    def forBranch(self, user, repo, branch='master'):
+        """Get the commits for the given branch."""
+        return self._parsed('/'.join(['commits', 'list', user, repo, branch]))
+
 class GitHub(object):
     """Interface to github."""
 
@@ -206,3 +235,6 @@ class GitHub(object):
         """Get access to the user API."""
         return RepositoryEndpoint(self.user, self.token, self.fetcher)
 
+    @property
+    def commits(self):
+        return CommitEndpoint(self.user, self.token, self.fetcher)

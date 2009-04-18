@@ -217,6 +217,10 @@ class CommitEndpoint(BaseEndpoint):
         """Get the commits for the given branch."""
         return self._parsed('/'.join(['commits', 'list', user, repo, branch]))
 
+    def forFile(self, user, repo, path, branch='master'):
+        """Get the commits for the given file within the given branch."""
+        return self._parsed('/'.join(['commits', 'list', user, repo, branch, path]))
+
 class GitHub(object):
     """Interface to github."""
 

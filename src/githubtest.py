@@ -181,5 +181,26 @@ class CommitTest(BaseCase):
         self.assertEquals('Tom Preston-Werner', c.committer.name)
         self.assertEquals('tom@mojombo.com', c.committer.email)
 
+    def testCommitListForFile(self):
+        """Test commit list for a file."""
+        cl = self._gh('http://github.com/api/v2/xml/commits/list/mojombo/grit/master/grit.gemspec',
+                      'data/commits.xml').commits.forFile('mojombo', 'grit', 'grit.gemspec')
+        self.assertEquals(30, len(cl))
+
+        c = cl[0]
+        self.assertEquals("Regenerated gemspec for version 1.1.1", c.message)
+        self.assertEquals('4ac4acab7fd9c7fd4c0e0f4ff5794b0347baecde', c.id)
+        self.assertEquals('94490563ebaf733cbb3de4ad659eb58178c2e574', c.tree)
+        self.assertEquals('2009-03-31T09:54:51-07:00', c.committed_date)
+        self.assertEquals('2009-03-31T09:54:51-07:00', c.authored_date)
+        self.assertEquals('http://github.com/mojombo/grit/commit/4ac4acab7fd9c7fd4c0e0f4ff5794b0347baecde',
+                          c.url)
+        self.assertEquals(1, len(c.parents))
+        self.assertEquals('5071bf9fbfb81778c456d62e111440fdc776f76c', c.parents[0].id)
+        self.assertEquals('Tom Preston-Werner', c.author.name)
+        self.assertEquals('tom@mojombo.com', c.author.email)
+        self.assertEquals('Tom Preston-Werner', c.committer.name)
+        self.assertEquals('tom@mojombo.com', c.committer.email)
+
 if __name__ == '__main__':
     unittest.main()

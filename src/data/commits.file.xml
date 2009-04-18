@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commits type="array">
+  <commit>
+    <message>Regenerated gemspec for version 1.1.1</message>
+    <parents type="array">
+      <parent>
+        <id>5071bf9fbfb81778c456d62e111440fdc776f76c</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/4ac4acab7fd9c7fd4c0e0f4ff5794b0347baecde</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>4ac4acab7fd9c7fd4c0e0f4ff5794b0347baecde</id>
+    <committed-date>2009-03-31T09:54:51-07:00</committed-date>
+    <authored-date>2009-03-31T09:54:51-07:00</authored-date>
+    <tree>94490563ebaf733cbb3de4ad659eb58178c2e574</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>Regenerated gemspec for version 1.1.0</message>
+    <parents type="array">
+      <parent>
+        <id>5bace1138462c9e40807ee542016fb4213eb49f8</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/ac8700fe97702bc13806a5bfea7a0e28f97b5f6b</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>ac8700fe97702bc13806a5bfea7a0e28f97b5f6b</id>
+    <committed-date>2009-03-29T21:07:22-07:00</committed-date>
+    <authored-date>2009-03-29T21:07:22-07:00</authored-date>
+    <tree>57504834bb2a0cfda808223b42460fb8f806515f</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>Rename the GitRuby Mmap class to FileWindow, since it's not really mmap'ed at
+all (except for any OS level caching)</message>
+    <parents type="array">
+      <parent>
+        <id>3838109f4a35f3d4ae4895f1ed45389ca30becc3</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/a17e8603006e231316d7bd20f47b6d39dcbe69d6</url>
+    <author>
+      <name>Johan S&#248;rensen</name>
+      <email>johan@johansorensen.com</email>
+    </author>
+    <id>a17e8603006e231316d7bd20f47b6d39dcbe69d6</id>
+    <committed-date>2009-02-14T02:49:18-08:00</committed-date>
+    <authored-date>2009-02-13T03:17:38-08:00</authored-date>
+    <tree>95c3d0d1dd44a2a068d8c9b2b513357a14c3b956</tree>
+    <committer>
+      <name>Johan S&#248;rensen</name>
+      <email>johan@johansorensen.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>Update version and History.txt</message>
+    <parents type="array">
+      <parent>
+        <id>d76b71c087eb3a5a2062575e944d43fd84fd9a53</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/f2dd525a36b0ffc9a0f41099ad20bc7c564cfea9</url>
+    <author>
+      <name>Chris Wanstrath</name>
+      <email>chris@ozmm.org</email>
+    </author>
+    <id>f2dd525a36b0ffc9a0f41099ad20bc7c564cfea9</id>
+    <committed-date>2009-02-13T16:02:41-08:00</committed-date>
+    <authored-date>2009-02-13T16:02:41-08:00</authored-date>
+    <tree>4c45dfeafc15746820c2e6fe0c8836f22dc370d1</tree>
+    <committer>
+      <name>Chris Wanstrath</name>
+      <email>chris@ozmm.org</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>Regenerated gemspec for version 1.0.2</message>
+    <parents type="array">
+      <parent>
+        <id>fd82cce7bf4e26d15b3c529fef5f1581b46a152f</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/62824a73d5b4d65e417470966d2a4de471d861cb</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>62824a73d5b4d65e417470966d2a4de471d861cb</id>
+    <committed-date>2009-02-10T22:55:11-08:00</committed-date>
+    <authored-date>2009-02-10T22:55:11-08:00</authored-date>
+    <tree>836a63787ef10ba881377c3606051edf8271245c</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>Regenerated gemspec for version 1.0.1</message>
+    <parents type="array">
+      <parent>
+        <id>12a9eee718d78faa6b566d440a29987449c48322</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/4d4bca4abd71631a80faa37d5483a69935c09167</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>4d4bca4abd71631a80faa37d5483a69935c09167</id>
+    <committed-date>2009-02-10T16:35:28-08:00</committed-date>
+    <authored-date>2009-02-10T16:35:28-08:00</authored-date>
+    <tree>64a8097e3474f62cd48e186d8138ad0715ddaa7f</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>update summary and description meta</message>
+    <parents type="array">
+      <parent>
+        <id>8f1f391fb1f063b60102e773872fd744e64b7c25</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/5fdd1d9970ee62ce20c0c5b33162d13eff2cb35a</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>5fdd1d9970ee62ce20c0c5b33162d13eff2cb35a</id>
+    <committed-date>2009-02-05T14:44:42-08:00</committed-date>
+    <authored-date>2009-02-05T14:44:42-08:00</authored-date>
+    <tree>264323691d583b33e28646f4a2ee71329a9fac74</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>Regenerated gemspec for version 1.0.0</message>
+    <parents type="array">
+      <parent>
+        <id>518385c5afba53957332119dd9fdf4980a779d6f</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/1b15724a61edca3d52ec7cca1f21e3ef54cf6790</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>1b15724a61edca3d52ec7cca1f21e3ef54cf6790</id>
+    <committed-date>2009-01-27T21:18:43-08:00</committed-date>
+    <authored-date>2009-01-27T21:18:43-08:00</authored-date>
+    <tree>28c03b474ee54193bf9afdb6b49915175639a948</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>switch ot using Jeweler for packaging tasks, and up to version 1.0.0</message>
+    <parents type="array">
+      <parent>
+        <id>a26053925a22cb737638264b49ae837957689cbc</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/518385c5afba53957332119dd9fdf4980a779d6f</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>518385c5afba53957332119dd9fdf4980a779d6f</id>
+    <committed-date>2009-01-27T21:18:02-08:00</committed-date>
+    <authored-date>2009-01-27T21:18:02-08:00</authored-date>
+    <tree>a8f48aad7ece3bc73e4e9268bc51448e486e0458</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>add open3_detach to gemspec file list</message>
+    <parents type="array">
+      <parent>
+        <id>bd80d2e753cae1d637f5a74f2264a7c88b36b108</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/9b29157990e686e8325df165e66252e3f9e776a5</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>9b29157990e686e8325df165e66252e3f9e776a5</id>
+    <committed-date>2008-11-07T10:46:24-08:00</committed-date>
+    <authored-date>2008-11-07T10:46:24-08:00</authored-date>
+    <tree>b04cbb5bd65eceae30dc1bfe0c6dc2198b0b003c</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>up to 0.9.4</message>
+    <parents type="array">
+      <parent>
+        <id>6e9433fa9a49e31f12369e6c19b45d92fc43812a</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/bd80d2e753cae1d637f5a74f2264a7c88b36b108</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>bd80d2e753cae1d637f5a74f2264a7c88b36b108</id>
+    <committed-date>2008-11-07T10:41:26-08:00</committed-date>
+    <authored-date>2008-11-07T10:41:26-08:00</authored-date>
+    <tree>19bce14fe14158575629fd91d26a65afd612fb8c</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>update gemspec file list</message>
+    <parents type="array">
+      <parent>
+        <id>d1dfcd84c41b91cb3f8900eb36dbdfdbe52d6a73</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/6e9433fa9a49e31f12369e6c19b45d92fc43812a</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>6e9433fa9a49e31f12369e6c19b45d92fc43812a</id>
+    <committed-date>2008-11-07T10:41:10-08:00</committed-date>
+    <authored-date>2008-11-07T10:41:10-08:00</authored-date>
+    <tree>4518a8ad9e50a2f8f46e303bc7e2bbf7c25b0a56</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>Add diff-lcs dependency</message>
+    <parents type="array">
+      <parent>
+        <id>e1ba1e3ca83d53a2f16b39c453fad33380f8d1cc</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/9764edd90cf9a423c9698a2f1e814f16f0111238</url>
+    <author>
+      <name>Hans Engel</name>
+      <email>engel@engel.uk.to</email>
+    </author>
+    <id>9764edd90cf9a423c9698a2f1e814f16f0111238</id>
+    <committed-date>2008-08-23T11:00:10-07:00</committed-date>
+    <authored-date>2008-08-23T11:00:10-07:00</authored-date>
+    <tree>82b7d171818a17bf647d9212516d868512c1cd48</tree>
+    <committer>
+      <name>Hans Engel</name>
+      <email>engel@engel.uk.to</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>Add dependency for Open4</message>
+    <parents type="array">
+      <parent>
+        <id>0f87b4d9020fff756c18323106b3fd4e2f422135</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/e1ba1e3ca83d53a2f16b39c453fad33380f8d1cc</url>
+    <author>
+      <name>Hans Engel</name>
+      <email>engel@engel.uk.to</email>
+    </author>
+    <id>e1ba1e3ca83d53a2f16b39c453fad33380f8d1cc</id>
+    <committed-date>2008-08-23T09:51:15-07:00</committed-date>
+    <authored-date>2008-08-23T09:51:15-07:00</authored-date>
+    <tree>4dd115a03870e5c91e083f346236279b020ead17</tree>
+    <committer>
+      <name>Hans Engel</name>
+      <email>engel@engel.uk.to</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>added sha() def to commit object</message>
+    <parents type="array">
+      <parent>
+        <id>4a904d796030639b0b686cf58423d71e56d65e1c</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/8fcb2081e8f6a983bd6f194da84064ebed75ecb3</url>
+    <author>
+      <name>Scott Chacon</name>
+      <email>schacon@gmail.com</email>
+    </author>
+    <id>8fcb2081e8f6a983bd6f194da84064ebed75ecb3</id>
+    <committed-date>2008-08-07T15:35:31-07:00</committed-date>
+    <authored-date>2008-08-07T15:35:31-07:00</authored-date>
+    <tree>a32e515757abfa81a3d93aea0ac3d4fad7a2310a</tree>
+    <committer>
+      <name>Scott Chacon</name>
+      <email>schacon@gmail.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>merged in bryces changes and fixed some testing issues</message>
+    <parents type="array">
+      <parent>
+        <id>c615d80aa8e72f2450ccfa399e6957021ae38024</id>
+      </parent>
+      <parent>
+        <id>23f4ecfe98897872f2522bcee52733724872dfa9</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/dfeffcef039cb1b1682baadba39d82b4c6f8470d</url>
+    <author>
+      <name>Scott Chacon</name>
+      <email>schacon@gmail.com</email>
+    </author>
+    <id>dfeffcef039cb1b1682baadba39d82b4c6f8470d</id>
+    <committed-date>2008-07-31T13:47:19-07:00</committed-date>
+    <authored-date>2008-07-31T13:47:19-07:00</authored-date>
+    <tree>7581b8a3f01d433614ab2e4b8d3b6e0ddde87e75</tree>
+    <committer>
+      <name>Scott Chacon</name>
+      <email>schacon@gmail.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>added lib/grit/commit_stats.rb to the big list o' files
+
+somebody please tell me there's an automatic way to generate this list</message>
+    <parents type="array">
+      <parent>
+        <id>823a9d9b70367cb72af5ebba9a030924c48791fe</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/cd27d577f73bcf4b2405c5959bdf7db75b8da314</url>
+    <author>
+      <name>Bryce Kerley</name>
+      <email>bryce@worldmedia.net</email>
+    </author>
+    <id>cd27d577f73bcf4b2405c5959bdf7db75b8da314</id>
+    <committed-date>2008-07-31T08:52:45-07:00</committed-date>
+    <authored-date>2008-07-31T08:52:45-07:00</authored-date>
+    <tree>146ce0fea6811e659a72a95eed89671633d526e3</tree>
+    <committer>
+      <name>Bryce Kerley</name>
+      <email>bryce@worldmedia.net</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>cleared out errors by adding in Grit::Git#run method</message>
+    <parents type="array">
+      <parent>
+        <id>4eb3bf067d9292d8dd6d9075bc25a6579b13febe</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/823a9d9b70367cb72af5ebba9a030924c48791fe</url>
+    <author>
+      <name>Bryce Kerley</name>
+      <email>bryce@worldmedia.net</email>
+    </author>
+    <id>823a9d9b70367cb72af5ebba9a030924c48791fe</id>
+    <committed-date>2008-07-31T08:44:54-07:00</committed-date>
+    <authored-date>2008-07-31T08:44:54-07:00</authored-date>
+    <tree>a67e2b2f7ea3fe143b28c3a193ce2ebe5d926f1e</tree>
+    <committer>
+      <name>Bryce Kerley</name>
+      <email>bryce@worldmedia.net</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>resolved merge conflicts, hopefully amicably</message>
+    <parents type="array">
+      <parent>
+        <id>ba23640e001a0a00957deece46c4450f6c0e6f46</id>
+      </parent>
+      <parent>
+        <id>d065e7601ce78c015e2a82f51efcd71f438a12aa</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/4eb3bf067d9292d8dd6d9075bc25a6579b13febe</url>
+    <author>
+      <name>Bryce Kerley</name>
+      <email>bryce@worldmedia.net</email>
+    </author>
+    <id>4eb3bf067d9292d8dd6d9075bc25a6579b13febe</id>
+    <committed-date>2008-07-31T08:39:48-07:00</committed-date>
+    <authored-date>2008-07-31T08:39:48-07:00</authored-date>
+    <tree>145f4b8537d69958198cc434cadd3bdcc187d1ba</tree>
+    <committer>
+      <name>Bryce Kerley</name>
+      <email>bryce@worldmedia.net</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>updated grit gemspec</message>
+    <parents type="array">
+      <parent>
+        <id>756a947ccf1b21891939badefc58f758d6bab264</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/791ec6b35164473e80d10d5af89ef879e3b9f212</url>
+    <author>
+      <name>Scott Chacon</name>
+      <email>schacon@gmail.com</email>
+    </author>
+    <id>791ec6b35164473e80d10d5af89ef879e3b9f212</id>
+    <committed-date>2008-07-26T23:22:44-07:00</committed-date>
+    <authored-date>2008-07-18T12:02:17-07:00</authored-date>
+    <tree>65295c288c87cbac87208f439f60cdc6b55b142b</tree>
+    <committer>
+      <name>Scott Chacon</name>
+      <email>schacon@gmail.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>updated grit gemspec</message>
+    <parents type="array">
+      <parent>
+        <id>7569d0dca47379123c3c72ffb5b96202b5f8d450</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/a0e4a3d417aa68c881fc28ef81d8821698ed2600</url>
+    <author>
+      <name>Scott Chacon</name>
+      <email>schacon@gmail.com</email>
+    </author>
+    <id>a0e4a3d417aa68c881fc28ef81d8821698ed2600</id>
+    <committed-date>2008-07-18T12:02:17-07:00</committed-date>
+    <authored-date>2008-07-18T12:02:17-07:00</authored-date>
+    <tree>65295c288c87cbac87208f439f60cdc6b55b142b</tree>
+    <committer>
+      <name>Scott Chacon</name>
+      <email>schacon@gmail.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>push 0.8.3</message>
+    <parents type="array">
+      <parent>
+        <id>06bae5adf344c28a9c904dacb007296e8809ca9f</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/13f8cc35ffe1e8f6edad51fd198e8d2076fd2a21</url>
+    <author>
+      <name>Rob Sanheim</name>
+      <email>rsanheim@gmail.com</email>
+    </author>
+    <id>13f8cc35ffe1e8f6edad51fd198e8d2076fd2a21</id>
+    <committed-date>2008-07-07T08:55:41-07:00</committed-date>
+    <authored-date>2008-07-07T08:55:41-07:00</authored-date>
+    <tree>b3d062decc6ff753982b0b924f87b932d18f59b0</tree>
+    <committer>
+      <name>Rob Sanheim</name>
+      <email>rsanheim@gmail.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>update gemspec to include the newly added files to manifest</message>
+    <parents type="array">
+      <parent>
+        <id>15dd34769eb57a95b321f4ebb4da7574842143d1</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/ef8a23cd8a0b6be67e81c2cd36fe538636771db7</url>
+    <author>
+      <name>Rob Sanheim</name>
+      <email>rsanheim@gmail.com</email>
+    </author>
+    <id>ef8a23cd8a0b6be67e81c2cd36fe538636771db7</id>
+    <committed-date>2008-06-27T19:18:20-07:00</committed-date>
+    <authored-date>2008-06-27T19:18:20-07:00</authored-date>
+    <tree>4d6fdd20adff920580fda4a174b0860c4723ffac</tree>
+    <committer>
+      <name>Rob Sanheim</name>
+      <email>rsanheim@gmail.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>up to 0.8.1</message>
+    <parents type="array">
+      <parent>
+        <id>11c3d028d1f66f43d7c3f5d4ae6ff5377119af97</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/b778d456672ec74eba6eaab5439a144b41e0f61b</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>b778d456672ec74eba6eaab5439a144b41e0f61b</id>
+    <committed-date>2008-04-24T17:54:07-07:00</committed-date>
+    <authored-date>2008-04-24T17:54:07-07:00</authored-date>
+    <tree>a1bc96a2decc6496c8ef76ec00706c1fa816747d</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>grit gems are now exclusively available via gems.github.com!</message>
+    <parents type="array">
+      <parent>
+        <id>c94f0bdd4b90855669d13ae0faa4af51cde21a56</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/11c3d028d1f66f43d7c3f5d4ae6ff5377119af97</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>11c3d028d1f66f43d7c3f5d4ae6ff5377119af97</id>
+    <committed-date>2008-04-24T17:42:58-07:00</committed-date>
+    <authored-date>2008-04-24T17:42:58-07:00</authored-date>
+    <tree>25142dee53e88fa4e4f35ce20b9366e8ff0ee14e</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>a few more little gemspec fixes</message>
+    <parents type="array">
+      <parent>
+        <id>92f6075f573f625b84883035e00d6d1da108ae73</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/c94f0bdd4b90855669d13ae0faa4af51cde21a56</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>c94f0bdd4b90855669d13ae0faa4af51cde21a56</id>
+    <committed-date>2008-04-24T16:20:43-07:00</committed-date>
+    <authored-date>2008-04-24T16:20:43-07:00</authored-date>
+    <tree>0c59b015f81b0c60c2b97f51e0051c1cb73ffe7f</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>gemification updates</message>
+    <parents type="array">
+      <parent>
+        <id>a2db1039174aae39e60c182de85a12bf67c34518</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/92f6075f573f625b84883035e00d6d1da108ae73</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>92f6075f573f625b84883035e00d6d1da108ae73</id>
+    <committed-date>2008-04-24T16:17:49-07:00</committed-date>
+    <authored-date>2008-04-24T16:17:49-07:00</authored-date>
+    <tree>7a444ee1c62e6f85d709f4991485172998a89f47</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>fix gemspec</message>
+    <parents type="array">
+      <parent>
+        <id>3c1e3d79440e61fac88ce9bde84e5c6b6cbdade2</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/bbedbdbebbe8c2549e92a87d35643a0721ebd1b8</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>bbedbdbebbe8c2549e92a87d35643a0721ebd1b8</id>
+    <committed-date>2008-04-24T12:23:15-07:00</committed-date>
+    <authored-date>2008-04-24T12:23:15-07:00</authored-date>
+    <tree>468d97c6000cca1ebd0314899f36b01959762969</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+  <commit>
+    <message>up to 0.8.0 and add gemspec</message>
+    <parents type="array">
+      <parent>
+        <id>2d3acf90f35989df8f262dc50beadc4ee3ae1560</id>
+      </parent>
+    </parents>
+    <url>http://github.com/mojombo/grit/commit/3c1e3d79440e61fac88ce9bde84e5c6b6cbdade2</url>
+    <author>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </author>
+    <id>3c1e3d79440e61fac88ce9bde84e5c6b6cbdade2</id>
+    <committed-date>2008-04-24T12:19:23-07:00</committed-date>
+    <authored-date>2008-04-24T12:19:23-07:00</authored-date>
+    <tree>d325c081db5fa26f8200f064ae840323694b9dce</tree>
+    <committer>
+      <name>Tom Preston-Werner</name>
+      <email>tom@mojombo.com</email>
+    </committer>
+  </commit>
+</commits>

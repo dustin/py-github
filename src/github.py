@@ -197,6 +197,13 @@ class Tree(BaseResponse):
     def __repr__(self):
         return "<<Tree: %s>>" % self.name
 
+class Blob(BaseResponse):
+    """A Blob object."""
+
+    # Parsing is scoped to objects...
+    def __repr__(self):
+        return "<<Blob: %s>>" % self.name
+
 # Load the known types.
 for __t in (t for t in globals().values() if hasattr(t, 'parses')):
     _types[__t.parses] = __t
@@ -281,6 +288,10 @@ class ObjectsEndpoint(BaseEndpoint):
         """Get the given tree from the given repo."""
         tl = self._parsed('/'.join(['tree', 'show', user, repo, t]))
         return dict([(t.name, t) for t in tl])
+
+    @with_temporary_mappings({'blob': Blob})
+    def blob(self, user, repo, t, fn):
+        return self._parsed('/'.join(['blob', 'show', user, repo, t, fn]))
 
 class GitHub(object):
     """Interface to github."""

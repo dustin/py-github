@@ -273,5 +273,19 @@ class ObjectTest(BaseCase):
         self.assertEquals('040000', tl['src'].mode)
         self.assertEquals('tree', tl['src'].type)
 
+    def testBlob(self):
+        """Test blob fetching."""
+        h = '1ddd3f99f0b96019042239375b3ad4d45796ffba'
+        blob = self._gh('http://github.com/api/v2/xml/blob/show/dustin/py-github/'
+                        + h + '/setup.py',
+                        'data/blob.xml').objects.blob('dustin', 'py-github', h, 'setup.py')
+        self.assertEquals('setup.py', blob.name)
+        self.assertEquals(1842, blob.size)
+        self.assertEquals('6e290379ec58fa00ac9d1c2a78f0819a21397445', blob.sha)
+        self.assertEquals('100755', blob.mode)
+        self.assertEquals('text/plain', blob.mime_type)
+        self.assertEquals(1842, len(blob.data))
+        self.assertEquals(1641, blob.data.index('Production/Stable'))
+
 if __name__ == '__main__':
     unittest.main()

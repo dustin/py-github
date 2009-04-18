@@ -100,7 +100,8 @@ class BaseResponse(object):
         ch = el.firstChild
         while ch:
             if ch.nodeType != xml.dom.Node.TEXT_NODE and ch.firstChild:
-                self.__dict__[ch.localName] = _parse(ch)
+                ln = ch.localName.replace('-', '_')
+                self.__dict__[ln] = _parse(ch)
             ch=ch.nextSibling
 
     def __repr__(self):

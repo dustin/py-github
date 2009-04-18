@@ -133,6 +133,14 @@ class Repository(BaseResponse):
     def __repr__(self):
         return "<<Repository %s/%s>>" % (self.owner, self.name)
 
+class PublicKey(BaseResponse):
+    """A public key."""
+
+    parses = 'public-key'
+
+    def __repr__(self):
+        return "<<Public key %s>>" % self.title
+
 # Load the known types.
 for __t in (t for t in globals().values() if hasattr(t, 'parses')):
     _types[__t.parses] = __t
@@ -169,6 +177,10 @@ class UserEndpoint(BaseEndpoint):
     def show(self, username):
         """Get the info for a user."""
         return self._parsed('user/show/' + username)
+
+    def keys(self):
+        """Get the public keys for a user."""
+        return self._parsed('user/keys')
 
 class RepositoryEndpoint(BaseEndpoint):
 

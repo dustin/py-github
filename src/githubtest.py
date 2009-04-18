@@ -123,6 +123,17 @@ class UserTest(BaseCase):
         self.assertEquals(5, u.total_private_repo_count)
         self.assertEquals(0, u.private_gist_count)
 
+    def testKeysList(self):
+        """Test key listing."""
+        kl = self._agh('http://github.com/api/v2/xml/user/keys?login=dustin&token=blahblah',
+                       'dustin', 'blahblah', 'data/keys.xml').users.keys()
+        self.assertEquals(7, len(kl))
+        k = kl[0]
+
+        self.assertEquals('some key', k.title)
+        self.assertEquals(2181, k.id)
+        self.assertEquals(549, k.key.find('cdEXwCSjAIFp8iRqh3GOkxGyFSc25qv/MuOBg=='))
+
 class RepoTest(BaseCase):
 
     def __loadUserRepos(self):

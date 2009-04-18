@@ -135,6 +135,10 @@ class UserEndpoint(BaseEndpoint):
         doc = self._fetch('user/search/' + query)
         return _parse(doc.documentElement)
 
+    def show(self, username):
+        doc = self._fetch('user/show/' + username)
+        return _parse(doc.documentElement)
+
 class GitHub(object):
     """Interface to github."""
 

@@ -42,6 +42,10 @@ class GitHubTest(unittest.TestCase):
         return self.__gh('http://github.com/api/v2/xml/user/search/dustin',
             'data/user.search.xml').users.search('dustin')
 
+    def __loadUser(self, which):
+        return self.__gh('http://github.com/api/v2/xml/user/show/dustin',
+            'data/' + which).users.show('dustin')
+
     def testUserSearch(self):
         """Test the base properties of the user object."""
         u = self.__loadUserSearch()[0]
@@ -59,6 +63,22 @@ class GitHubTest(unittest.TestCase):
         self.assertEquals('2008-02-29T17:59:09Z', u.created)
         self.assertEquals('2009-03-19T09:15:24.663Z', u.pushed)
         self.assertEquals("<<User dustin>>", repr(u))
+
+    def testUserPublic(self):
+        """Test the user show API with no authentication."""
+        u = self.__loadUser('user.public.xml')
+        self.assertEquals("Dustin Sallings", u.name)
+        # self.assertEquals(None, u.company)
+        self.assertEquals(10, u.following_count)
+        self.assertEquals(21, u.public_gist_count)
+        self.assertEquals(81, u.public_repo_count)
+        self.assertEquals('http://bleu.west.spy.net/~dustin/', u.blog)
+        self.assertEquals(1779, u.id)
+        self.assertEquals(82, u.followers_count)
+        self.assertEquals('dustin', u.login)
+        self.assertEquals('Santa Clara, CA', u.location)
+        self.assertEquals('dustin@spy.net', u.email)
+        self.assertEquals('2008-02-29T09:59:09-08:00', u.created_at)
 
 if __name__ == '__main__':
     unittest.main()

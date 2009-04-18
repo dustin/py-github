@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user>
+  <name>Dustin Sallings</name>
+  <company nil="true"></company>
+  <following-count type="integer">10</following-count>
+  <public-gist-count type="integer">21</public-gist-count>
+  <public-repo-count type="integer">81</public-repo-count>
+  <blog>http://bleu.west.spy.net/~dustin/</blog>
+  <id type="integer">1779</id>
+  <followers-count type="integer">82</followers-count>
+  <login>dustin</login>
+  <location>Santa Clara, CA</location>
+  <email>dustin@spy.net</email>
+  <created-at type="datetime">2008-02-29T09:59:09-08:00</created-at>
+</user>

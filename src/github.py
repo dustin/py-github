@@ -131,7 +131,6 @@ class BaseEndpoint(object):
 class UserEndpoint(BaseEndpoint):
 
     def search(self, query):
-        print "Searching for", query
         doc = self._fetch('user/search/' + query)
         return _parse(doc.documentElement)
 

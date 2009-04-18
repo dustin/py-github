@@ -163,9 +163,11 @@ class BaseEndpoint(object):
 class UserEndpoint(BaseEndpoint):
 
     def search(self, query):
+        """Search for a user."""
         return self._parsed('user/search/' + query)
 
     def show(self, username):
+        """Get the info for a user."""
         return self._parsed('user/show/' + username)
 
 class RepositoryEndpoint(BaseEndpoint):

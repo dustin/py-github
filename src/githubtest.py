@@ -253,6 +253,25 @@ class IssueTest(BaseCase):
         self.assertEquals('2009-04-17T16:18:50-07:00', i.created_at)
         self.assertEquals('open', i.state)
 
+class ObjectTest(BaseCase):
+
+    def testTree(self):
+        """Test tree fetching."""
+        h = '1ddd3f99f0b96019042239375b3ad4d45796ffba'
+        tl = self._gh('http://github.com/api/v2/xml/tree/show/dustin/py-github/' + h,
+                      'data/tree.xml').objects.tree('dustin', 'py-github', h)
+        self.assertEquals(8, len(tl))
+        self.assertEquals('setup.py', tl['setup.py'].name)
+        self.assertEquals('6e290379ec58fa00ac9d1c2a78f0819a21397445',
+                          tl['setup.py'].sha)
+        self.assertEquals('100755', tl['setup.py'].mode)
+        self.assertEquals('blob', tl['setup.py'].type)
+
+        self.assertEquals('src', tl['src'].name)
+        self.assertEquals('5fb9175803334c82b3fd66f1b69502691b91cf4f',
+                          tl['src'].sha)
+        self.assertEquals('040000', tl['src'].mode)
+        self.assertEquals('tree', tl['src'].type)
 
 if __name__ == '__main__':
     unittest.main()

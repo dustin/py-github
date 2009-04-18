@@ -172,6 +172,13 @@ class Issue(BaseResponse):
     def __repr__(self):
         return "<<Issue #%d>>" % self.number
 
+class Tree(BaseResponse):
+    """A Tree object."""
+
+    # Parsing is scoped to objects...
+    def __repr__(self):
+        return "<<Tree: %s>>" % self.name
+
 # Load the known types.
 for __t in (t for t in globals().values() if hasattr(t, 'parses')):
     _types[__t.parses] = __t
@@ -254,6 +261,19 @@ class IssuesEndpoint(BaseEndpoint):
         finally:
             _types['user'] = olduser
 
+class ObjectsEndpoint(BaseEndpoint):
+
+    def tree(self, user, repo, t):
+        """Get the given tree from the given repo."""
+        _types['tree'] = Tree
+        _types['type'] = lambda x: x.firstChild.data
+        try:
+            tl = self._parsed('/'.join(['tree', 'show', user, repo, t]))
+            return dict([(t.name, t) for t in tl])
+        finally:
+            del _types['tree']
+            del _types['type']
+
 class GitHub(object):
     """Interface to github."""
 
@@ -279,3 +299,7 @@ class GitHub(object):
     @property
     def issues(self):
         return IssuesEndpoint(self.user, self.token, self.fetcher)
+
+    @property
+    def objects(self):
+        return ObjectsEndpoint(self.user, self.token, self.fetcher)

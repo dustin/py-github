@@ -158,6 +158,13 @@ class RepoTest(BaseCase):
         # XXX:  Can't parse empty elements.  :(
         # self.assertEquals('', r.homepage)
 
+    def testBranchList(self):
+        """Test branch listing for a repo."""
+        bl = self._gh('http://github.com/api/v2/xml/repos/show/schacon/ruby-git/branches',
+                      'data/repos.branches.xml').repos.branches('schacon', 'ruby-git')
+        self.assertEquals(4, len(bl))
+        self.assertEquals('ee90922f3da3f67ef19853a0759c1d09860fe3b3', bl['master'])
+
 class CommitTest(BaseCase):
 
     def testCommitList(self):

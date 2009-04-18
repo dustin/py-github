@@ -211,6 +211,15 @@ class RepositoryEndpoint(BaseEndpoint):
         """Get the repositories for the given user."""
         return self._parsed('repos/show/' + username)
 
+    def branches(self, user, repo):
+        """List the branches for a repo."""
+        doc = self._fetch("repos/show/" + user + "/" + repo + "/branches")
+        rv = {}
+        for c in doc.documentElement.childNodes:
+            if c.nodeType != xml.dom.Node.TEXT_NODE:
+                rv[c.localName] = str(c.firstChild.data)
+        return rv
+
 class CommitEndpoint(BaseEndpoint):
 
     def forBranch(self, user, repo, branch='master'):

@@ -43,6 +43,7 @@ try:
 except LoadError:
     pass
 
+import urllib
 import xml
 import xml.dom.minidom
 
@@ -121,11 +122,21 @@ for __t in (t for t in globals().values() if hasattr(t, 'parses')):
 
 class BaseEndpoint(object):
 
-    def __init__(self, fetcher):
+    def __init__(self, user, token, fetcher):
+        self.user = user
+        self.token = token
         self.fetcher = fetcher
 
     def _fetch(self, path):
         p = "http://github.com/api/v2/xml/" + path
+        args = ''
+        if self.user and self.token:
+            params = '&'.join(['login=' + urllib.quote(self.user),
+                               'token=' + urllib.quote(self.token)])
+            if '?' in path:
+                p += params
+            else:
+                p += '?' + params
         return xml.dom.minidom.parseString(self.fetcher(p).read())
 
 class UserEndpoint(BaseEndpoint):
@@ -141,11 +152,13 @@ class UserEndpoint(BaseEndpoint):
 class GitHub(object):
     """Interface to github."""
 
-    def __init__(self, fetcher=default_fetcher):
+    def __init__(self, user=None, token=None, fetcher=default_fetcher):
+        self.user = user
+        self.token = token
         self.fetcher = fetcher
 
     @property
     def users(self):
         """Get access to the user API."""
-        return UserEndpoint(self.fetcher)
+        return UserEndpoint(self.user, self.token, self.fetcher)
 

@@ -47,12 +47,16 @@ import urllib
 import xml
 import xml.dom.minidom
 
+def _string_parser(x):
+    """Extract the data from the first child of the input."""
+    return x.firstChild.data
+
 _types = {
-    'string': lambda x: x.firstChild.data,
-    'integer': lambda x: int(x.firstChild.data),
-    'float': lambda x: float(x.firstChild.data),
-    'datetime': lambda x: x.firstChild.data,
-    'boolean': lambda x: x.firstChild.data == 'true'
+    'string': _string_parser,
+    'integer': lambda x: int(_string_parser(x)),
+    'float': lambda x: float(_string_parser(x)),
+    'datetime': _string_parser,
+    'boolean': lambda x: _string_parser(x) == 'true'
 }
 
 def _parse(el):
@@ -287,8 +291,8 @@ class CommitEndpoint(BaseEndpoint):
     @with_temporary_mappings({'removed': _parseArray,
                               'added': _parseArray,
                               'modified': Modification,
-                              'diff': lambda x: x.firstChild.data,
-                              'filename': lambda x: x.firstChild.data})
+                              'diff': _string_parser,
+                              'filename': _string_parser})
     def show(self, user, repo, sha):
         """Get an individual commit."""
         c = self._parsed('/'.join(['commits', 'show', user, repo, sha]))
@@ -306,7 +310,7 @@ class IssuesEndpoint(BaseEndpoint):
 
 class ObjectsEndpoint(BaseEndpoint):
 
-    @with_temporary_mappings({'tree': Tree, 'type': lambda x: x.firstChild.data})
+    @with_temporary_mappings({'tree': Tree, 'type': _string_parser})
     def tree(self, user, repo, t):
         """Get the given tree from the given repo."""
         tl = self._parsed('/'.join(['tree', 'show', user, repo, t]))

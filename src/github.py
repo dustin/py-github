@@ -278,6 +278,10 @@ class RepositoryEndpoint(BaseEndpoint):
         """Search for repositories."""
         return self._parsed('repos/search/' + urllib.quote_plus(term))
 
+    def show(self, user, repo):
+        """Lookup an individual repository."""
+        return self._parsed('/'.join(['repos', 'show', user, repo]))
+
 class CommitEndpoint(BaseEndpoint):
 
     def forBranch(self, user, repo, branch='master'):

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repository>
+  <description>Grit is a Ruby library for extracting information from a git repository in an object oriented manner - this fork tries to intergrate as much pure-ruby functionality as possible</description>
+  <watchers type="integer">68</watchers>
+  <forks type="integer">4</forks>
+  <name>grit</name>
+  <private type="boolean">false</private>
+  <url>http://github.com/schacon/grit</url>
+  <fork type="boolean">true</fork>
+  <owner>schacon</owner>
+  <homepage>http://grit.rubyforge.org/</homepage>
+</repository>

@@ -335,6 +335,15 @@ class IssueTest(BaseCase):
                   'd', 'pw').issues.remove_label(
             'dustin', 'py-github', 33, 'todo')
 
+    def testCloseIssue(self):
+        """Closing an issue."""
+        self._ghp('issues/close/dustin/py-github/1', 'd', 'pw').issues.close(
+            'dustin', 'py-github', 1)
+
+    def testReopenIssue(self):
+        """Reopening an issue."""
+        self._ghp('issues/reopen/dustin/py-github/1', 'd', 'pw').issues.reopen(
+            'dustin', 'py-github', 1)
 
 class ObjectTest(BaseCase):
 

@@ -334,6 +334,14 @@ class IssuesEndpoint(BaseEndpoint):
         self._post('issues/label/remove/' + user + '/'
                    + repo + '/' + label + '/' + str(issue_id))
 
+    def close(self, user, repo, issue_id):
+        """Close an issue."""
+        self._post('/'.join(['issues', 'close', user, repo, str(issue_id)]))
+
+    def reopen(self, user, repo, issue_id):
+        """Reopen an issue."""
+        self._post('/'.join(['issues', 'reopen', user, repo, str(issue_id)]))
+
 class ObjectsEndpoint(BaseEndpoint):
 
     @with_temporary_mappings({'tree': Tree, 'type': _string_parser})

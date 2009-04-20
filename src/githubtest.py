@@ -46,6 +46,15 @@ class BaseCase(unittest.TestCase):
             return open(filename)
         return github.GitHub(fetcher=opener)
 
+    def _ghp(self, expUrl, u, t, **kv):
+
+        def opener(url, data):
+            h = {'login': u, 'token': t}
+            h.update(kv)
+            self.assertEquals(github.BaseEndpoint.BASE_URL + expUrl, url)
+            self.assertEquals(data, urllib.urlencode(h))
+        return github.GitHub(u, t, fetcher=opener)
+
 class UserTest(BaseCase):
 
     def __loadUserSearch(self):

@@ -221,13 +221,15 @@ for __t in (t for t in globals().values() if hasattr(t, 'parses')):
 
 class BaseEndpoint(object):
 
+    BASE_URL = 'http://github.com/api/v2/xml/'
+
     def __init__(self, user, token, fetcher):
         self.user = user
         self.token = token
         self.fetcher = fetcher
 
     def _raw_fetch(self, path):
-        p = 'http://github.com/api/v2/xml/' + path
+        p = self.BASE_URL + path
         args = ''
         if self.user and self.token:
             params = '&'.join(['login=' + urllib.quote(self.user),
@@ -240,6 +242,11 @@ class BaseEndpoint(object):
 
     def _fetch(self, path):
         return xml.dom.minidom.parseString(self._raw_fetch(path))
+
+    def _post(self, path, **kwargs):
+        p = {'login': self.user, 'token': self.token}
+        p.update(kwargs)
+        return self.fetcher(self.BASE_URL + path, urllib.urlencode(p))
 
     def _parsed(self, path):
         doc = self._fetch(path)

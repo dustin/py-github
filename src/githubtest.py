@@ -329,6 +329,13 @@ class IssueTest(BaseCase):
         self._ghp('issues/label/add/dustin/py-github/todo/33', 'd', 'pw').issues.add_label(
             'dustin', 'py-github', 33, 'todo')
 
+    def testRemoveLabel(self):
+        """Removing a label from an issue."""
+        self._ghp('issues/label/remove/dustin/py-github/todo/33',
+                  'd', 'pw').issues.remove_label(
+            'dustin', 'py-github', 33, 'todo')
+
+
 class ObjectTest(BaseCase):
 
     def testTree(self):

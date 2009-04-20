@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issue>
+  <user>dustin</user>
+  <updated-at type="datetime">2009-04-17T18:37:04-07:00</updated-at>
+  <body>http://develop.github.com/p/general.html</body>
+  <title>Add auth tokens</title>
+  <number type="integer">1</number>
+  <votes type="integer">0</votes>
+  <position type="float">1.0</position>
+  <created-at type="datetime">2009-04-17T17:00:58-07:00</created-at>
+  <state>closed</state>
+</issue>

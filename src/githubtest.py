@@ -291,6 +291,16 @@ class CommitTest(BaseCase):
         self.assertEquals('Dustin Sallings', c.committer.name)
         self.assertEquals('dustin@spy.net', c.committer.email)
 
+    def testWatchRepo(self):
+        """Test watching a repo."""
+        self._ghp('repos/watch/dustin/py-github', 'dustin', 'p').repos.watch(
+            'dustin', 'py-github')
+
+    def testWatchRepo(self):
+        """Test watching a repo."""
+        self._ghp('repos/unwatch/dustin/py-github', 'dustin', 'p').repos.unwatch(
+            'dustin', 'py-github')
+
 class IssueTest(BaseCase):
 
     def testListIssues(self):

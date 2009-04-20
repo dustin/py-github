@@ -289,6 +289,15 @@ class RepositoryEndpoint(BaseEndpoint):
         """Lookup an individual repository."""
         return self._parsed('/'.join(['repos', 'show', user, repo]))
 
+    def watch(self, user, repo):
+        """Watch a repository."""
+        self._post('repos/watch/' + user + '/' + repo)
+
+    def unwatch(self, user, repo):
+        """Stop watching a repository."""
+        self._post('repos/unwatch/' + user + '/' + repo)
+
+
 class CommitEndpoint(BaseEndpoint):
 
     def forBranch(self, user, repo, branch='master'):

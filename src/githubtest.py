@@ -345,6 +345,12 @@ class IssueTest(BaseCase):
         self._ghp('issues/reopen/dustin/py-github/1', 'd', 'pw').issues.reopen(
             'dustin', 'py-github', 1)
 
+    def testCreateIssue(self):
+        """Creating an issue."""
+        self._ghp('issues/open/dustin/py-github', 'd', 'pw',
+                  title='test title', body='').issues.new(
+            'dustin', 'py-github', title='test title')
+
 class ObjectTest(BaseCase):
 
     def testTree(self):

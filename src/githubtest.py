@@ -299,6 +299,21 @@ class IssueTest(BaseCase):
         self.assertEquals('2009-04-17T16:18:50-07:00', i.created_at)
         self.assertEquals('open', i.state)
 
+    def testShowIssue(self):
+        """Show an individual issue."""
+        i = self._gh('http://github.com/api/v2/xml/issues/show/dustin/py-github/1',
+                     'data/issues.show.xml').issues.show('dustin', 'py-github', 1)
+
+        self.assertEquals('dustin', i.user)
+        self.assertEquals('2009-04-17T18:37:04-07:00', i.updated_at)
+        self.assertEquals('http://develop.github.com/p/general.html', i.body)
+        self.assertEquals('Add auth tokens', i.title)
+        self.assertEquals(1, i.number)
+        self.assertEquals(0, i.votes)
+        self.assertEquals(1.0, i.position)
+        self.assertEquals('2009-04-17T17:00:58-07:00', i.created_at)
+        self.assertEquals('closed', i.state)
+
 class ObjectTest(BaseCase):
 
     def testTree(self):

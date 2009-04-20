@@ -312,6 +312,11 @@ class IssuesEndpoint(BaseEndpoint):
         """Get the list of issues for the given repo in the given state."""
         return self._parsed('/'.join(['issues', 'list', user, repo, state]))
 
+    @with_temporary_mappings({'user': None})
+    def show(self, user, repo, issue_id):
+        """Show an individual issue."""
+        return self._parsed('/'.join(['issues', 'show', user, repo, str(issue_id)]))
+
 class ObjectsEndpoint(BaseEndpoint):
 
     @with_temporary_mappings({'tree': Tree, 'type': _string_parser})

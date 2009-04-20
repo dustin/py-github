@@ -351,6 +351,12 @@ class IssueTest(BaseCase):
                   title='test title', body='').issues.new(
             'dustin', 'py-github', title='test title')
 
+    def testEditIssue(self):
+        """Editing an existing issue."""
+        self._ghp('issues/edit/dustin/py-github/1', 'd', 'pw',
+                  title='new title', body='new body').issues.edit(
+            'dustin', 'py-github', 1, 'new title', 'new body')
+
 class ObjectTest(BaseCase):
 
     def testTree(self):

@@ -25,6 +25,7 @@
 Defines and runs unittests.
 """
 
+import urllib
 import hashlib
 import unittest
 
@@ -322,6 +323,11 @@ class IssueTest(BaseCase):
         self.assertEquals(1.0, i.position)
         self.assertEquals('2009-04-17T17:00:58-07:00', i.created_at)
         self.assertEquals('closed', i.state)
+
+    def testAddLabel(self):
+        """Adding a label to an issue."""
+        self._ghp('issues/label/add/dustin/py-github/todo/33', 'd', 'pw').issues.add_label(
+            'dustin', 'py-github', 33, 'todo')
 
 class ObjectTest(BaseCase):
 

@@ -324,6 +324,16 @@ class IssuesEndpoint(BaseEndpoint):
         """Show an individual issue."""
         return self._parsed('/'.join(['issues', 'show', user, repo, str(issue_id)]))
 
+    def add_label(self, user, repo, issue_id, label):
+        """Add a label to an issue."""
+        self._post('issues/label/add/' + user + '/'
+                       + repo + '/' + label + '/' + str(issue_id))
+
+    def remove_label(self, user, repo, issue_id, label):
+        """Remove a label from an issue."""
+        self._post('issues/label/remove/' + user + '/'
+                   + repo + '/' + label + '/' + str(issue_id))
+
 class ObjectsEndpoint(BaseEndpoint):
 
     @with_temporary_mappings({'tree': Tree, 'type': _string_parser})

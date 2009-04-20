@@ -53,7 +53,8 @@ class BaseCase(unittest.TestCase):
             h = {'login': u, 'token': t}
             h.update(kv)
             self.assertEquals(github.BaseEndpoint.BASE_URL + expUrl, url)
-            self.assertEquals(data, urllib.urlencode(h))
+            self.assertEquals(sorted(data.split('&')),
+                              sorted(urllib.urlencode(h).split('&')))
         return github.GitHub(u, t, fetcher=opener)
 
 class UserTest(BaseCase):

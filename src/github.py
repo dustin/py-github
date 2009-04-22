@@ -335,8 +335,10 @@ class CommitEndpoint(BaseEndpoint):
         """Get an individual commit."""
         c = self._parsed('/'.join(['commits', 'show', user, repo, sha]))
         # Some fixup due to weird XML structure
-        c.removed = [i[0] for i in c.removed]
-        c.added = [i[0] for i in c.added]
+        if hasattr(c, 'removed'):
+            c.removed = [i[0] for i in c.removed]
+        if hasattr(c, 'added'):
+            c.added = [i[0] for i in c.added]
         return c
 
 class IssuesEndpoint(BaseEndpoint):

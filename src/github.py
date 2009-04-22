@@ -215,6 +215,14 @@ class Modification(BaseResponse):
     def __repr__(self):
         return "<<Modification of %s>>" % self.filename
 
+class Network(BaseResponse):
+    """A network entry."""
+
+    parses = 'network'
+
+    def __repr__(self):
+        return "<<Network of %s/%s>>" % (self.owner, self.name)
+
 # Load the known types.
 for __t in (t for t in globals().values() if hasattr(t, 'parses')):
     _types[__t.parses] = __t
@@ -297,6 +305,9 @@ class RepositoryEndpoint(BaseEndpoint):
         """Stop watching a repository."""
         self._post('repos/unwatch/' + user + '/' + repo)
 
+    def network(self, user, repo):
+        """Get the network for a given repo."""
+        return self._parsed('repos/show/' + user + '/' + repo + '/network')
 
 class CommitEndpoint(BaseEndpoint):
 

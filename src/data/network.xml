@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<network type="array">
+  <network>
+    <description>Python interface for talking to the github API</description>
+    <name>py-github</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/dustin/py-github</url>
+    <watchers type="integer">30</watchers>
+    <forks type="integer">4</forks>
+    <fork type="boolean">false</fork>
+    <owner>dustin</owner>
+    <homepage>http://dustin.github.com/2008/12/29/github-sync.html</homepage>
+  </network>
+  <network>
+    <description>Python interface for talking to the github API</description>
+    <name>py-github</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/bunions1/py-github</url>
+    <watchers type="integer">1</watchers>
+    <forks type="integer">0</forks>
+    <fork type="boolean">true</fork>
+    <owner>bunions1</owner>
+    <homepage></homepage>
+  </network>
+  <network>
+    <description>Python interface for talking to the github API</description>
+    <name>py-github</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/ashcrow/py-github</url>
+    <watchers type="integer">1</watchers>
+    <forks type="integer">0</forks>
+    <fork type="boolean">true</fork>
+    <owner>ashcrow</owner>
+    <homepage></homepage>
+  </network>
+  <network>
+    <description>Python interface for talking to the github API</description>
+    <name>py-github</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/crispywalrus/py-github</url>
+    <watchers type="integer">1</watchers>
+    <forks type="integer">0</forks>
+    <fork type="boolean">true</fork>
+    <owner>crispywalrus</owner>
+    <homepage>http://dustin.github.com/2008/12/29/github-sync.html</homepage>
+  </network>
+  <network>
+    <description>Python interface for talking to the github API</description>
+    <name>py-github</name>
+    <private type="boolean">false</private>
+    <url>http://github.com/jsmits/py-github</url>
+    <watchers type="integer">2</watchers>
+    <forks type="integer">0</forks>
+    <fork type="boolean">true</fork>
+    <owner>jsmits</owner>
+    <homepage>http://dustin.github.com/2008/12/29/github-sync.html</homepage>
+  </network>
+</network>

@@ -220,6 +220,25 @@ class RepoTest(BaseCase):
         self.assertEquals('schacon', r.owner)
         self.assertEquals('http://grit.rubyforge.org/', r.homepage)
 
+    def testGetRepoNetwork(self):
+        """Test network fetching."""
+        nl = self._gh('http://github.com/api/v2/xml/repos/show/dustin/py-github/network',
+                      'data/network.xml').repos.network('dustin', 'py-github')
+        self.assertEquals(5, len(nl))
+
+        n = nl[0]
+        self.assertEquals('Python interface for talking to the github API',
+                          n.description)
+        self.assertEquals('py-github', n.name)
+        self.assertFalse(n.private)
+        self.assertEquals('http://github.com/dustin/py-github', n.url)
+        self.assertEquals(30, n.watchers)
+        self.assertEquals(4, n.forks)
+        self.assertFalse(n.fork)
+        self.assertEquals('dustin', n.owner)
+        self.assertEquals('http://dustin.github.com/2008/12/29/github-sync.html',
+                          n.homepage)
+
 class CommitTest(BaseCase):
 
     def testCommitList(self):

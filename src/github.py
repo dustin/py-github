@@ -152,8 +152,15 @@ class Repository(BaseResponse):
 
     parses = 'repository'
 
+    @property
+    def owner_name(self):
+        if hasattr(self, 'owner'):
+            return self.owner
+        else:
+            return self.username
+
     def __repr__(self):
-        return "<<Repository %s/%s>>" % (self.owner, self.name)
+        return "<<Repository %s/%s>>" % (self.owner_name, self.name)
 
 class PublicKey(BaseResponse):
     """A public key."""

@@ -3,9 +3,6 @@
 This is a library that implements
 [github's API](http://develop.github.com/) in python.
 
-v2 is still in early development, so don't expect it to be terribly
-uesful for a bit.
-
 # Supported APIs
 
 All API access begins with the creation of a `GitHub` object.  For the

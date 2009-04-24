@@ -258,6 +258,11 @@ class RepoTest(BaseCase):
                   public='1').repos.create(
             'testrepo', description='woo')
 
+    def testDeleteRepo(self):
+        """Test setting a repo to private."""
+        self._ghp('repos/delete/mytest', 'dustin', 'p').repos.delete('mytest')
+
+
 class CommitTest(BaseCase):
 
     def testCommitList(self):

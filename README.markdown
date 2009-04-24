@@ -131,6 +131,12 @@ Consider this case where a private repository is created.
     agh.repos.create('testrepo', description='My test repo',
                      homepage='http://www.spy.net/', public=0)
 
+### Deleting a Repository
+
+You may delete repositories attached to your account only.
+
+    agh.repos.delete('testrepo')
+
 ## Commits
 
 The [commit API][commitapi] is available via `gh.commits`.

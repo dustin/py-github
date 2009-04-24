@@ -329,6 +329,10 @@ class RepositoryEndpoint(BaseEndpoint):
         self._post('repos/create', name=name, description=description,
                    homepage=homepage, public=str(public))
 
+    def delete(self, repo):
+        """Delete a repository."""
+        self._post('repos/delete/' + repo)
+
 class CommitEndpoint(BaseEndpoint):
 
     def forBranch(self, user, repo, branch='master'):

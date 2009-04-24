@@ -137,6 +137,10 @@ You may delete repositories attached to your account only.
 
     agh.repos.delete('testrepo')
 
+### Forking a Repository
+
+    agh.repos.fork('dustin', 'memcached')
+
 ## Commits
 
 The [commit API][commitapi] is available via `gh.commits`.

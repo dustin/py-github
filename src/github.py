@@ -333,6 +333,10 @@ class RepositoryEndpoint(BaseEndpoint):
         """Delete a repository."""
         self._post('repos/delete/' + repo)
 
+    def fork(self, user, repo):
+        """Fork a user's repo."""
+        self._post('repos/fork/' + user + '/' + repo)
+
 class CommitEndpoint(BaseEndpoint):
 
     def forBranch(self, user, repo, branch='master'):

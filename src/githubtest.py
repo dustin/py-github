@@ -262,6 +262,10 @@ class RepoTest(BaseCase):
         """Test setting a repo to private."""
         self._ghp('repos/delete/mytest', 'dustin', 'p').repos.delete('mytest')
 
+    def testFork(self):
+        """Test forking'"""
+        self._ghp('repos/fork/someuser/somerepo', 'dustin', 'p').repos.fork(
+            'someuser', 'somerepo')
 
 class CommitTest(BaseCase):
 

@@ -105,6 +105,19 @@ Retrieve the network for a repository.
     for r in gh.repos.network('dustin', 'memcached'):
         print "%'s %s" % (r.owner_name, r.name)
 
+### Adjust a Repository's Visibility
+
+You can adjust repository visibility for your own repositories only
+(therefore the username is omitted).
+
+To set a repository public:
+
+    agh.repos.setVisible('repo-name')
+
+To set a repository private:
+
+    agh.repos.setVisible('repo-name', False)
+
 ## Commits
 
 The [commit API][commitapi] is available via `gh.commits`.

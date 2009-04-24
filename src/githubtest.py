@@ -239,6 +239,16 @@ class RepoTest(BaseCase):
         self.assertEquals('http://dustin.github.com/2008/12/29/github-sync.html',
                           n.homepage)
 
+    def testSetPublic(self):
+        """Test setting a repo visible."""
+        self._ghp('repos/set/public/py-github', 'dustin', 'p').repos.setVisible(
+            'py-github')
+
+    def testSetPrivate(self):
+        """Test setting a repo to private."""
+        self._ghp('repos/set/private/py-github', 'dustin', 'p').repos.setVisible(
+            'py-github', False)
+
 class CommitTest(BaseCase):
 
     def testCommitList(self):

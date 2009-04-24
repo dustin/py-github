@@ -316,6 +316,14 @@ class RepositoryEndpoint(BaseEndpoint):
         """Get the network for a given repo."""
         return self._parsed('repos/show/' + user + '/' + repo + '/network')
 
+    def setVisible(self, repo, public=True):
+        """Set the visibility of the given repository (owned by the current user)."""
+        if public:
+            path = 'repos/set/public/' + repo
+        else:
+            path = 'repos/set/private/' + repo
+        self._post(path)
+
 class CommitEndpoint(BaseEndpoint):
 
     def forBranch(self, user, repo, branch='master'):

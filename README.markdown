@@ -118,6 +118,19 @@ To set a repository private:
 
     agh.repos.setVisible('repo-name', False)
 
+### Create a New Repository
+
+The most simple invocation (create a public repository with no
+description or URL) would look like this:
+
+    agh.repos.create('testrepository')
+
+You can pass many flags in to set up the repository, however.
+Consider this case where a private repository is created.
+
+    agh.repos.create('testrepo', description='My test repo',
+                     homepage='http://www.spy.net/', public=0)
+
 ## Commits
 
 The [commit API][commitapi] is available via `gh.commits`.

@@ -324,6 +324,11 @@ class RepositoryEndpoint(BaseEndpoint):
             path = 'repos/set/private/' + repo
         self._post(path)
 
+    def create(self, name, description='', homepage='', public=1):
+        """Create a new repository."""
+        self._post('repos/create', name=name, description=description,
+                   homepage=homepage, public=str(public))
+
 class CommitEndpoint(BaseEndpoint):
 
     def forBranch(self, user, repo, branch='master'):

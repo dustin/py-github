@@ -249,6 +249,15 @@ class RepoTest(BaseCase):
         self._ghp('repos/set/private/py-github', 'dustin', 'p').repos.setVisible(
             'py-github', False)
 
+    def testCreateRepository(self):
+        """Test creating a repository."""
+        self._ghp('repos/create', 'dustin', 'p',
+                  name='testrepo',
+                  description='woo',
+                  homepage='',
+                  public='1').repos.create(
+            'testrepo', description='woo')
+
 class CommitTest(BaseCase):
 
     def testCommitList(self):

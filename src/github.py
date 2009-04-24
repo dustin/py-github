@@ -337,6 +337,14 @@ class RepositoryEndpoint(BaseEndpoint):
         """Fork a user's repo."""
         self._post('repos/fork/' + user + '/' + repo)
 
+    def addCollaborator(self, repo, username):
+        """Add a collaborator to one of your repositories."""
+        self._post('repos/collaborators/' + repo + '/add/' + username)
+
+    def removeCollaborator(self, repo, username):
+        """Remove a collaborator from one of your repositories."""
+        self._post('repos/collaborators/' + repo + '/remove/' + username)
+
 class CommitEndpoint(BaseEndpoint):
 
     def forBranch(self, user, repo, branch='master'):

@@ -141,6 +141,14 @@ You may delete repositories attached to your account only.
 
     agh.repos.fork('dustin', 'memcached')
 
+### Adding a Collaborator
+
+    agh.repos.addCollaborator('memcached', 'trondn')
+
+### Removing a Collaborator
+
+    agh.repos.removeCollaborator('memcached', 'trondn')
+
 ## Commits
 
 The [commit API][commitapi] is available via `gh.commits`.

@@ -267,6 +267,16 @@ class RepoTest(BaseCase):
         self._ghp('repos/fork/someuser/somerepo', 'dustin', 'p').repos.fork(
             'someuser', 'somerepo')
 
+    def testAddCollaborator(self):
+        """Adding a collaborator."""
+        self._ghp('repos/collaborators/memcached/add/trondn',
+                  'dustin', 'p').repos.addCollaborator('memcached', 'trondn')
+
+    def testRemoveCollaborator(self):
+        """Removing a collaborator."""
+        self._ghp('repos/collaborators/memcached/remove/trondn',
+                  'dustin', 'p').repos.removeCollaborator('memcached', 'trondn')
+
 class CommitTest(BaseCase):
 
     def testCommitList(self):

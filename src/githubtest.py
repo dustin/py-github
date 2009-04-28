@@ -146,6 +146,17 @@ class UserTest(BaseCase):
         self.assertEquals(2181, k.id)
         self.assertEquals(549, k.key.find('cdEXwCSjAIFp8iRqh3GOkxGyFSc25qv/MuOBg=='))
 
+    def testRemoveKey(self):
+        """Remove a key."""
+        self._ghp('user/key/remove',
+                  'dustin', 'p', id=828).users.removeKey(828)
+
+    def testAddKey(self):
+        """Add a key."""
+        self._ghp('user/key/add',
+                  'dustin', 'p', name='my key', key='some key').users.addKey(
+            'my key', 'some key')
+
 class RepoTest(BaseCase):
 
     def __loadUserRepos(self):

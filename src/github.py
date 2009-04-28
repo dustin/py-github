@@ -281,6 +281,14 @@ class UserEndpoint(BaseEndpoint):
         """Get the public keys for a user."""
         return self._parsed('user/keys')
 
+    def removeKey(self, keyId):
+        """Remove the key with the given ID (as retrieved from keys)"""
+        self._post('user/key/remove', id=keyId)
+
+    def addKey(self, name, key):
+        """Add an ssh key."""
+        self._post('user/key/add', name=name, key=key)
+
 class RepositoryEndpoint(BaseEndpoint):
 
     def forUser(self, username):

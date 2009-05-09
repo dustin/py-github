@@ -149,6 +149,10 @@ You may delete repositories attached to your account only.
 
     agh.repos.removeCollaborator('memcached', 'trondn')
 
+### Listing Deploy Keys
+
+    agh.repos.deployKeys('myrepo')
+
 ## Commits
 
 The [commit API][commitapi] is available via `gh.commits`.

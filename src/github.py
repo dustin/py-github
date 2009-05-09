@@ -353,6 +353,12 @@ class RepositoryEndpoint(BaseEndpoint):
         """Remove a collaborator from one of your repositories."""
         self._post('repos/collaborators/' + repo + '/remove/' + username)
 
+    def deployKeys(self, repo):
+        """List the deploy keys for the given repository.
+
+        The repository must be owned by the current user."""
+        return self._parsed('repos/keys/' + repo)
+
 class CommitEndpoint(BaseEndpoint):
 
     def forBranch(self, user, repo, branch='master'):

@@ -166,6 +166,7 @@ class PublicKey(BaseResponse):
     """A public key."""
 
     parses = 'public-key'
+    title = 'untitled'
 
     def __repr__(self):
         return "<<Public key %s>>" % self.title

@@ -360,6 +360,14 @@ class RepositoryEndpoint(BaseEndpoint):
         The repository must be owned by the current user."""
         return self._parsed('repos/keys/' + repo)
 
+    def addDeployKey(self, repo, title, key):
+        """Add a deploy key to a repository."""
+        self._post('repos/key/' + repo + '/add', title=title, key=key)
+
+    def removeDeployKey(self, repo, keyId):
+        """Remove a deploy key."""
+        self._post('repos/key/' + repo + '/remove', id=keyId)
+
 class CommitEndpoint(BaseEndpoint):
 
     def forBranch(self, user, repo, branch='master'):

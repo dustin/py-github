@@ -153,6 +153,15 @@ You may delete repositories attached to your account only.
 
     agh.repos.deployKeys('myrepo')
 
+### Add a Deploy Key
+
+    keyContents = open(os.path.expanduser("~/.ssh/id_dsa.pub")).read()
+    agh.repos.addDeployKey('myrepo', 'Key Name', keyContents)
+
+### Remove a Deploy Key
+
+    agh.repos.removeDeployKey('myrepo', 8582)
+
 ## Commits
 
 The [commit API][commitapi] is available via `gh.commits`.

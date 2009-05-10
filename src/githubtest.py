@@ -288,6 +288,16 @@ class RepoTest(BaseCase):
         self._ghp('repos/collaborators/memcached/remove/trondn',
                   'dustin', 'p').repos.removeCollaborator('memcached', 'trondn')
 
+    def testAddDeployKey(self):
+        """Add a deploy key."""
+        self._ghp('repos/key/blah/add', 'dustin', 'p',
+                  title='title', key='key').repos.addDeployKey('blah', 'title', 'key')
+
+    def testRemoveDeployKey(self):
+        """Remove a deploy key."""
+        self._ghp('repos/key/blah/remove', 'dustin', 'p',
+                  id=5).repos.removeDeployKey('blah', 5)
+
 class CommitTest(BaseCase):
 
     def testCommitList(self):

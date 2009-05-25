@@ -38,7 +38,7 @@ setup(name = "github",
 
       license = 'MIT',
 
-      package_dir={'github': 'src/'},
+      package_dir={'github': 'src'},
       packages = ['github'],
 
       classifiers=['MIT License',

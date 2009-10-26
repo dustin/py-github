@@ -202,6 +202,13 @@ class Issue(BaseResponse):
     def __repr__(self):
         return "<<Issue #%d>>" % self.number
 
+class Label(BaseResponse):
+    """A Label within the issue tracker."""
+    parses = 'label'
+
+    def __repr__(self):
+        return "<<Label $%d>>" % self.number
+
 class Tree(BaseResponse):
     """A Tree object."""
 
@@ -262,10 +269,15 @@ class BaseEndpoint(object):
     def _post(self, path, **kwargs):
         p = {'login': self.user, 'token': self.token}
         p.update(kwargs)
-        return self.fetcher(self.BASE_URL + path, urllib.urlencode(p))
+        return self.fetcher(self.BASE_URL + path, urllib.urlencode(p)).read()
 
     def _parsed(self, path):
         doc = self._fetch(path)
+        return _parse(doc.documentElement)
+
+    def _posted(self,path,**kwargs):
+        stuff = self._post(path,**kwargs)
+        doc = xml.dom.minidom.parseString(stuff)
         return _parse(doc.documentElement)
 
 class UserEndpoint(BaseEndpoint):
@@ -425,8 +437,8 @@ class IssuesEndpoint(BaseEndpoint):
 
     def new(self, user, repo, title, body=''):
         """Create a new issue."""
-        self._post('/'.join(['issues', 'open', user, repo]),
-                   title=title, body=body)
+        return self._posted('/'.join(['issues', 'open', user, repo]),
+                            title=title, body=body)
 
     def edit(self, user, repo, issue_id, title, body):
         """Create a new issue."""

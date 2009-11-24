@@ -333,6 +333,10 @@ class RepositoryEndpoint(BaseEndpoint):
         """Stop watching a repository."""
         self._post('repos/unwatch/' + user + '/' + repo)
 
+    def watched(self, user):
+        """Get watched repositories of a user."""
+        return self._parsed('repos/watched/' + user)
+
     def network(self, user, repo):
         """Get the network for a given repo."""
         return self._parsed('repos/show/' + user + '/' + repo + '/network')
@@ -357,6 +361,10 @@ class RepositoryEndpoint(BaseEndpoint):
     def fork(self, user, repo):
         """Fork a user's repo."""
         self._post('repos/fork/' + user + '/' + repo)
+
+    def collaborators(self, user, repo):
+        """Find all of the collaborators of one of your repositories."""
+        return self._parsed('repos/show/%s/%s/collaborators' % (user, repo))
 
     def addCollaborator(self, repo, username):
         """Add a collaborator to one of your repositories."""

@@ -374,6 +374,25 @@ class RepositoryEndpoint(BaseEndpoint):
         """Remove a collaborator from one of your repositories."""
         self._post('repos/collaborators/' + repo + '/remove/' + username)
 
+    def collaborators_all(self):
+        """Find all of the collaborators of every of your repositories.
+
+        Returns a dictionary with reponame as key and a list of collaborators as value."""
+        ret = {}
+        for reponame in (rp.name for rp in self.forUser(self.user)):
+            ret[reponame] = self.collaborators(self.user, reponame)
+        return ret
+
+    def addCollaborator_all(self, username):
+        """Add a collaborator to all of your repositories."""
+        for reponame in (rp.name for rp in self.forUser(self.user)):
+            self.addCollaborator(reponame, username)
+
+    def removeCollaborator_all(self, username):
+        """Remove a collaborator from all of your repositories."""
+        for reponame in (rp.name for rp in self.forUser(self.user)):
+            self.removeCollaborator(reponame, username)
+
     def deployKeys(self, repo):
         """List the deploy keys for the given repository.
 

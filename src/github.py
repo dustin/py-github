@@ -362,6 +362,10 @@ class RepositoryEndpoint(BaseEndpoint):
         """Fork a user's repo."""
         self._post('repos/fork/' + user + '/' + repo)
 
+    def watchers(self, user, repo):
+        """Find all of the watchers of one of your repositories."""
+        return self._parsed('repos/show/%s/%s/watchers' % (user, repo))
+
     def collaborators(self, user, repo):
         """Find all of the collaborators of one of your repositories."""
         return self._parsed('repos/show/%s/%s/collaborators' % (user, repo))

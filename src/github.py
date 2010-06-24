@@ -317,9 +317,15 @@ class RepositoryEndpoint(BaseEndpoint):
                 rv[c.localName] = str(c.firstChild.data)
         return rv
 
-    def search(self, term):
-        """Search for repositories."""
-        return self._parsed('repos/search/' + urllib.quote_plus(term))
+    def search(self, term, **args):
+        """Search for repositories. Accept arguments to filter the search:
+        - start_page => specifies the page of the results to show
+        - language   => limits the search to a programming language """
+        path = 'repos/search/' + urllib.quote_plus(term)
+        params = "&".join(["%s=%s" % (k, v) for k,v in args.items()])
+        if params:
+          path += '?%s' % params
+        return self._parsed(path)
 
     def show(self, user, repo):
         """Lookup an individual repository."""

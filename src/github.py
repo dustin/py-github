@@ -207,7 +207,7 @@ class Label(BaseResponse):
     parses = 'label'
 
     def __repr__(self):
-        return "<<Label $%d>>" % self.number
+        return "<<Label $%s>>" % self.name
 
 class Tree(BaseResponse):
     """A Tree object."""

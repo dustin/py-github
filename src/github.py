@@ -202,6 +202,14 @@ class Issue(BaseResponse):
     def __repr__(self):
         return "<<Issue #%d>>" % self.number
 
+class IssueComment(BaseResponse):
+    """ An issue comment within the issue tracker."""
+
+    parses = 'comment'
+
+    def __repr__(self):
+        return "<<Comment #%s>>" % self.body
+
 class Label(BaseResponse):
     """A Label within the issue tracker."""
     parses = 'label'
@@ -448,6 +456,10 @@ class IssuesEndpoint(BaseEndpoint):
     def list(self, user, repo, state='open'):
         """Get the list of issues for the given repo in the given state."""
         return self._parsed('/'.join(['issues', 'list', user, repo, state]))
+
+    @with_temporary_mappings({'user': None})
+    def comments(self, user, repo, issue_id):
+        return self._parsed('/'.join(['issues', 'comments', user, repo, str(issue_id)]))
 
     @with_temporary_mappings({'user': None})
     def show(self, user, repo, issue_id):

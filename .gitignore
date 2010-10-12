@@ -2,6 +2,6 @@
 *.pyo
 *~
 .*.swp
+MANIFEST
 build
 dist
-MANIFEST

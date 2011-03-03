@@ -312,9 +312,9 @@ class UserEndpoint(BaseEndpoint):
 
 class RepositoryEndpoint(BaseEndpoint):
 
-    def forUser(self, username):
+    def forUser(self, username, page=1):
         """Get the repositories for the given user."""
-        return self._parsed('repos/show/' + username)
+        return self._parsed('repos/show/' + username + "?page=" + str(page))
 
     def branches(self, user, repo):
         """List the branches for a repo."""

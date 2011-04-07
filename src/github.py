@@ -246,6 +246,14 @@ class Network(BaseResponse):
     def __repr__(self):
         return "<<Network of %s/%s>>" % (self.owner, self.name)
 
+class Organization(BaseResponse):
+    """An organization."""
+
+    parses = 'organization'
+
+    def __repr__(self):
+        return "<<Organization %s>>" % (self.name)
+
 # Load the known types.
 for __t in (t for t in globals().values() if hasattr(t, 'parses')):
     _types[__t.parses] = __t
@@ -536,6 +544,20 @@ class ObjectsEndpoint(BaseEndpoint):
         path = 'blob/show/%s/%s/%s' % (user, repo, sha)
         return self._raw_fetch(path)
 
+class OrganizationsEndpoint(BaseEndpoint):
+
+    def show(self, org):
+        """Get the info of an organization."""
+        return self._parsed('organizations/' + org)
+
+class TeamsEndpoint(BaseEndpoint):
+
+    def addUserToTeam(self, team_id, username):
+        self._post('teams/%s/members' % str(team_id), name=username)
+
+    def addRepoToTeam(self, team_id, user, repo):
+        self._post('teams/%s/repositories' % team_id, name="%s/%s" % (user, repo))
+
 class GitHub(object):
     """Interface to github."""
 
@@ -565,3 +587,11 @@ class GitHub(object):
     @property
     def objects(self):
         return ObjectsEndpoint(self.user, self.token, self.fetcher)
+
+    @property
+    def organizations(self):
+        return OrganizationsEndpoint(self.user, self.token, self.fetcher)
+
+    @property
+    def teams(self):
+        return TeamsEndpoint(self.user, self.token, self.fetcher)

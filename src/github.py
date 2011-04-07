@@ -342,6 +342,12 @@ class RepositoryEndpoint(BaseEndpoint):
         """Lookup an individual repository."""
         return self._parsed('/'.join(['repos', 'show', user, repo]))
 
+    def set(self, user, repo, **args):
+        prepared_args = {}
+        for k,v in args.items():
+            prepared_args['values[' + k + ']'] = v
+        return self._post('/'.join(['repos', 'show', user, repo]), **prepared_args)
+
     def watch(self, user, repo):
         """Watch a repository."""
         self._post('repos/watch/' + user + '/' + repo)

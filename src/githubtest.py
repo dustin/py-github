@@ -60,17 +60,17 @@ class BaseCase(unittest.TestCase):
 class UserTest(BaseCase):
 
     def __loadUserSearch(self):
-        return self._gh('http://github.com/api/v2/xml/user/search/dustin',
+        return self._gh('https://github.com/api/v2/xml/user/search/dustin',
             'data/user.search.xml').users.search('dustin')
 
     def __loadUser(self, which, u=None, p=None):
         if u:
-            return self._agh('http://github.com/api/v2/xml/user/show/dustin'
+            return self._agh('https://github.com/api/v2/xml/user/show/dustin'
                               + '?login=' + u + '&token=' + p,
                               u, p, 'data/' + which).users.show('dustin')
 
         else:
-            return self._gh('http://github.com/api/v2/xml/user/show/dustin',
+            return self._gh('https://github.com/api/v2/xml/user/show/dustin',
                              'data/' + which).users.show('dustin')
 
     def testUserSearch(self):
@@ -137,7 +137,7 @@ class UserTest(BaseCase):
 
     def testKeysList(self):
         """Test key listing."""
-        kl = self._agh('http://github.com/api/v2/xml/user/keys?login=dustin&token=blahblah',
+        kl = self._agh('https://github.com/api/v2/xml/user/keys?login=dustin&token=blahblah',
                        'dustin', 'blahblah', 'data/keys.xml').users.keys()
         self.assertEquals(7, len(kl))
         k = kl[0]
@@ -160,7 +160,7 @@ class UserTest(BaseCase):
 class RepoTest(BaseCase):
 
     def __loadUserRepos(self):
-        return self._gh('http://github.com/api/v2/xml/repos/show/verbal',
+        return self._gh('https://github.com/api/v2/xml/repos/show/verbal?page=1',
             'data/repos.xml').repos.forUser('verbal')
 
     def testUserRepoList(self):
@@ -183,7 +183,7 @@ class RepoTest(BaseCase):
 
     def testRepoSearch(self):
         """Test searching a repository."""
-        rl = self._gh('http://github.com/api/v2/xml/repos/search/ruby+testing',
+        rl = self._gh('https://github.com/api/v2/xml/repos/search/ruby+testing',
                       'data/repos.search.xml').repos.search('ruby testing')
         self.assertEquals(12, len(rl))
 
@@ -208,14 +208,14 @@ class RepoTest(BaseCase):
 
     def testBranchList(self):
         """Test branch listing for a repo."""
-        bl = self._gh('http://github.com/api/v2/xml/repos/show/schacon/ruby-git/branches',
+        bl = self._gh('https://github.com/api/v2/xml/repos/show/schacon/ruby-git/branches',
                       'data/repos.branches.xml').repos.branches('schacon', 'ruby-git')
         self.assertEquals(4, len(bl))
         self.assertEquals('ee90922f3da3f67ef19853a0759c1d09860fe3b3', bl['master'])
 
     def testGetOneRepo(self):
         """Fetch an individual repository."""
-        r = self._gh('http://github.com/api/v2/xml/repos/show/schacon/grit',
+        r = self._gh('https://github.com/api/v2/xml/repos/show/schacon/grit',
                      'data/repo.xml').repos.show('schacon', 'grit')
 
         self.assertEquals('Grit is a Ruby library for extracting information from a '
@@ -233,7 +233,7 @@ class RepoTest(BaseCase):
 
     def testGetRepoNetwork(self):
         """Test network fetching."""
-        nl = self._gh('http://github.com/api/v2/xml/repos/show/dustin/py-github/network',
+        nl = self._gh('https://github.com/api/v2/xml/repos/show/dustin/py-github/network',
                       'data/network.xml').repos.network('dustin', 'py-github')
         self.assertEquals(5, len(nl))
 
@@ -302,7 +302,7 @@ class CommitTest(BaseCase):
 
     def testCommitList(self):
         """Test commit list."""
-        cl = self._gh('http://github.com/api/v2/xml/commits/list/mojombo/grit/master',
+        cl = self._gh('https://github.com/api/v2/xml/commits/list/mojombo/grit/master?page=1',
                       'data/commits.xml').commits.forBranch('mojombo', 'grit')
         self.assertEquals(30, len(cl))
 
@@ -323,7 +323,7 @@ class CommitTest(BaseCase):
 
     def testCommitListForFile(self):
         """Test commit list for a file."""
-        cl = self._gh('http://github.com/api/v2/xml/commits/list/mojombo/grit/master/grit.gemspec',
+        cl = self._gh('https://github.com/api/v2/xml/commits/list/mojombo/grit/master/grit.gemspec',
                       'data/commits.xml').commits.forFile('mojombo', 'grit', 'grit.gemspec')
         self.assertEquals(30, len(cl))
 
@@ -345,7 +345,7 @@ class CommitTest(BaseCase):
     def testIndividualCommit(self):
         """Grab a single commit."""
         h = '4c86fa592fcc7cb685c6e9d8b6aebe8dcbac6b3e'
-        c = self._gh('http://github.com/api/v2/xml/commits/show/dustin/memcached/' + h,
+        c = self._gh('https://github.com/api/v2/xml/commits/show/dustin/memcached/' + h,
                      'data/commit.xml').commits.show('dustin', 'memcached', h)
         self.assertEquals(['internal_tests.c'], c.removed)
         self.assertEquals(set(['cache.c', 'cache.h', 'testapp.c']), set(c.added))
@@ -383,7 +383,7 @@ class IssueTest(BaseCase):
 
     def testListIssues(self):
         """Test listing issues."""
-        il = self._gh('http://github.com/api/v2/xml/issues/list/schacon/simplegit/open',
+        il = self._gh('https://github.com/api/v2/xml/issues/list/schacon/simplegit/open',
                       'data/issues.list.xml').issues.list('schacon', 'simplegit')
         self.assertEquals(1, len(il))
         i = il[0]
@@ -400,7 +400,7 @@ class IssueTest(BaseCase):
 
     def testShowIssue(self):
         """Show an individual issue."""
-        i = self._gh('http://github.com/api/v2/xml/issues/show/dustin/py-github/1',
+        i = self._gh('https://github.com/api/v2/xml/issues/show/dustin/py-github/1',
                      'data/issues.show.xml').issues.show('dustin', 'py-github', 1)
 
         self.assertEquals('dustin', i.user)
@@ -451,7 +451,7 @@ class ObjectTest(BaseCase):
     def testTree(self):
         """Test tree fetching."""
         h = '1ddd3f99f0b96019042239375b3ad4d45796ffba'
-        tl = self._gh('http://github.com/api/v2/xml/tree/show/dustin/py-github/' + h,
+        tl = self._gh('https://github.com/api/v2/xml/tree/show/dustin/py-github/' + h,
                       'data/tree.xml').objects.tree('dustin', 'py-github', h)
         self.assertEquals(8, len(tl))
         self.assertEquals('setup.py', tl['setup.py'].name)
@@ -469,7 +469,7 @@ class ObjectTest(BaseCase):
     def testBlob(self):
         """Test blob fetching."""
         h = '1ddd3f99f0b96019042239375b3ad4d45796ffba'
-        blob = self._gh('http://github.com/api/v2/xml/blob/show/dustin/py-github/'
+        blob = self._gh('https://github.com/api/v2/xml/blob/show/dustin/py-github/'
                         + h + '/setup.py',
                         'data/blob.xml').objects.blob('dustin', 'py-github', h, 'setup.py')
         self.assertEquals('setup.py', blob.name)
@@ -483,7 +483,7 @@ class ObjectTest(BaseCase):
     def testRawBlob(self):
         """Test raw blob fetching."""
         h = '6e290379ec58fa00ac9d1c2a78f0819a21397445'
-        blob = self._gh('http://github.com/api/v2/xml/blob/show/dustin/py-github/' + h,
+        blob = self._gh('https://github.com/api/v2/xml/blob/show/dustin/py-github/' + h,
                         'data/setup.py').objects.raw_blob('dustin', 'py-github', h)
         self.assertEquals('e2dc8aea9ae8961f4f5923f9febfdd0a',
                           hashlib.md5(blob).hexdigest())

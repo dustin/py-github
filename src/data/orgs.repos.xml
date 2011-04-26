@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repositories type="array">
+  <repository>
+    <url>https://github.com/vlex/integrity</url>
+    <pushed-at type="datetime">2010-11-05T07:04:47-07:00</pushed-at>
+    <master-branch>vlex</master-branch>
+    <has-issues type="boolean">false</has-issues>
+    <description>Continuous Integration server for vLex &#8211;&#160;check the &quot;enhanced&quot; branch for improvements on the original integrity/integrity</description>
+    <created-at type="datetime">2010-04-09T08:01:37-07:00</created-at>
+    <integrate-branch>master</integrate-branch>
+    <organization>vlex</organization>
+    <watchers type="integer">2</watchers>
+    <forks type="integer">1</forks>
+    <fork type="boolean">true</fork>
+    <has-downloads type="boolean">true</has-downloads>
+    <homepage>http://integrity.vlex.com</homepage>
+    <size type="integer">7976</size>
+    <private type="boolean">false</private>
+    <name>integrity</name>
+    <owner>vlex</owner>
+    <has-wiki type="boolean">true</has-wiki>
+    <open-issues type="integer">0</open-issues>
+    <permission>push</permission>
+  </repository>
+</repositories>

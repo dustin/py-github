@@ -489,5 +489,107 @@ class ObjectTest(BaseCase):
                           hashlib.md5(blob).hexdigest())
 
 
+
+class OrganizationTest(BaseCase):
+
+    def testOrganization(self):
+        """Get the details of an organization."""
+        o = self._gh('https://github.com/api/v2/xml/organizations/ff0000',
+            'data/org.xml').organizations.show('ff0000')
+        self.assertEquals('ff0000', o.login)
+        self.assertEquals("RED Interactive Agency", o.name)
+        self.assertEquals('514663408e310690ce46f6e8efdf5e2d', o.gravatar_id)
+        self.assertEquals('Santa Monica, CA', o.location)
+        self.assertEquals('http://ff0000.github.com/', o.blog)
+        self.assertEquals('Organization', o.type)
+        self.assertEquals(0, o.public_gist_count)
+        self.assertEquals(0, o.following_count)
+        self.assertEquals(21, o.public_repo_count)
+        self.assertEquals(283774, o.id)
+        self.assertEquals(1, o.followers_count)
+        self.assertEquals('2010-05-21T15:42:37-07:00', o.created_at)
+
+    def testUserPublicOrganizationList(self):
+        """Get a list of organizations a user is publicly member of."""
+        os = self._gh('https://github.com/api/v2/xml/user/show/claudiob/organizations',
+            'data/orgs.for_user.public.xml').organizations.forUser('claudiob')
+        self.assertEquals(2, len(os))
+        o = os[0]
+        self.assertEquals('ff0000', o.login)
+        self.assertEquals('RED Interactive Agency', o.name)
+        self.assertEquals('514663408e310690ce46f6e8efdf5e2d', o.gravatar_id)
+        self.assertEquals('Santa Monica, CA', o.location)
+        self.assertEquals('http://ff0000.github.com/', o.blog)
+        self.assertEquals('Organization', o.type)
+
+    def testUserFullOrganizationList(self):
+        """Get a list of organizations a user is member of."""
+        u, t = 'claudiob', 'blah blah' # use real token to run the test
+        os = self._agh('https://github.com/api/v2/xml/organizations'
+            + '?login=' + u + '&token=' + t,
+            u, t, 'data/orgs.for_user.xml').organizations.forMe()
+        self.assertEquals(3, len(os))
+        o = os[0]
+        self.assertEquals('lexdir', o.login)
+
+    def testOrganizationPublicRepositories(self):
+        """Get a list of public repositories of an organization."""
+        rs = self._gh('https://github.com/api/v2/xml/organizations/ff0000/public_repositories',
+            'data/org.repos.public.xml').organizations.publicRepositories('ff0000')
+        self.assertEquals(7, len(rs))
+        r = rs[0]
+        self.assertEquals(r.url, 'https://github.com/ff0000/random_instances')
+        self.assertEquals(r.pushed_at, '2011-01-21T14:52:20-08:00')
+        self.assertEquals(r.has_issues, True)
+        self.assertEquals(r.description, 'Retrieve or generate random instances of Django models.')
+        self.assertEquals(r.created_at, '2011-01-20T15:05:23-08:00')
+        self.assertEquals(r.watchers, 2)
+        self.assertEquals(r.forks, 1)
+        self.assertEquals(r.fork, False)
+        self.assertEquals(r.has_downloads, True)
+        self.assertEquals(r.size, 176)
+        self.assertEquals(r.private, False)
+        self.assertEquals(r.language, 'Python')
+        self.assertEquals(r.name, 'random_instances')
+        self.assertEquals(r.owner, 'ff0000')
+        self.assertEquals(r.has_wiki, True)
+        self.assertEquals(r.open_issues, 0)
+
+    def testOrganizationPublicMembers(self):
+        """Get a list of public members of an organization."""
+        ms = self._gh('https://github.com/api/v2/xml/organizations/ff0000/public_members',
+            'data/org.members.public.xml').organizations.publicMembers('ff0000')
+        self.assertEquals(4, len(ms))
+        m = ms[2]
+        self.assertEquals(m.login, 'claudiob')
+        self.assertEquals(m.name, 'Claudio B.')
+        self.assertEquals(m.blog, 'http://claudiob.github.com')
+
+    def testOrganizationOwners(self):
+        """Get a list of owners of an organization."""
+        u, t = 'claudiob', 'blah blah' # use real token to run the test
+        ms = self._agh('https://github.com/api/v2/xml/organizations/ff0000/owners'
+            + '?login=' + u + '&token=' + t,
+            u, t, 'data/org.owners.xml').organizations.owners('ff0000')
+        self.assertEquals(1, len(ms))
+        m = ms[0]
+        self.assertEquals(m.login, 'claudiob')
+        self.assertEquals(m.name, 'Claudio B.')
+        self.assertEquals(m.blog, 'http://claudiob.github.com')
+
+    def testOrganizationRepositories(self):
+        """Get a list of repositories across all the organizations that a user can access."""
+        u, t = 'claudiob', 'blah blah' # use real token to run the test
+        os = self._agh('https://github.com/api/v2/xml/organizations/repositories'
+            + '?login=' + u + '&token=' + t,
+            u, t, 'data/orgs.repos.xml').organizations.repositories()
+        self.assertEquals(1, len(os))
+        o = os[0]
+        self.assertEquals('vlex', o.owner)
+        self.assertEquals('integrity', o.name)
+
+
+
+
 if __name__ == '__main__':
     unittest.main()

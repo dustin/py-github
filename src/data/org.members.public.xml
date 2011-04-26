@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users type="array">
+  <user>
+    <gravatar-id>ddb31f03132c48d1821b5600e8dfe249</gravatar-id>
+    <company nil="true"></company>
+    <name>Jon Caldwell</name>
+    <created-at type="datetime">2010-03-29T16:58:22-07:00</created-at>
+    <location nil="true"></location>
+    <public-repo-count type="integer">7</public-repo-count>
+    <public-gist-count type="integer">0</public-gist-count>
+    <blog>joncaldwell.com</blog>
+    <following-count type="integer">6</following-count>
+    <id type="integer">232986</id>
+    <type>User</type>
+    <permission nil="true"></permission>
+    <followers-count type="integer">6</followers-count>
+    <login>arkie</login>
+    <email>email@joncaldwell.com</email>
+  </user>
+  <user>
+    <gravatar-id>e4f4f42f8e65935c2233e1f5039eb2bd</gravatar-id>
+    <company>RED Interactive Agency</company>
+    <name>Chris Gilmer</name>
+    <created-at type="datetime">2010-03-09T10:47:09-08:00</created-at>
+    <location>Los Angeles, CA</location>
+    <public-repo-count type="integer">13</public-repo-count>
+    <public-gist-count type="integer">0</public-gist-count>
+    <blog>http://blog.chrisgilmer.net</blog>
+    <following-count type="integer">3</following-count>
+    <id type="integer">219296</id>
+    <type>User</type>
+    <permission nil="true"></permission>
+    <followers-count type="integer">3</followers-count>
+    <login>chrisgilmerproj</login>
+    <email>chris.gilmer@gmail.com</email>
+  </user>
+  <user>
+    <gravatar-id>4dea5cf83d2d6c1228750b76e579b38d</gravatar-id>
+    <company></company>
+    <name>Claudio B.</name>
+    <created-at type="datetime">2008-05-12T13:01:33-07:00</created-at>
+    <location>Los Angeles, United States</location>
+    <public-repo-count type="integer">32</public-repo-count>
+    <public-gist-count type="integer">0</public-gist-count>
+    <blog>http://claudiob.github.com</blog>
+    <following-count type="integer">14</following-count>
+    <id type="integer">10076</id>
+    <type>User</type>
+    <permission nil="true"></permission>
+    <followers-count type="integer">16</followers-count>
+    <login>claudiob</login>
+    <email></email>
+  </user>
+  <user>
+    <gravatar-id>c9877917379438bb2b31e951a74f8fec</gravatar-id>
+    <company>RED Interactive Agency</company>
+    <name>Michael Barlow</name>
+    <created-at type="datetime">2010-05-20T17:40:48-07:00</created-at>
+    <location>Los Angeles</location>
+    <public-repo-count type="integer">0</public-repo-count>
+    <public-gist-count type="integer">0</public-gist-count>
+    <blog nil="true"></blog>
+    <following-count type="integer">2</following-count>
+    <id type="integer">282906</id>
+    <type>User</type>
+    <permission nil="true"></permission>
+    <followers-count type="integer">4</followers-count>
+    <login>mbarlow</login>
+    <email nil="true"></email>
+  </user>
+</users>

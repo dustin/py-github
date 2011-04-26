@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users type="array">
+  <user>
+    <gravatar-id>4dea5cf83d2d6c1228750b76e579b38d</gravatar-id>
+    <company></company>
+    <name>Claudio B.</name>
+    <created-at type="datetime">2008-05-12T13:01:33-07:00</created-at>
+    <location>Los Angeles, United States</location>
+    <public-repo-count type="integer">32</public-repo-count>
+    <public-gist-count type="integer">0</public-gist-count>
+    <blog>http://claudiob.github.com</blog>
+    <following-count type="integer">14</following-count>
+    <id type="integer">10076</id>
+    <type>User</type>
+    <permission nil="true"></permission>
+    <followers-count type="integer">16</followers-count>
+    <login>claudiob</login>
+    <email></email>
+  </user>
+</users>

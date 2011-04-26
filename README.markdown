@@ -39,7 +39,7 @@ properties:
 Get details about an individual user.
 
     username = 'dustin'
-    print("%s's web site:  %s" % (username, gh.users.show(%s).blog))
+    print "%s's web site:  %s" % (username, gh.users.show(username).blog)
 
 Note that this API returns more information if you're authenticated
 and ask for yourself:
@@ -260,9 +260,72 @@ Retreive the tree object with the given hash:
     print b.raw_blob('dustin', 'py-github',
         'a1ae3723758a0dc1ea857e9efe6640f18a6b3865')
 
+## Organizations
+
+The [organizations API][organizationapi] is available via `gh.organizations`.
+
+### Getting Organization Information
+
+Get the full information on organizations by the screen name.
+
+    org = 'ff0000'
+    print "%s's location:  %s" % (org, gh.organizations.show(org).location)
+
+### Updating fields
+
+Owners can update the organization with these fields:
+
+* name
+* email
+* blog
+* company
+* location
+* billing_email
+
+    org = 'ff0000'
+    print "%s's old location:  %s" % (org, gh.organizations.show(org).location)
+    agh.organizations.set('ff0000', location='Los Angeles, CA')
+
+### Checking Organization Membership
+
+Get all the public organizations that a user is part of.
+If you are authenticated, concealed memberships will also be returned.
+
+    print "My organizations:"
+    for org in gh.organizations.forUser(me):
+        print org
+
+### Listing Organization Memberships
+
+List all repositories across all the organizations that you can access.
+
+    print "Repositories of my organizations:"
+    for repo in agh.organizations.repositories():
+        print repo.name
+
+List all members of the organization's Owners team:
+
+    print "Owner of my organization:"
+    for owner in agh.organizations.owners('ff0000'):
+        print owner.name
+
+List all public repositories of any other organization:
+
+    print "Public repositories of the github organization:"
+    for repo in gh.organizations.publicRepositories('github'):
+        print repo.name
+
+List all public members of any organization:
+
+    print "Public members of the github organization:"
+    for member in gh.organizations.publicMembers('github'):
+        print member.name
+
+
 [accountpage]: https://github.com/account
 [userapi]: http://develop.github.com/p/users.html
 [repoapi]: http://develop.github.com/p/repo.html
 [issueapi]: http://develop.github.com/p/issues.html
 [commitapi]: http://develop.github.com/p/commits.html
 [objectapi]: http://develop.github.com/p/object.html
+[organizationapi]: http://develop.github.com/p/orgs.html

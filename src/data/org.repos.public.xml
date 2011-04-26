@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repositories type="array">
+  <repository>
+    <url>https://github.com/ff0000/random_instances</url>
+    <pushed-at type="datetime">2011-01-21T14:52:20-08:00</pushed-at>
+    <has-issues type="boolean">true</has-issues>
+    <description>Retrieve or generate random instances of Django models.</description>
+    <created-at type="datetime">2011-01-20T15:05:23-08:00</created-at>
+    <organization>ff0000</organization>
+    <watchers type="integer">2</watchers>
+    <forks type="integer">1</forks>
+    <fork type="boolean">false</fork>
+    <has-downloads type="boolean">true</has-downloads>
+    <homepage></homepage>
+    <size type="integer">176</size>
+    <private type="boolean">false</private>
+    <language>Python</language>
+    <name>random_instances</name>
+    <owner>ff0000</owner>
+    <has-wiki type="boolean">true</has-wiki>
+    <open-issues type="integer">0</open-issues>
+  </repository>
+  <repository>
+    <url>https://github.com/ff0000/red-fab-deploy</url>
+    <pushed-at type="datetime">2011-04-25T10:54:58-07:00</pushed-at>
+    <has-issues type="boolean">true</has-issues>
+    <description>Fabric deployment scripts</description>
+    <created-at type="datetime">2011-02-24T08:55:55-08:00</created-at>
+    <organization>ff0000</organization>
+    <watchers type="integer">6</watchers>
+    <forks type="integer">4</forks>
+    <fork type="boolean">false</fork>
+    <has-downloads type="boolean">true</has-downloads>
+    <homepage></homepage>
+    <size type="integer">280</size>
+    <private type="boolean">false</private>
+    <language>VimL</language>
+    <name>red-fab-deploy</name>
+    <owner>ff0000</owner>
+    <has-wiki type="boolean">true</has-wiki>
+    <open-issues type="integer">0</open-issues>
+  </repository>
+  <repository>
+    <url>https://github.com/ff0000/ff0000.github.com</url>
+    <pushed-at type="datetime">2011-04-23T11:43:03-07:00</pushed-at>
+    <has-issues type="boolean">false</has-issues>
+    <description>Red Interactive Agency &#8211; Developers blog</description>
+    <created-at type="datetime">2011-03-03T14:48:02-08:00</created-at>
+    <organization>ff0000</organization>
+    <watchers type="integer">1</watchers>
+    <forks type="integer">0</forks>
+    <fork type="boolean">true</fork>
+    <has-downloads type="boolean">true</has-downloads>
+    <homepage></homepage>
+    <size type="integer">596</size>
+    <private type="boolean">false</private>
+    <language>JavaScript</language>
+    <name>ff0000.github.com</name>
+    <owner>ff0000</owner>
+    <has-wiki type="boolean">true</has-wiki>
+    <open-issues type="integer">0</open-issues>
+  </repository>
+  <repository>
+    <url>https://github.com/ff0000/pypeton</url>
+    <pushed-at type="datetime">2011-04-19T15:01:02-07:00</pushed-at>
+    <has-issues type="boolean">true</has-issues>
+    <description>Tool to deploy Django and Bongo projects.</description>
+    <created-at type="datetime">2011-03-08T13:59:31-08:00</created-at>
+    <organization>ff0000</organization>
+    <watchers type="integer">3</watchers>
+    <forks type="integer">3</forks>
+    <fork type="boolean">false</fork>
+    <has-downloads type="boolean">true</has-downloads>
+    <homepage></homepage>
+    <size type="integer">620</size>
+    <private type="boolean">false</private>
+    <language>Python</language>
+    <name>pypeton</name>
+    <owner>ff0000</owner>
+    <has-wiki type="boolean">true</has-wiki>
+    <open-issues type="integer">0</open-issues>
+  </repository>
+  <repository>
+    <url>https://github.com/ff0000/django-cumulus</url>
+    <pushed-at type="datetime">2011-04-01T12:35:43-07:00</pushed-at>
+    <has-issues type="boolean">false</has-issues>
+    <description>An interface to Rackspace Cloud Files through Django.</description>
+    <created-at type="datetime">2011-03-31T18:01:54-07:00</created-at>
+    <organization>ff0000</organization>
+    <watchers type="integer">1</watchers>
+    <forks type="integer">0</forks>
+    <fork type="boolean">true</fork>
+    <has-downloads type="boolean">true</has-downloads>
+    <homepage>http://django-cumulus.rtfd.org/</homepage>
+    <size type="integer">1336</size>
+    <private type="boolean">false</private>
+    <language>Python</language>
+    <name>django-cumulus</name>
+    <owner>ff0000</owner>
+    <has-wiki type="boolean">false</has-wiki>
+    <open-issues type="integer">0</open-issues>
+  </repository>
+  <repository>
+    <url>https://github.com/ff0000/sortable</url>
+    <pushed-at type="datetime">2011-04-08T16:13:16-07:00</pushed-at>
+    <has-issues type="boolean">true</has-issues>
+    <description>An app to add drag-and-drop to Grappelli admin to reorder instances of models.</description>
+    <created-at type="datetime">2011-04-08T15:47:18-07:00</created-at>
+    <organization>ff0000</organization>
+    <watchers type="integer">1</watchers>
+    <forks type="integer">1</forks>
+    <fork type="boolean">false</fork>
+    <has-downloads type="boolean">true</has-downloads>
+    <homepage></homepage>
+    <size type="integer">204</size>
+    <private type="boolean">false</private>
+    <language>JavaScript</language>
+    <name>sortable</name>
+    <owner>ff0000</owner>
+    <has-wiki type="boolean">true</has-wiki>
+    <open-issues type="integer">1</open-issues>
+  </repository>
+  <repository>
+    <url>https://github.com/ff0000/ec2selector</url>
+    <pushed-at type="datetime">2011-04-22T14:34:16-07:00</pushed-at>
+    <has-issues type="boolean">true</has-issues>
+    <description>Interactive prompt to select an AMI (Amazon Machine Image) from Amazon EC2</description>
+    <created-at type="datetime">2011-04-22T12:56:05-07:00</created-at>
+    <organization>ff0000</organization>
+    <watchers type="integer">1</watchers>
+    <forks type="integer">1</forks>
+    <fork type="boolean">false</fork>
+    <has-downloads type="boolean">true</has-downloads>
+    <homepage></homepage>
+    <size type="integer">180</size>
+    <private type="boolean">false</private>
+    <language>Python</language>
+    <name>ec2selector</name>
+    <owner>ff0000</owner>
+    <has-wiki type="boolean">true</has-wiki>
+    <open-issues type="integer">0</open-issues>
+  </repository>
+</repositories>

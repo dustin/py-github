@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<organizations type="array">
+  <organization>
+    <gravatar-id>20a418cd340f5c989f244f2057658337</gravatar-id>
+    <type>Organization</type>
+    <login>lexdir</login>
+  </organization>
+  <organization>
+    <name>RED Interactive Agency</name>
+    <gravatar-id>514663408e310690ce46f6e8efdf5e2d</gravatar-id>
+    <location>Santa Monica, CA</location>
+    <blog>http://ff0000.github.com/</blog>
+    <type>Organization</type>
+    <login>ff0000</login>
+  </organization>
+  <organization>
+    <gravatar-id>c15142db81eca4cb9286fe2e111e55f1</gravatar-id>
+    <type>Organization</type>
+    <login>contributors</login>
+  </organization>
+</organizations>

@@ -267,7 +267,7 @@ class Organization(BaseResponse):
     parses = 'organization'
 
     def __repr__(self):
-        return "<<Organization %s>>" % (self.name)
+        return "<<Organization %s>>" % getattr(self, 'name', self.login)
 
 # Load the known types.
 for __t in (t for t in list(globals().values()) if hasattr(t, 'parses')):
@@ -301,6 +301,16 @@ class BaseEndpoint(object):
         p = {'login': self.user, 'token': self.token}
         p.update(kwargs)
         return self.fetcher(self.BASE_URL + path, urlencode(p)).read()
+
+    def _put(self, path, **kwargs):
+        p = {'login': self.user, 'token': self.token}
+        p.update(kwargs)
+        # Setting PUT with urllib2: http://stackoverflow.com/questions/111945
+        import urllib2
+        opener = urllib2.build_opener(urllib2.HTTPHandler)
+        request = urllib2.Request(self.BASE_URL + path, data=urllib.urlencode(p))
+        request.get_method = lambda: 'PUT'
+        return opener.open(request).read()
 
     def _parsed(self, path):
         doc = self._fetch(path)
@@ -564,6 +574,47 @@ class OrganizationsEndpoint(BaseEndpoint):
     def show(self, org):
         """Get the info of an organization."""
         return self._parsed('organizations/' + org)
+
+    def forUser(self, username):
+        """Get the organizations for the given user."""
+        return self._parsed('user/show/' + username + "/organizations")
+
+    def forMe(self):
+        """Get the organizations for an authenticated user."""
+        return self._parsed('organizations')
+
+    def set(self, org, **args):
+        """Set organization parameters.
+
+        Organization parameters include the following:
+         - name
+         - email
+         - blog
+         - company
+         - location
+         - billing_email"""
+        prepared_args = {}
+        for k,v in args.items():
+            prepared_args['organization[' + k + ']'] = v
+        return self._put('/'.join(['organizations', org]),
+            **prepared_args)
+
+    def repositories(self):
+        """List repositories across all the organizations that an authenticated user can access."""
+        return self._parsed("organizations/repositories")
+
+    def owners(self, org):
+        """List the owners of an organization."""
+        return self._parsed("organizations/" + org + "/owners")
+
+    def publicRepositories(self, org):
+        """List the public repositories for an organization."""
+        return self._parsed("organizations/" + org + "/public_repositories")
+
+    def publicMembers(self, org):
+        """List the public members of an organization."""
+        return self._parsed("organizations/" + org + "/public_members")
+
 
 class TeamsEndpoint(BaseEndpoint):
 

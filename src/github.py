@@ -36,14 +36,29 @@ See the GitHub docs or README.markdown for more usage.
 Copyright (c) 2007  Dustin Sallings <dustin@spy.net>
 """
 
-# GAE friendly URL detection (theoretically)
-try:
-    import urllib2
-    default_fetcher = urllib2.urlopen
-except LoadError:
-    pass
+import sys
+PY3 = sys.version_info[0] == 3
 
-import urllib
+if PY3:
+    from urllib.parse import urlencode
+    from urllib.parse import quote
+    from urllib.parse import quote_plus
+    from urllib.request import urlopen
+
+    default_fetcher = urlopen
+else:
+    from urllib import urlencode
+    from urllib import quote
+    from urllib import quote_plus
+
+    # GAE friendly URL detection (theoretically)
+    try:
+        import urllib2.urlopen
+        default_fetcher = urllib2.urlopen
+    except ImportError:
+        pass
+
+
 import xml
 import xml.dom.minidom
 
@@ -63,7 +78,7 @@ def _parse(el):
     """Generic response parser."""
 
     type = 'string'
-    if el.attributes and 'type' in el.attributes.keys():
+    if el.attributes and 'type' in list(el.attributes.keys()):
         type = el.attributes['type'].value
     elif el.localName in _types:
         type = el.localName
@@ -78,7 +93,7 @@ def _parse(el):
 
     if not type:
         raise Exception("Can't parse %s, known: %s"
-                        % (el.toxml(), repr(_types.keys())))
+                        % (el.toxml(), repr(list(_types.keys()))))
 
     return _types[type](el)
 
@@ -95,7 +110,7 @@ def with_temporary_mappings(m):
         def every(self, *args):
             global _types
             o = _types.copy()
-            for k,v in m.items():
+            for k,v in list(m.items()):
                 if v:
                     _types[k] = v
                 else:
@@ -255,7 +270,7 @@ class Organization(BaseResponse):
         return "<<Organization %s>>" % (self.name)
 
 # Load the known types.
-for __t in (t for t in globals().values() if hasattr(t, 'parses')):
+for __t in (t for t in list(globals().values()) if hasattr(t, 'parses')):
     _types[__t.parses] = __t
 
 class BaseEndpoint(object):
@@ -271,8 +286,8 @@ class BaseEndpoint(object):
         p = self.BASE_URL + path
         args = ''
         if self.user and self.token:
-            params = '&'.join(['login=' + urllib.quote(self.user),
-                               'token=' + urllib.quote(self.token)])
+            params = '&'.join(['login=' + quote(self.user),
+                               'token=' + quote(self.token)])
             if '?' in path:
                 p += params
             else:
@@ -285,7 +300,7 @@ class BaseEndpoint(object):
     def _post(self, path, **kwargs):
         p = {'login': self.user, 'token': self.token}
         p.update(kwargs)
-        return self.fetcher(self.BASE_URL + path, urllib.urlencode(p)).read()
+        return self.fetcher(self.BASE_URL + path, urlencode(p)).read()
 
     def _parsed(self, path):
         doc = self._fetch(path)
@@ -340,8 +355,8 @@ class RepositoryEndpoint(BaseEndpoint):
         - start_page => specifies the page of the results to show
         - language   => limits the search to a programming language """
 
-        path = 'repos/search/' + urllib.quote_plus(term)
-        params = "&".join(["%s=%s" % (k, v) for k,v in args.items()])
+        path = 'repos/search/' + quote_plus(term)
+        params = "&".join(["%s=%s" % (k, v) for k,v in list(args.items())])
         if params:
             path += '?%s' % params
         return self._parsed(path)
@@ -362,7 +377,7 @@ class RepositoryEndpoint(BaseEndpoint):
          - has_downloads"""
 
         prepared_args = {}
-        for k,v in args.items():
+        for k,v in list(args.items()):
             prepared_args['values[' + k + ']'] = v
         return self._post('/'.join(['repos', 'show', user, repo]),
                           **prepared_args)
@@ -483,7 +498,7 @@ class IssuesEndpoint(BaseEndpoint):
     @with_temporary_mappings({'user': None})
     def search(self, user, repo, state, search_term):
         """Search the issues for the given repo for the given state and search term."""
-        return self._parsed('/'.join(['issues', 'search', user, repo, state, urllib.quote_plus(search_term)]))
+        return self._parsed('/'.join(['issues', 'search', user, repo, state, quote_plus(search_term)]))
     
     @with_temporary_mappings({'user': None})
     def list(self, user, repo, state='open'):

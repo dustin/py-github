@@ -32,27 +32,27 @@ Example displaying search results using the `name` and `fullname`
 properties:
 
     for u in gh.users.search(myquery):
-        print "User:  %s (%s)" % (u.name, u.fullname)
+        print("User:  %s (%s)" % (u.name, u.fullname))
 
 ### Show
 
 Get details about an individual user.
 
     username = 'dustin'
-    print "%s's web site:  %s" % (username, gh.users.show(%s).blog)
+    print("%s's web site:  %s" % (username, gh.users.show(%s).blog))
 
 Note that this API returns more information if you're authenticated
 and ask for yourself:
 
-    print "My disk usage: %d" % agh.users.show(me).disk_usage
+    print("My disk usage: %d" % agh.users.show(me).disk_usage)
 
 ### Keys
 
 List your ssh keys:
 
     print "Names of my keys:"
-    for k in agh.users.keys():
-        print k.title
+    for k in list(agh.users.keys()):
+        print(k.title)
 
 ## Repositories
 
@@ -65,26 +65,26 @@ user, private repositories will also be returned.
 
     print "My repo names:"
     for r in gh.repos.forUser(me):
-        print r.name
+        print(r.name)
 
 ### Branches Within a Repo
 
 List the branches within a repo:
 
-    print "memcached branches:"
+    print("memcached branches:")
     for branchname, branchhash in gh.repos.branches('dustin', 'memcached'):
-        print branchname
+        print(branchname)
 
 ### Search for a Repository
 
     for r in gh.repos.search('memcached'):
-        print "%s's %s" % (r.username, r.name)
+        print("%s's %s" % (r.username, r.name))
 
 ### Show a Repository
 
 Retrieve an individual repository.
 
-    print gh.repos.show('dustin', 'py-github').homepage
+    print(gh.repos.show('dustin', 'py-github').homepage)
 
 ### Watch a Repository
 
@@ -103,7 +103,7 @@ Stop watching a repository.
 Retrieve the network for a repository.
 
     for r in gh.repos.network('dustin', 'memcached'):
-        print "%'s %s" % (r.owner_name, r.name)
+        print("%'s %s" % (r.owner_name, r.name))
 
 ### Adjust a Repository's Visibility
 
@@ -171,12 +171,12 @@ The [commit API][commitapi] is available via `gh.commits`.
 Master is assumed:
 
     for c in gh.commits.forBranch('dustin', 'py-github'):
-        print "%s %s" % (c.id[:7], c.message[:60].split("\n")[0])
+        print("%s %s" % (c.id[:7], c.message[:60].split("\n")[0]))
 
 Otherwise, you can specify a branch name:
 
     for c in gh.commits.forBranch('dustin', 'py-github', 'v2'):
-        print "%s %s" % (c.id[:7], c.message[:60].split("\n")[0])
+        print("%s %s" % (c.id[:7], c.message[:60].split("\n")[0]))
 
 ### Get the Commits Affecting a File
 
@@ -184,12 +184,12 @@ Retrieve all of the commits for the specified file.  Again, master is
 assumed):
 
     for c in gh.commits.forFile('dustin', 'py-github', 'README.markdown'):
-        print "%s %s" % (c.id[:7], c.message[:60].split("\n")[0])
+        print("%s %s" % (c.id[:7], c.message[:60].split("\n")[0]))
 
 ...but you can also specify a branch name:
 
     for c in gh.commits.forFile('dustin', 'py-github', 'README.markdown', 'v2'):
-        print "%s %s" % (c.id[:7], c.message[:60].split("\n")[0])
+        print("%s %s" % (c.id[:7], c.message[:60].split("\n")[0]))
 
 ### Show a Specific Commit
 
@@ -203,12 +203,12 @@ The [issues api][issueapi] is available via `gh.issues`.
 ### List Repository Issues
 
     for i in gh.issues.list('dustin', 'py-github'):
-        print "issue #%s:  %s" % (i.number, i.title)
+        print("issue #%s:  %s" % (i.number, i.title))
 
 ### Show a Particular Issue
 
     i = gh.issues.show('dustin', 'py-github', 1)
-    print "%s:  %s" % (i.state, i.title)
+    print("%s:  %s" % (i.state, i.title))
 
 ### Add a Label to an Issue
 
@@ -246,7 +246,7 @@ Retreive the tree object with the given hash:
 
     t = gh.objects.tree('dustin', 'py-github',
         'b34f658fd7be0d3e00cc961b75da10ca0d44d050')
-    for k,v in t.items():
+    for k,v in list(t.items()):
         print "%s\t%s\t%s" % (v.sha, v.type, k)
 
 ### Retrieve a Blob (with info)

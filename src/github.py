@@ -289,9 +289,10 @@ class BaseEndpoint(object):
             params = '&'.join(['login=' + quote(self.user),
                                'token=' + quote(self.token)])
             if '?' in path:
-                p += params
+                p += '&' + params
             else:
                 p += '?' + params
+
         return self.fetcher(p).read()
 
     def _fetch(self, path):
@@ -347,7 +348,7 @@ class RepositoryEndpoint(BaseEndpoint):
 
     def forUser(self, username, page=1):
         """Get the repositories for the given user."""
-        return self._parsed('repos/show/' + username + "?page=" + str(page))
+        return self._parsed('repos/show/' + username + "/?page=" + str(page))
 
     def branches(self, user, repo):
         """List the branches for a repo."""

@@ -628,10 +628,13 @@ class TeamsEndpoint(BaseEndpoint):
 class GitHub(object):
     """Interface to github."""
 
-    def __init__(self, user=None, token=None, fetcher=default_fetcher):
-        self.user = user
-        self.token = token
+    def __init__(self, user=None, token=None, fetcher=default_fetcher, base_url=None):
+        self.user    = user
+        self.token   = token
         self.fetcher = fetcher
+
+        if base_url:
+            BaseEndpoint.BASE_URL = base_url
 
     @property
     def users(self):

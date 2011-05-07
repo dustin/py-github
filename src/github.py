@@ -359,6 +359,15 @@ class RepositoryEndpoint(BaseEndpoint):
                 rv[c.localName] = str(c.firstChild.data)
         return rv
 
+    def tags(self, user, repo):
+        """List the tags for a repo."""
+        doc = self._fetch("repos/show/" + user + "/" + repo + "/tags")
+        rv = {}
+        for c in doc.documentElement.childNodes:
+            if c.nodeType != xml.dom.Node.TEXT_NODE:
+                rv[c.localName] = str(c.firstChild.data)
+        return rv
+
     def search(self, term, **args):
         """Search for repositories.
 

@@ -56,8 +56,12 @@ else:
         import urllib2.urlopen
         default_fetcher = urllib2.urlopen
     except ImportError:
-        pass
-
+        try:
+            import urllib2
+            default_fetcher = urllib2.urlopen
+            pass
+        except ImportError:
+            pass
 
 import xml
 import xml.dom.minidom

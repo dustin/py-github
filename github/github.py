@@ -299,8 +299,18 @@ class BaseEndpoint(object):
 
         return self.fetcher(p).read()
 
-    def _fetch(self, path):
-        return xml.dom.minidom.parseString(self._raw_fetch(path))
+    def _fetch(self, path, parselang = False):
+        rawfetch = self._raw_fetch(path)
+        # Hack since Github languages API gives malformed XML
+        if parselang:
+            rawfetch = rawfetch.replace('#', 'sharp')
+            rawfetch = rawfetch.replace('-', '')
+            rawfetch = rawfetch.replace('+', 'p')
+            rawfetch = rawfetch.replace(' Lisp', 'Lisp')
+            rawfetch = rawfetch.replace('Visual Basic', 'VisualBasic')
+            rawfetch = rawfetch.replace('Pure Data', 'PureData')
+            rawfetch = rawfetch.replace('Max/MSP', 'MaxMSP')
+        return xml.dom.minidom.parseString(rawfetch)
 
     def _post(self, path, **kwargs):
         p = {'login': self.user, 'token': self.token}
@@ -357,6 +367,15 @@ class RepositoryEndpoint(BaseEndpoint):
     def branches(self, user, repo):
         """List the branches for a repo."""
         doc = self._fetch("repos/show/" + user + "/" + repo + "/branches")
+        rv = {}
+        for c in doc.documentElement.childNodes:
+            if c.nodeType != xml.dom.Node.TEXT_NODE:
+                rv[c.localName] = str(c.firstChild.data)
+        return rv
+
+    def languages(self, user, repo):
+        """List the languages for a repo."""
+        doc = self._fetch("repos/show/" + user + "/" + repo + "/languages", True)
         rv = {}
         for c in doc.documentElement.childNodes:
             if c.nodeType != xml.dom.Node.TEXT_NODE:

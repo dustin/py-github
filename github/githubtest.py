@@ -213,6 +213,13 @@ class RepoTest(BaseCase):
         self.assertEquals(4, len(bl))
         self.assertEquals('ee90922f3da3f67ef19853a0759c1d09860fe3b3', bl['master'])
 
+    def testLanguageList(self):
+        """Test language listing for a repo."""
+        bl = self._gh('https://github.com/api/v2/xml/repos/show/schacon/ruby-git/languages',
+                      'data/repos.languages.xml').repos.languages('schacon', 'ruby-git')
+        self.assertEquals(1, len(bl))
+        self.assertEquals('136905', bl['Ruby'])
+
     def testGetOneRepo(self):
         """Fetch an individual repository."""
         r = self._gh('https://github.com/api/v2/xml/repos/show/schacon/grit',

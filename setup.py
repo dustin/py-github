@@ -35,12 +35,8 @@ setup(name = "github",
       description = "Library to make github access easier.",
       author = "Dustin Sallings",
       author_email = 'dustin@spy.net',
-
       license = 'MIT',
-
-      package_dir={'': 'src'},
       packages = ['github'],
-
       classifiers=['MIT License',
                    'Development Status :: 5 - Production/Stable',
                    'Topic :: Software Development :: Libraries ' +

@@ -3,4 +3,4 @@ include LICENSE
 include README.markdown
 include COPYING
 include MANIFEST.in
-recursive-include src/ *
+recursive-include github/ *

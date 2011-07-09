@@ -537,12 +537,12 @@ class CommitEndpoint(BaseEndpoint):
         return c
 
 class IssuesEndpoint(BaseEndpoint):
-    
+
     @with_temporary_mappings({'user': None})
     def search(self, user, repo, state, search_term):
         """Search the issues for the given repo for the given state and search term."""
         return self._parsed('/'.join(['issues', 'search', user, repo, state, quote_plus(search_term)]))
-    
+
     @with_temporary_mappings({'user': None})
     def list(self, user, repo, state='open'):
         """Get the list of issues for the given repo in the given state."""

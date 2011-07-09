@@ -36,9 +36,9 @@ The suffix pool could be thread-local and use the generic cache</message>
  pkginclude_HEADERS = protocol_binary.h
 -noinst_PROGRAMS = memcached-debug sizes internal_tests
 +noinst_PROGRAMS = memcached-debug sizes testapp
- 
+
  BUILT_SOURCES=
- 
+
 +testapp_SOURCES = testapp.c util.c util.h
 +
  memcached_SOURCES = memcached.c memcached.h \
@@ -55,30 +55,30 @@ The suffix pool could be thread-local and use the generic cache</message>
 +memcached_SOURCES += cache.c
 +testapp_SOURCES += cache.c
 +endif
- 
+
  if BUILD_SOLARIS_PRIVS
  memcached_SOURCES += solaris_priv.c
 @@ -28,8 +35,6 @@ memcached_DEPENDENCIES =
- memcached_debug_DEPENDENCIES = 
+ memcached_debug_DEPENDENCIES =
  CLEANFILES=
- 
+
 -internal_tests_SOURCES = internal_tests.c util.c
 -
  if BUILD_DTRACE
  BUILT_SOURCES += memcached_dtrace.h
  CLEANFILES += memcached_dtrace.h
 @@ -62,9 +67,9 @@ EXTRA_DIST = doc scripts TODO t memcached.spec memcached_dtrace.d version.m4
- 
+
  MOSTLYCLEANFILES = *.gcov *.gcno *.gcda *.tcov
- 
+
 -test:	memcached-debug internal_tests sizes
 +test:	memcached-debug sizes testapp
- 	$(srcdir)/sizes
+	$(srcdir)/sizes
 -	$(srcdir)/internal_tests
 +	$(srcdir)/testapp
- 	prove $(srcdir)/t
- 	@if test `basename $(PROFILER)` = "gcov"; then \
- 	  for file in memcached_debug-*.gc??; do \</diff>
+	prove $(srcdir)/t
+	@if test `basename $(PROFILER)` = "gcov"; then \
+	  for file in memcached_debug-*.gc??; do \</diff>
       <filename>Makefile.am</filename>
     </modified>
     <modified>
@@ -89,11 +89,11 @@ The suffix pool could be thread-local and use the generic cache</message>
 -
  AC_HEADER_STDBOOL
  AC_C_CONST
- 
+
 @@ -336,6 +335,14 @@ AC_CHECK_FUNCS(setppriv, [
- 
+
  AM_CONDITIONAL([BUILD_SOLARIS_PRIVS],[test "$build_solaris_privs" = "yes"])
- 
+
 +AC_CHECK_HEADER(umem.h, [
 +   AC_DEFINE([HAVE_UMEM_H], 1,
 +         [Define this if you have umem.h])
@@ -109,7 +109,7 @@ The suffix pool could be thread-local and use the generic cache</message>
     </modified>
     <modified>
       <diff>@@ -451,9 +451,7 @@ static void conn_cleanup(conn *c) {
- 
+
      if (c-&gt;suffixleft != 0) {
          for (; c-&gt;suffixleft &gt; 0; c-&gt;suffixleft--, c-&gt;suffixcurr++) {
 -            if(suffix_add_to_freelist(*(c-&gt;suffixcurr))) {
@@ -118,10 +118,10 @@ The suffix pool could be thread-local and use the generic cache</message>
 +            cache_free(c-&gt;thread-&gt;suffix_cache, *(c-&gt;suffixcurr));
          }
      }
- 
+
 @@ -613,72 +611,6 @@ static void conn_set_state(conn *c, enum conn_states state) {
  }
- 
+
  /*
 - * Free list management for suffix buffers.
 - */
@@ -195,7 +195,7 @@ The suffix pool could be thread-local and use the generic cache</message>
 @@ -2354,7 +2286,7 @@ static inline void process_get_command(conn *c, token_t *tokens, size_t ntokens,
                      }
                    }
- 
+
 -                  suffix = suffix_from_freelist();
 +                  suffix = cache_alloc(c-&gt;thread-&gt;suffix_cache);
                    if (suffix == NULL) {
@@ -220,17 +220,17 @@ The suffix pool could be thread-local and use the generic cache</message>
 -    /* Hacky suffix buffers. */
 -    suffix_init();
      slabs_init(settings.maxbytes, settings.factor, preallocate);
- 
+
      /*</diff>
       <filename>memcached.c</filename>
     </modified>
     <modified>
       <diff>@@ -15,6 +15,7 @@
  #include &lt;pthread.h&gt;
- 
+
  #include "protocol_binary.h"
 +#include "cache.h"
- 
+
  /* Maximum length of a key. */
  #define KEY_MAX_LENGTH 250
 @@ -263,6 +264,7 @@ typedef struct {
@@ -239,7 +239,7 @@ The suffix pool could be thread-local and use the generic cache</message>
      struct conn_queue *new_conn_queue; /* queue of new connections to handle */
 +    cache_t *suffix_cache;      /* suffix cache */
  } LIBEVENT_THREAD;
- 
+
  typedef struct conn conn;
 @@ -392,8 +394,6 @@ char *add_delta(conn *c, item *item, const int incr, const int64_t delta,
  void accept_new_conns(const bool do_accept);
@@ -265,7 +265,7 @@ The suffix pool could be thread-local and use the generic cache</message>
 +        exit(EXIT_FAILURE);
 +    }
  }
- 
+
  </diff>
       <filename>thread.c</filename>
     </modified>

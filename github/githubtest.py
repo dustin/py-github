@@ -29,6 +29,8 @@ import urllib
 import hashlib
 import unittest
 
+import StringIO
+
 import github
 
 class BaseCase(unittest.TestCase):
@@ -55,6 +57,9 @@ class BaseCase(unittest.TestCase):
             self.assertEquals(github.BaseEndpoint.BASE_URL + expUrl, url)
             self.assertEquals(sorted(data.split('&')),
                               sorted(urllib.urlencode(h).split('&')))
+
+            return StringIO.StringIO("")
+
         return github.GitHub(u, t, fetcher=opener)
 
 class UserTest(BaseCase):

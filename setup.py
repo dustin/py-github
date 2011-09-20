@@ -31,7 +31,7 @@ except ImportError:
 
 
 setup(name = "github",
-      version = "1.0.0",
+      version = "1.0.1",
       description = "Library to make github access easier.",
       author = "Dustin Sallings",
       author_email = 'dustin@spy.net',

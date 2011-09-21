@@ -554,7 +554,9 @@ class IssuesEndpoint(BaseEndpoint):
 
     def add_comment(self, user, repo, issue_id, comment):
         """Add a comment to an issue."""
-        return self._post('/'.join(['issues', 'comment', user, repo, str(issue_id)]), comment=comment)
+        return self._post('/'.join(['issues', 'comment', user,
+                                    repo, str(issue_id)]),
+                          comment=comment)
 
     @with_temporary_mappings({'user': None})
     def show(self, user, repo, issue_id):

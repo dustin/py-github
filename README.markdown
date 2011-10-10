@@ -103,7 +103,7 @@ Stop watching a repository.
 Retrieve the network for a repository.
 
     for r in gh.repos.network('dustin', 'memcached'):
-        print("%'s %s" % (r.owner_name, r.name))
+        print("%s's %s" % (r.owner, r.name))
 
 ### Adjust a Repository's Visibility
 

@@ -47,8 +47,11 @@ else:
 
     from base64 import b64encode
 
-def fetch(url, data=None, username=None, password=None, headers={}):
+def fetch(url, data=None, username=None, password=None, headers={},
+          method=None):
     request = Request(url, data=data, headers=headers)
+    if method:
+        request.get_method = lambda: method
     if username and password:
         request.add_header('Authorization',
                            'Basic ' + b64encode("%s:%s" % (username,

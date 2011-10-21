@@ -40,6 +40,8 @@ import sys
 import xml
 import xml.dom.minidom
 
+import json
+
 import hclient
 
 def _string_parser(x):
@@ -262,7 +264,7 @@ class BaseEndpoint(object):
         self.token = token
         self.fetcher = fetcher
 
-    def _raw_fetch(self, path, base=None, httpAuth=False):
+    def _raw_fetch(self, path, base=None, data=None, httpAuth=False, method=None):
         if not base:
             base = self.BASE_URL
         p = base + path
@@ -276,9 +278,11 @@ class BaseEndpoint(object):
                 p += '?' + params
 
         if httpAuth:
-            return self.fetcher(p, username=self.user, password=self.token)
+            return self.fetcher(p, data,
+                                username=self.user, password=self.token,
+                                method=method)
         else:
-            return self.fetcher(p)
+            return self.fetcher(p, data)
 
     def _fetch(self, path, parselang = False):
         rawfetch = self._raw_fetch(path).read()
@@ -292,6 +296,15 @@ class BaseEndpoint(object):
             rawfetch = rawfetch.replace('Pure Data', 'PureData')
             rawfetch = rawfetch.replace('Max/MSP', 'MaxMSP')
         return xml.dom.minidom.parseString(rawfetch)
+
+    def _jfetch(self, path, httpAuth=True):
+        return json.load(self._raw_fetch(path, 'https://api.github.com/',
+                                         httpAuth=httpAuth))
+
+    def _jpost(self, path, data, httpAuth=True):
+        return json.load(self._raw_fetch(path, 'https://api.github.com/',
+                                         data=data,
+                                         httpAuth=httpAuth))
 
     def _post(self, path, **kwargs):
         p = {'login': self.user, 'token': self.token}
@@ -491,6 +504,54 @@ class RepositoryEndpoint(BaseEndpoint):
     def removeDeployKey(self, repo, keyId):
         """Remove a deploy key."""
         self._post('repos/key/' + repo + '/remove', id=keyId)
+
+    def discoverHooks(self):
+        """Get the known hook types supported by github.
+
+        returns a dict of name -> info.  (see info['schema'] for config params)
+        """
+        hooks = self._jfetch('hooks', httpAuth=False)
+        return dict((h['name'], h) for h in hooks)
+
+    def listHooks(self, user, repo):
+        """List hooks configured for a repo."""
+        # /repos/:user/:repo/hooks
+        return self._jfetch('/'.join(['repos', user, repo, 'hooks']))
+
+    def getHook(self, user, repo, hookid):
+        """Get a specific hook by ID."""
+        return self._jfetch('/'.join(['repos', user, repo, 'hooks',
+                                      str(hookid)]))
+
+    def createHook(self, user, repo, name, config,
+                   events=["push"], active=True):
+        """Create a hook on the given repo.
+
+        For more info, see the docs:
+             http://developer.github.com/v3/repos/hooks/
+        """
+
+        doc = json.dumps({'name': name,
+                          'active': active,
+                          'config': config,
+                          'events': events})
+
+        return self._jpost('/'.join(['repos', user, repo, 'hooks']), doc)
+
+    def testHook(self, user, repo, hookid):
+        """Test a specific hook by ID."""
+        return self._raw_fetch('/'.join(['repos', user, repo, 'hooks',
+                                     str(hookid), 'test']),
+                               base='https://api.github.com/',
+                               data='', httpAuth=True).read()
+
+    def deleteHook(self, user, repo, hookid):
+        """Remove a specified hook."""
+        return self._raw_fetch('/'.join(['repos', user, repo, 'hooks',
+                                         str(hookid)]),
+                               base='https://api.github.com/',
+                               data='', httpAuth=True, method='DELETE').read()
+
 
 class CommitEndpoint(BaseEndpoint):
 

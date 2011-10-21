@@ -37,34 +37,10 @@ Copyright (c) 2007  Dustin Sallings <dustin@spy.net>
 """
 
 import sys
-PY3 = sys.version_info[0] == 3
-
-if PY3:
-    from urllib.parse import urlencode
-    from urllib.parse import quote
-    from urllib.parse import quote_plus
-    from urllib.request import urlopen
-
-    default_fetcher = urlopen
-else:
-    from urllib import urlencode
-    from urllib import quote
-    from urllib import quote_plus
-
-    # GAE friendly URL detection (theoretically)
-    try:
-        import urllib2.urlopen
-        default_fetcher = urllib2.urlopen
-    except ImportError:
-        try:
-            import urllib2
-            default_fetcher = urllib2.urlopen
-            pass
-        except ImportError:
-            pass
-
 import xml
 import xml.dom.minidom
+
+import hclient
 
 def _string_parser(x):
     """Extract the data from the first child of the input."""
@@ -286,21 +262,26 @@ class BaseEndpoint(object):
         self.token = token
         self.fetcher = fetcher
 
-    def _raw_fetch(self, path):
-        p = self.BASE_URL + path
+    def _raw_fetch(self, path, base=None, httpAuth=False):
+        if not base:
+            base = self.BASE_URL
+        p = base + path
         args = ''
-        if self.user and self.token:
-            params = '&'.join(['login=' + quote(self.user),
-                               'token=' + quote(self.token)])
+        if self.user and self.token and not httpAuth:
+            params = '&'.join(['login=' + hclient.quote(self.user),
+                               'token=' + hclient.quote(self.token)])
             if '?' in path:
                 p += '&' + params
             else:
                 p += '?' + params
 
-        return self.fetcher(p).read()
+        if httpAuth:
+            return self.fetcher(p, username=self.user, password=self.token)
+        else:
+            return self.fetcher(p)
 
     def _fetch(self, path, parselang = False):
-        rawfetch = self._raw_fetch(path)
+        rawfetch = self._raw_fetch(path).read()
         # Hack since Github languages API gives malformed XML
         if parselang:
             rawfetch = rawfetch.replace('#', 'sharp')
@@ -323,7 +304,7 @@ class BaseEndpoint(object):
         # Setting PUT with urllib2: http://stackoverflow.com/questions/111945
         import urllib2
         opener = urllib2.build_opener(urllib2.HTTPHandler)
-        request = urllib2.Request(self.BASE_URL + path, data=urllib.urlencode(p))
+        request = urllib2.Request(self.BASE_URL + path, data=hclient.urlencode(p))
         request.get_method = lambda: 'PUT'
         return opener.open(request).read()
 
@@ -398,7 +379,7 @@ class RepositoryEndpoint(BaseEndpoint):
         - start_page => specifies the page of the results to show
         - language   => limits the search to a programming language """
 
-        path = 'repos/search/' + quote_plus(term)
+        path = 'repos/search/' + hclient.quote_plus(term)
         params = "&".join(["%s=%s" % (k, v) for k,v in list(args.items())])
         if params:
             path += '?%s' % params
@@ -541,7 +522,8 @@ class IssuesEndpoint(BaseEndpoint):
     @with_temporary_mappings({'user': None})
     def search(self, user, repo, state, search_term):
         """Search the issues for the given repo for the given state and search term."""
-        return self._parsed('/'.join(['issues', 'search', user, repo, state, quote_plus(search_term)]))
+        return self._parsed('/'.join(['issues', 'search', user, repo, state,
+                                      hclient.quote_plus(search_term)]))
 
     @with_temporary_mappings({'user': None})
     def list(self, user, repo, state='open'):
@@ -606,7 +588,7 @@ class ObjectsEndpoint(BaseEndpoint):
     def raw_blob(self, user, repo, sha):
         """Get a raw blob from a repo."""
         path = 'blob/show/%s/%s/%s' % (user, repo, sha)
-        return self._raw_fetch(path)
+        return self._raw_fetch(path).read()
 
 class OrganizationsEndpoint(BaseEndpoint):
 
@@ -666,7 +648,7 @@ class TeamsEndpoint(BaseEndpoint):
 class GitHub(object):
     """Interface to github."""
 
-    def __init__(self, user=None, token=None, fetcher=default_fetcher, base_url=None):
+    def __init__(self, user=None, token=None, fetcher=hclient.fetch, base_url=None):
         self.user    = user
         self.token   = token
         self.fetcher = fetcher

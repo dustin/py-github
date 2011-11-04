@@ -40,7 +40,8 @@ import sys
 import xml
 import xml.dom.minidom
 
-import json
+try: import simplejson as json
+except ImportError: import json
 
 import hclient
 

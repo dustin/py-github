@@ -43,6 +43,8 @@ import xml.dom.minidom
 try: import simplejson as json
 except ImportError: import json
 
+from urllib import urlencode
+
 import hclient
 
 def _string_parser(x):

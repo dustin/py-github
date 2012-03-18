@@ -43,7 +43,7 @@ def printFooter():
 </html>"""
 
 def usage():
-    sys.stderr.write("Usage:  %s githubuser githubtoken > map.html"
+    sys.stderr.write("Usage:  %s githubuser githubtoken > map.html\n"
                      % sys.argv[0])
     sys.exit(64)
 
